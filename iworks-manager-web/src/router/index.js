@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routers'
-import store from '@/store/index'
+import store from '@/store'
 import iView from 'iview'
 import { getToken, canTurnTo } from '@/api/store'
 
@@ -28,13 +28,13 @@ router.beforeEach((to, from, next) => {
       name: 'index' // 跳转到首页
     })
   } else {
-    // 拉取用户信息，通过用户权限和跳转的页面的name来判断是否有权限访问;access必须是一个数组，如：['super_admin'] ['super_admin', 'admin']
-    const permission = store.state.biz.permission
-    if (canTurnTo(to.name, permission, routes)) {
-      next() // 有权限，可访问
-    } else {
-      next({replace: true, name: 'error_401'}) // 无权限，重定向到401页面
-    }
+    // 拉取用户信息，通过用户权限和跳转的页面的name来判断是否有权限访问;permission 必须是一个数组，如：['super_admin'] ['super_admin', 'admin']
+    // 避免刷新时数据丢失
+    // 这里有一个梗，每次页面跳转都要去拉取用户信息，接口调用频繁
+    store.dispatch('getUserInfo').then(permission => {
+      if (canTurnTo(to.name, permission, routes)) next() // 有权限，可访问
+      else next({ replace: true, name: 'error_401' }) // 无权限，重定向到401页面
+    })
   }
 })
 

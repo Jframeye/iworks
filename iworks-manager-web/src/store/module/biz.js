@@ -17,7 +17,7 @@ export default {
     },
     setToken (state, token) {
       state.token = token
-      // setToken(token) // token 保存到Cookie中
+      setToken(token) // token 保存到 Cookie 中，避免刷新时数丢失
     }
   },
   actions: {
@@ -75,7 +75,7 @@ export default {
           const data = res.data
           commit('setUserInfo', data.userInfo)
           commit('setPermission', data.permission)
-          resolve()
+          resolve(data.permission)
         }).catch(err => {
           reject(err)
         })

@@ -1,4 +1,4 @@
-import store from '@/store/index'
+import store from '@/store'
 import Cookies from 'js-cookie'
 import { contains, forEach } from './utils'
 
@@ -17,11 +17,11 @@ export const cleanStore = () => {
  * @param token
  */
 export const setToken = (token) => {
-  // Cookies.set(TOKEN_KEY, token, {expires: config.cookieExpires || 1})
+  Cookies.set(TOKEN_KEY, token, {expires: 30}) // cookie 30分钟有效
 }
 
 /**
- * 获取 token
+ * 从 cookie 中获取 token
  * @returns {*}
  */
 export const getToken = () => {
@@ -29,10 +29,6 @@ export const getToken = () => {
   if (token) {
     return token
   } else {
-    token = store.state.biz.token
-    if (token) {
-      return token
-    }
     return false
   }
 }
