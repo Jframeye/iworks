@@ -1,0 +1,48 @@
+.header-bar{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .trans{
+    transition: transform .2s ease;
+  }
+  @size: 40px;
+  .sider-trigger-a{
+    padding: 6px;
+    width: @size;
+    height: @size;
+    display: inline-block;
+    text-align: center;
+    color: #5c6b77;
+    margin-top: 12px;
+    i{
+      .trans;
+      vertical-align: top;
+    }
+    &.collapsed i{
+      transform: rotateZ(90deg);
+      .trans;
+    }
+  }
+  .custom-bread-crumb{
+    display: inline-block;
+    vertical-align: top;
+  }
+  .custom-content-con{
+    float: right;
+    height: auto;
+    padding-right: 20px;
+    line-height: 64px;
+    & > *{
+      float: right;
+    }
+    .user{
+      &-avator-dropdown{
+        cursor: pointer;
+        display: inline-block;
+        // height: 64px;
+        vertical-align: middle;
+        // line-height: 64px;
+      }
+    }
+  }
+}

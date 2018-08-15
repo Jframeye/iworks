@@ -9,12 +9,10 @@
         </div>
       </side-menu>
     </Sider>
-    <!-- <Layout>
+    <Layout>
       <Header class="header-con">
-        <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
-          <user :user-avator="userAvator"/>
-          <language @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/>
-          <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
+        <header-bar :collapsed="settings.collapsed" @on-collapsed-change="handleCollapsedChange">
+          <!-- 在此处添加其他按钮，比如消息 -->
         </header-bar>
       </Header>
       <Content>
@@ -29,15 +27,14 @@
           </Content>
         </Layout>
       </Content>
-    </Layout> -->
+    </Layout>
   </Layout>
 </template>
 <script>
 import { mapMutations, mapActions } from "vuex";
 import SideMenu from "./components/side-menu";
-// import HeaderBar from './components/header-bar'
-// import TagsNav from './components/tags-nav'
-// import User from './components/user'
+import HeaderBar from './components/header-bar'
+import TagsNav from './components/tags-nav'
 // import Fullscreen from './components/fullscreen'
 // import Language from './components/language'
 
@@ -45,12 +42,9 @@ import SideMenu from "./components/side-menu";
 export default {
   name: "layout",
   components: {
-    SideMenu
-    // HeaderBar,
-    // Language,
-    // TagsNav,
-    // Fullscreen,
-    // User
+    SideMenu,
+    HeaderBar,
+    TagsNav
   },
   data() {
     return {
@@ -63,33 +57,23 @@ export default {
     menuList () {
       return this.$store.getters.menuList
     },
-    // tagNavList () {
-    //   return this.$store.state.app.tagNavList
-    // },
-    // tagRouter () {
-    //   return this.$store.state.app.tagRouter
-    // },
-    // userAvator () {
-    //   return this.$store.state.user.avatorImgPath
-    // },
-    // cacheList () {
-    //   return this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []
-    // },
-    
-    // local () {
-    //   return this.$store.state.app.local
-    // }
+    tagNavList () {
+      return this.$store.state.app.tagNavList
+    },
+    cacheList () {
+      return this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []
+    }
   },
   methods: {
-    // ...mapMutations([
-    //   'setBreadCrumb',
-    //   'setTagNavList',
-    //   'addTag',
-    //   'setLocal'
-    // ]),
-    // ...mapActions([
-    //   'handleLogin'
-    // ]),
+    ...mapMutations([
+      'setBreadCrumb',
+      'setTagNavList',
+      'addTag',
+      'setLocal'
+    ]),
+    ...mapActions([
+      'handleLogin'
+    ]),
     turnToPage (name) {
       if (name.indexOf('isTurnByHref_') > -1) {
         window.open(name.split('_')[1])
@@ -99,32 +83,32 @@ export default {
         name: name
       })
     },
-    // handleCollapsedChange (state) {
-    //   this.collapsed = state
-    // },
-    // handleCloseTag (res, type, name) {
-    //   const nextName = getNextName(this.tagNavList, name)
-    //   this.setTagNavList(res)
-    //   if (type === 'all') this.turnToPage('home')
-    //   else if (this.$route.name === name) this.$router.push({ name: nextName })
-    // },
-    // handleClick (item) {
-    //   this.turnToPage(item.name)
-    // }
+    handleCollapsedChange (state) {
+      this.collapsed = state
+    },
+    handleCloseTag (res, type, name) {
+      const nextName = getNextName(this.tagNavList, name)
+      this.setTagNavList(res)
+      if (type === 'all') this.turnToPage('home')
+      else if (this.$route.name === name) this.$router.push({ name: nextName })
+    },
+    handleClick (item) {
+      this.turnToPage(item.name)
+    }
   },
   watch: {
-    // '$route' (newRoute) {
-    //   this.setBreadCrumb(newRoute.matched)
-    //   this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
-    // }
+    '$route' (newRoute) {
+      this.setBreadCrumb(newRoute.matched)
+      this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
+    }
   },
   mounted() {
     /**
      * @description 初始化设置面包屑导航和标签导航
      */
-    // this.setTagNavList()
-    // this.addTag(this.$store.state.app.homeRoute)
-    // this.setBreadCrumb(this.$route.matched)
+    this.setTagNavList()
+    this.addTag(this.$store.state.app.homeRoute)
+    this.setBreadCrumb(this.$route.matched)
     // 设置初始语言
     // this.setLocal(this.$i18n.locale)
     // 文档提示
@@ -152,6 +136,6 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import "./layout.less";
 </style>
