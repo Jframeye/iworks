@@ -72,6 +72,7 @@ export default {
 }
 .login-info {
   padding-left: 60px;
+  color: #fff;
 }
 .login-info-title {
   line-height: 90px;

@@ -22,6 +22,18 @@
     .horizontal-collapse-transition {
       transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
     }
+    .sidebar-logo {
+      background-color: rgb(48, 65, 86);
+      text-align: center;
+      .max {
+        margin-top: 5px;
+        height: 45px;
+      }
+      .min {
+        height: 30px;
+        margin: 10px auto;
+      }
+    }
     .scrollbar-wrapper {
       overflow-x: hidden!important;
       .el-scrollbar__view {
