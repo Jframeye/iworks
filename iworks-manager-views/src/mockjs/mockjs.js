@@ -34,3 +34,27 @@ Mock.mock('api/system/usermenu/getUserInfo', (req, res) => {
     }
 })
 
+//export const listByPage = () => post('api/functions/record/listByPage', {})
+Mock.mock('api/functions/record/listByPage', (req, res) => {
+    return {
+        code: 200,
+        data: {
+            total: 10,
+            offset: 0,
+            limit: 10,
+            datas: [
+                { title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' }
+            ]
+        },
+        msg: ''
+    }
+})

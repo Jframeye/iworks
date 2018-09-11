@@ -9,9 +9,13 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+import vuescroll from 'vuescroll'
+import 'vuescroll/dist/vuescroll.css'
+Vue.use(vuescroll)
+
 // 加载图标
 import svgicon from '@/components/svgicon';
-Vue.component('svg-icon', svgicon); 
+Vue.component('svg-icon', svgicon);
 
 import '@/styles/index.scss' // global css
 

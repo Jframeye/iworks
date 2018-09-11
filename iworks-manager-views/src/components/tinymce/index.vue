@@ -13,7 +13,7 @@ import plugins from './plugins'
 import toolbar from './toolbar'
 
 export default {
-  name: 'Tinymce',
+  name: 'tinymce',
   components: { editorImage },
   props: {
     id: {
@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     language() {
-      return this.languageTypeList[this.$store.getters.language]
+      return this.languageTypeList['zh']
     }
   },
   watch: {
