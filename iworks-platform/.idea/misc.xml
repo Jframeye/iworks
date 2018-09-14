@@ -11,6 +11,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/iworks-platform-user-api/pom.xml" />
+        <option value="$PROJECT_DIR$/iworks-platform-user/user-persistent/pom.xml" />
       </set>
     </option>
   </component>

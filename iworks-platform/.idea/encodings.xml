@@ -4,5 +4,10 @@
     <file url="file://$PROJECT_DIR$/iworks-platform" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/iworks-platform-user" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/iworks-platform-user-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/iworks-platform-user/user-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/iworks-platform-user/user-persistent" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/iworks-platform-user/user-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/iworks-platform-user/user-service-impl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/iworks-platform-user/user-service-persistent" charset="UTF-8" />
   </component>
 </project>

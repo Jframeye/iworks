@@ -6,11 +6,10 @@
         <artifactId>iworks-platform-user</artifactId>
         <groupId>com.xiaoye.iworks</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../iworks-platform-user/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>iworks-platform-user-api</artifactId>
+    <artifactId>user-service-impl</artifactId>
 
 
 </project>

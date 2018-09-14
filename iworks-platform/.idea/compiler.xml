@@ -7,12 +7,20 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="iworks-platform-utils" />
+        <module name="user-api" />
+        <module name="user-service" />
+        <module name="user-service-impl" />
+        <module name="user-service-persistent" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="iworks-platform" target="1.5" />
       <module name="iworks-platform-user" target="1.5" />
       <module name="iworks-platform-utils" target="1.5" />
+      <module name="user-api" target="1.5" />
+      <module name="user-service" target="1.5" />
+      <module name="user-service-impl" target="1.5" />
+      <module name="user-service-persistent" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
