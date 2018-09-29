@@ -16,6 +16,7 @@ import Layout from '@/pages/layout/Layout'
 /* Router Modules */
 import commonRouterMap from './modules/common'
 import recordRouterMap from './modules/record'
+import toolsRouterMap from './modules/tools'
 import demoRouterMap from './modules/demo'
 
 /** note: submenu only apppear when children.length >= 1
@@ -47,6 +48,7 @@ export const commonRouter = commonRouterMap
  */
 export const permissionRouter = [
   recordRouterMap,
+  toolsRouterMap,
   demoRouterMap
 ]
 

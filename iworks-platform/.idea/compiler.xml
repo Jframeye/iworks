@@ -1,26 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <option name="USE_RELEASE_OPTION" value="false" />
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="iworks-basic-service-api" />
+        <module name="iworks-basic-service-interface" />
+        <module name="iworks-basic-service-interimpl" />
+        <module name="iworks-basic-service-persistent" />
+        <module name="iworks-core-service-basic" />
+        <module name="iworks-core-service-persistent" />
+        <module name="iworks-manager-api" />
+        <module name="iworks-manager-service" />
         <module name="iworks-platform-utils" />
-        <module name="user-api" />
-        <module name="user-service" />
-        <module name="user-service-impl" />
-        <module name="user-service-persistent" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="iworks-platform" target="1.5" />
-      <module name="iworks-platform-user" target="1.5" />
-      <module name="iworks-platform-utils" target="1.5" />
-      <module name="user-api" target="1.5" />
-      <module name="user-service" target="1.5" />
-      <module name="user-service-impl" target="1.5" />
-      <module name="user-service-persistent" target="1.5" />
+    <bytecodeTargetLevel target="8">
+      <module name="iworks-basic-service" target="1.8" />
+      <module name="iworks-basic-service-api" target="1.8" />
+      <module name="iworks-basic-service-interface" target="1.8" />
+      <module name="iworks-basic-service-interimpl" target="1.8" />
+      <module name="iworks-basic-service-persistent" target="1.8" />
+      <module name="iworks-common" target="1.8" />
+      <module name="iworks-core-service" target="1.8" />
+      <module name="iworks-core-service-basic" target="1.8" />
+      <module name="iworks-core-service-persistent" target="1.8" />
+      <module name="iworks-database" target="1.8" />
+      <module name="iworks-manager-api" target="1.8" />
+      <module name="iworks-manager-platform" target="1.8" />
+      <module name="iworks-manager-service" target="1.8" />
+      <module name="iworks-platform" target="1.8" />
+      <module name="iworks-platform-core" target="1.8" />
+      <module name="iworks-platform-manager" target="1.8" />
+      <module name="iworks-platform-user" target="1.8" />
+      <module name="iworks-platform-utils" target="1.8" />
+      <module name="manager-api" target="1.8" />
+      <module name="manager-service" target="1.8" />
+      <module name="manager-service-impl" target="1.8" />
+      <module name="manager-service-persistent" target="1.8" />
+      <module name="user-api" target="1.8" />
+      <module name="user-service" target="1.8" />
+      <module name="user-service-impl" target="1.8" />
+      <module name="user-service-persistent" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

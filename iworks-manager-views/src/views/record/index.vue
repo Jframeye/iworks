@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-table :data="table_datas" v-loading.body="table_loading" border fit highlight-current-row style="width: 100%">
-      <el-table-column type="selection" width="55"></el-table-column>
+      <el-table-column type="selection" width="55" align="center"></el-table-column>
 
       <el-table-column align="center" label="标题" show-overflow-tooltip>
         <template slot-scope="scope">
