@@ -58,3 +58,31 @@ Mock.mock('api/functions/record/listByPage', (req, res) => {
         msg: ''
     }
 })
+
+/**
+ * 系统管理相关接口
+ */
+
+Mock.mock('api/system/user/list', (req, res) => {
+    return {
+        code: 200,
+        data: {
+            total: 10,
+            offset: 0,
+            limit: 10,
+            datas: [
+                { id: 1, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { id: 2, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { id: 3, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { id: 4, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { id: 5, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { id: 6, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { id: 7, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { id: 8, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { id: 9, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
+                { id: 10, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' }
+            ]
+        },
+        msg: ''
+    }
+})

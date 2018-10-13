@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/iworks-basic-service/iworks-basic-service-interimpl/iworks-basic-service-interimpl.iml" filepath="$PROJECT_DIR$/iworks-basic-service/iworks-basic-service-interimpl/iworks-basic-service-interimpl.iml" />
       <module fileurl="file://$PROJECT_DIR$/iworks-basic-service/iworks-basic-service-persistent/iworks-basic-service-persistent.iml" filepath="$PROJECT_DIR$/iworks-basic-service/iworks-basic-service-persistent/iworks-basic-service-persistent.iml" />
       <module fileurl="file://$PROJECT_DIR$/iworks-core-service/iworks-core-service.iml" filepath="$PROJECT_DIR$/iworks-core-service/iworks-core-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/iworks-core-service/iworks-core-service-api/iworks-core-service-api.iml" filepath="$PROJECT_DIR$/iworks-core-service/iworks-core-service-api/iworks-core-service-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/iworks-core-service/iworks-core-service-basic/iworks-core-service-basic.iml" filepath="$PROJECT_DIR$/iworks-core-service/iworks-core-service-basic/iworks-core-service-basic.iml" />
       <module fileurl="file://$PROJECT_DIR$/iworks-core-service/iworks-core-service-persistent/iworks-core-service-persistent.iml" filepath="$PROJECT_DIR$/iworks-core-service/iworks-core-service-persistent/iworks-core-service-persistent.iml" />
       <module fileurl="file://$PROJECT_DIR$/iworks-manager-platform/iworks-manager-api/iworks-manager-api.iml" filepath="$PROJECT_DIR$/iworks-manager-platform/iworks-manager-api/iworks-manager-api.iml" />

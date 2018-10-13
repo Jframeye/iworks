@@ -15,6 +15,7 @@ import Layout from '@/pages/layout/Layout'
 
 /* Router Modules */
 import commonRouterMap from './modules/common'
+import systemRouterMap from './modules/system'
 import recordRouterMap from './modules/record'
 import toolsRouterMap from './modules/tools'
 import demoRouterMap from './modules/demo'
@@ -47,6 +48,7 @@ export const commonRouter = commonRouterMap
  * 需要权限的路由
  */
 export const permissionRouter = [
+  systemRouterMap,
   recordRouterMap,
   toolsRouterMap,
   demoRouterMap

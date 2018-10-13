@@ -1,51 +1,37 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="sizeForm" label-width="80px" size="mini">
-      <el-form-item label="数据库">
-        <el-select v-model="search.database" placeholder="请选择数据库">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="表名">
-        <el-input v-model="search.table_name"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search">查询</el-button>
-      </el-form-item>
-    </el-form>
-
+    <div class="search-box">
+      <el-row :class="shrinkBox ? 'shrink' : ''">
+        <el-button type="text" style="margin-left: 5px;" @click="togggeSearchBox">查询
+          <i class="el-icon-arrow-up" style="margin-left: 5px;" v-show="shrinkBox"></i>
+          <i class="el-icon-arrow-down" style="margin-left: 5px;" v-show="!shrinkBox"></i>
+        </el-button>
+      </el-row>
+      <el-row style="padding: 10px 15px 0;" v-show="shrinkBox">
+        <el-form :inline=true size="mini" v-model="search">
+          <el-form-item label="账号">
+            <el-input style="width: 250px;" v-model="search.user_name" placeholder="请输入用户账号"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button icon="el-icon-search" round>查询</el-button>
+          </el-form-item>
+        </el-form>
+      </el-row>
+    </div>
     <el-table :data="table_datas" v-loading.body="table_loading" border fit highlight-current-row style="width: 100%">
-      <el-table-column type="expand">
-        <template slot-scope="props">
-          <el-form label-position="left">
-            <div v-for="column in props.row.column" :key="column.column_name">
-              <span>{{column.column_name}}</span>
-              <span>{{column.data_type}}</span>
-              <span>{{column.column}}</span>
-              <span>{{column.comments}}</span>
-            </div>
-          </el-form>
-        </template>
-      </el-table-column>
-      
-      <el-table-column type="selection" width="55"></el-table-column>
+      <el-table-column type="selection" width="55" align="center"></el-table-column>
 
-      <el-table-column align="center" label="数据库" show-overflow-tooltip>
+      <el-table-column align="center" label="标题" show-overflow-tooltip>
         <template slot-scope="scope">
-          <span>{{ scope.row.database }}</span>
+          <router-link class="link-type" :to="'/system/users/detail/' + scope.row.id">
+            <span>{{ scope.row.title }}</span>
+          </router-link>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="表名称" show-overflow-tooltip>
+      <el-table-column align="center" label="作者">
         <template slot-scope="scope">
-          <span>{{ scope.row.table_name }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="表说明" show-overflow-tooltip>
-        <template slot-scope="scope">
-          <span>{{ scope.row.table_comment }}</span>
+          <span>{{scope.row.author}}</span>
         </template>
       </el-table-column>
 
@@ -64,9 +50,10 @@
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button-group>
-            <el-button type="primary" size="small" icon="el-icon-edit"></el-button>
+            <router-link :to="'/system/users/update/' + scope.row.id">
+              <el-button type="primary" size="small" icon="el-icon-edit"></el-button>
+            </router-link>
             <el-button type="danger" size="small" icon="el-icon-delete"></el-button>
-            <el-button type="info" size="small" icon="el-icon-download"></el-button>
           </el-button-group>
         </template>
       </el-table-column>
@@ -82,7 +69,7 @@
 </template>
 
 <script>
-import { listDatabse, listByPage } from "@/api/generate";
+import { listUserByPage } from "@/api/system/user";
 
 export default {
   data() {
@@ -94,9 +81,9 @@ export default {
         offset: 1,
         limit: 10
       },
+      shrinkBox: false,
       search: {
-        database: '',
-        table_name: ''
+        user_name: ''
       }
     };
   },
@@ -106,7 +93,7 @@ export default {
   methods: {
     listDatas() {
       this.table_loading = true;
-      listByPage(this.search).then(result => {
+      listUserByPage(this.search).then(result => {
         this.table_datas = result.datas;
         this.page.total = result.total;
         this.table_loading = false;
@@ -119,6 +106,9 @@ export default {
     handleCurrentChange(value) {
       this.page.offset = value;
       this.listDatas();
+    },
+    togggeSearchBox() {
+      this.shrinkBox = !this.shrinkBox;
     }
   }
 };

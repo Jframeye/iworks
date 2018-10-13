@@ -11,6 +11,7 @@
         <module name="iworks-basic-service-interface" />
         <module name="iworks-basic-service-interimpl" />
         <module name="iworks-basic-service-persistent" />
+        <module name="iworks-core-service-api" />
         <module name="iworks-core-service-basic" />
         <module name="iworks-core-service-persistent" />
         <module name="iworks-manager-api" />
@@ -26,6 +27,7 @@
       <module name="iworks-basic-service-persistent" target="1.8" />
       <module name="iworks-common" target="1.8" />
       <module name="iworks-core-service" target="1.8" />
+      <module name="iworks-core-service-api" target="1.8" />
       <module name="iworks-core-service-basic" target="1.8" />
       <module name="iworks-core-service-persistent" target="1.8" />
       <module name="iworks-database" target="1.8" />

@@ -12,9 +12,11 @@
 
     <artifactId>iworks-core-service</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>iworks-core-service-persistent</module>
         <module>iworks-core-service-basic</module>
+        <module>iworks-core-service-api</module>
     </modules>
 
     <dependencies>

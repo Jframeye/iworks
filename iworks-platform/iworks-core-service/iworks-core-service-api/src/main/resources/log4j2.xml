@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+	<properties>
+		<property name="LOG_HOME">${log4j2.logger.path}</property>
+	</properties>
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d|%-5p|%t|%c{2.}:%L|%m%n" />
+		</Console>
+		<RollingFile name="application" fileName="${log4j2.logger.path}/${log4j2.root.filename}.log" filePattern="${log4j2.logger.path}/${log4j2.root.filename}.%d{yyyy-MM-dd}.log.%i">
+			<PatternLayout pattern="%d|%-5p|%t|%c{2.}:%L|%m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="500 MB" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="business" fileName="${log4j2.logger.path}/${log4j2.service.filename}.log" filePattern="${log4j2.logger.path}/${log4j2.service.filename}.%d{yyyy-MM-dd}.log.%i">
+			<PatternLayout pattern="%m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="500 MB" />
+			</Policies>
+		</RollingFile>
+	</appenders>
+	<loggers>
+		<root level="DEBUG">
+			<appender-ref ref="application" />
+			<appender-ref ref="Console" />
+		</root>
+		<!--记录 com.xiaoye.qing.logger.aspect包及其子包 debug 及其以上的记录，并输出到文件中-->
+		<logger name="com.xiaoye.qing.logger.aspect" additivity="false" level="DEBUG">
+			<appender-ref ref="business" />
+		</logger>
+	</loggers>
+</configuration> 

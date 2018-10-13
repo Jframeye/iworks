@@ -3,21 +3,24 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>iworks-basic-service</artifactId>
+        <artifactId>iworks-core-service</artifactId>
         <groupId>com.xiaoye.iworks</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>iworks-basic-service-api</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>iworks-core-service-api</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.xiaoye.iworks</groupId>
-            <artifactId>iworks-core-service-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
-
 </project>
