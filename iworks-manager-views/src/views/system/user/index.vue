@@ -24,7 +24,7 @@
         <el-button type="primary" size="small" icon="el-icon-edit" @click="updateUser">修改</el-button>
         <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteUser">删除</el-button>
       </el-button-group>
-    </div>
+    </div> 
     <el-table :data="table_datas" v-loading.body="table_loading" border fit highlight-current-row style="width: 100%" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"></el-table-column>
 
