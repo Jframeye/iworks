@@ -5,7 +5,7 @@ import Layout from '@/pages/layout/Layout'
 const recordRouter = {
   path: '/system',
   component: Layout,
-  redirect: '/system/users',
+  redirect: '/system/user',
   name: 'system',
   meta: {
     title: '系统管理',
@@ -14,38 +14,59 @@ const recordRouter = {
   },
   children: [
     {
-      path: 'users',
+      path: 'user',
       component: () => import('@/views/system/user/index.vue'),
-      name: 'users',
+      name: 'user',
       meta: { title: '用户管理', icon: 'sub_menu', permission: 'sysuser' }
     },
     {
-      path: 'users/detail/:id(\\d+)',
+      path: 'user/detail/:id(\\d+)',
       component: () => import('@/views/system/user/detail.vue'),
-      name: 'update',
+      name: 'user_detail',
       hidden: true,
-      meta: { title: '用户信息', permission: 'sysuser' }
+      meta: { title: '用户详情', icon: 'sub_menu', permission: 'sysuser' }
     },
     {
-      path: 'users/insert',
+      path: 'user/insert',
       component: () => import('@/views/system/user/insert.vue'),
-      name: 'update',
+      name: 'user_insert',
       hidden: true,
-      meta: { title: '新增用户信息', permission: 'sysuser' }
+      meta: { title: '新增用户', icon: 'sub_menu', permission: 'sysuser' }
     },
     {
-      path: 'users/update/:id(\\d+)',
+      path: 'user/update/:id(\\d+)',
       component: () => import('@/views/system/user/update.vue'),
-      name: 'update',
+      name: 'user_update',
       hidden: true,
-      meta: { title: '修改用户信息', permission: 'sysuser' }
+      meta: { title: '修改用户', icon: 'sub_menu', permission: 'sysuser' }
+    },
+
+    {
+      path: 'menu',
+      component: () => import('@/views/system/menu/index.vue'),
+      name: 'menu',
+      meta: { title: '菜单管理', icon: 'sub_menu', permission: 'sysuser' }
     },
     {
-      path: 'resources',
-      component: () => import('@/views/record/update.vue'),
-      name: 'resources',
+      path: 'menu/detail/:id(\\d+)',
+      component: () => import('@/views/system/menu/detail.vue'),
+      name: 'menu_detail',
       hidden: true,
-      meta: { title: '资源管理', icon: 'sub_menu', permission: 'sysuser' }
+      meta: { title: '用户详情', icon: 'sub_menu', permission: 'sysuser' }
+    },
+    {
+      path: 'menu/insert',
+      component: () => import('@/views/system/menu/insert.vue'),
+      name: 'menu_insert',
+      hidden: true,
+      meta: { title: '新增用户', icon: 'sub_menu', permission: 'sysuser' }
+    },
+    {
+      path: 'menu/update/:id(\\d+)',
+      component: () => import('@/views/system/menu/update.vue'),
+      name: 'menu_update',
+      hidden: true,
+      meta: { title: '修改用户', icon: 'sub_menu', permission: 'sysuser' }
     },
     {
       path: 'permissions',
