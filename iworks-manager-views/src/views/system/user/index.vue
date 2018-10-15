@@ -18,12 +18,19 @@
         </el-form>
       </el-row>
     </div>
-    <el-table :data="table_datas" v-loading.body="table_loading" border fit highlight-current-row style="width: 100%">
+    <div class="operationBox">
+      <el-button-group>
+        <el-button size="small" icon="el-icon-plus" @click="insertUser">新增</el-button>
+        <el-button type="primary" size="small" icon="el-icon-edit" @click="updateUser">修改</el-button>
+        <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteUser">删除</el-button>
+      </el-button-group>
+    </div>
+    <el-table :data="table_datas" v-loading.body="table_loading" border fit highlight-current-row style="width: 100%" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"></el-table-column>
 
       <el-table-column align="center" label="标题" show-overflow-tooltip>
         <template slot-scope="scope">
-          <router-link class="link-type" :to="'/system/users/detail/' + scope.row.id">
+          <router-link class="link-type" :to="'/system/user/detail/' + scope.row.id">
             <span>{{ scope.row.title }}</span>
           </router-link>
         </template>
@@ -50,10 +57,9 @@
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button-group>
-            <router-link :to="'/system/users/update/' + scope.row.id">
-              <el-button type="primary" size="small" icon="el-icon-edit"></el-button>
+            <router-link :to="'/system/user/detail/' + scope.row.id">
+              <el-button type="primary" size="small" icon="el-icon-view">详情</el-button>
             </router-link>
-            <el-button type="danger" size="small" icon="el-icon-delete"></el-button>
           </el-button-group>
         </template>
       </el-table-column>
@@ -69,7 +75,7 @@
 </template>
 
 <script>
-import { listUserByPage } from "@/api/system/user";
+import { listUserByPage, deleteUser } from "@/api/system/user";
 
 export default {
   data() {
@@ -83,8 +89,9 @@ export default {
       },
       shrinkBox: false,
       search: {
-        user_name: ''
-      }
+        user_name: ""
+      },
+      selected: []
     };
   },
   created() {
@@ -109,6 +116,57 @@ export default {
     },
     togggeSearchBox() {
       this.shrinkBox = !this.shrinkBox;
+    },
+    handleSelectionChange(value) {
+      this.selected = value;
+    },
+    insertUser() {
+      this.$router.push({ path: "user/insert" });
+    },
+    updateUser() {
+      if (this.selected.length === 1) {
+        let id = this.selected[0].id;
+        this.$router.push({ path: "user/update/" + id });
+      } else {
+        this.$message({
+          message: "请先选择一条待修改的数据",
+          type: "warning"
+        });
+      }
+    },
+    deleteUser() {
+      let _this = this;
+      if (_this.selected.length === 0) {
+        this.$message({
+          message: "请至少选择一条待删除的数据",
+          type: "warning"
+        });
+      } else {
+        this.$confirm("此操作将永久删除选中的数据, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            let ids = [];
+            _this.selected.forEach(row => {
+              ids.push(row.id);
+            });
+            deleteUser(ids).then(result => {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+              _this.listDatas(); // 更新数据
+            });
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消删除"
+            });
+          });
+      }
     }
   }
 };
