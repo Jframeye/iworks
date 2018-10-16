@@ -18,85 +18,55 @@
         </el-form>
       </el-row>
     </div>
-    <tree-table :data="table_datas" first="title" border>
-      <el-table-column label="排序" width="60">
-        <template slot-scope="scope">
-          <span>{{scope.row.order}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="请求地址" width="240">
-        <template slot-scope="scope">
-          <span>{{scope.row.url}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="类型" width="80">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.type == 1">目录</el-tag>
-          <el-tag type="success" v-if="scope.row.type == 2">菜单</el-tag>
-          <el-tag type="warning" v-if="scope.row.type == 3">按钮</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="状态" width="80">
-        <template slot-scope="scope">
-          <el-tag type="success" v-if="scope.row.state == 1">显示</el-tag>
-          <el-tag type="danger" v-if="scope.row.state == 2">隐藏</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="权限标识" width="180">
-        <template slot-scope="scope">
-          <span>{{scope.row.permission}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="260">
-        <template slot-scope="scope">
-          <el-button-group>
-            <el-button type="primary" size="small" icon="el-icon-edit" @click="updateMenu(scope.row)">修改</el-button>
-            <el-button type="danger" size="small" icon="el-icon-delete" @click="deleteMenu(scope.row.id)">删除</el-button>
-          </el-button-group>
-        </template>
-      </el-table-column>
-    </tree-table>
-
-    <div class="pagination-container">
-      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page.offset"
-        :page-sizes="[10,20,30, 50]" :page-size="page.limit" layout="total, sizes, prev, pager, next, jumper" :total="page.total">
-      </el-pagination>
-    </div>
-
-    <el-dialog :title="title" :visible.sync="showDialog">
-      <el-form :model="dialog_form" size="mini">
-        <el-form-item label="上级菜单">
-          <el-tree :load="listParentMenu" lazy show-checkbox @check-change="handleCheckChange"></el-tree>
-        </el-form-item>
-        <el-form-item label="菜单类型">
-          <el-radio-group v-model="dialog_form.type">
-            <el-radio :label="1">目录</el-radio>
-            <el-radio :label="2">菜单</el-radio>
-            <el-radio :label="3">按钮</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="菜单名称">
-          <el-input v-model="dialog_form.title" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="请求地址">
-          <el-input v-model="dialog_form.url" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="权限标识">
-          <el-input v-model="dialog_form.permission" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="显示顺序">
-          <el-input-number v-model="dialog_form.order" controls-position="right" :min="1"></el-input-number>
-        </el-form-item>
-        <el-form-item label="菜单状态">
-          <el-radio v-model="dialog_form.state" label="1">显示</el-radio>
-          <el-radio v-model="dialog_form.state" label="2">隐藏</el-radio>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="showDialog = false">取 消</el-button>
-        <el-button type="primary" @click="submitData">确 定</el-button>
-      </div>
-    </el-dialog>
+    <el-row>
+      <el-col :span="10">
+        <el-tree :data="table_datas" node-key="id" :expand-on-click-node="false" style="width: 80%;">
+          <span slot-scope="{ node, data }" style="width: 100%; line-height: 30px;">
+            {{ data.title }}
+            <span style="float: right;">
+              <el-button type="text" size="mini" icon="el-icon-view" @click="showMenu(data, true)">查看</el-button>
+              <el-button type="text" size="mini" icon="el-icon-plus" @click="showMenu(data, false)">新增</el-button>
+              <el-button type="text" size="mini" icon="el-icon-delete" @click="deleteMenu(data)">删除</el-button>
+              <el-button-group>
+              </el-button-group>
+            </span>
+          </span>
+        </el-tree>
+      </el-col>
+      <el-col :span="14" v-show="show_menu">
+        <el-form :model="menu_form" size="mini">
+          <el-input v-model="menu_form.id" v-show="false"></el-input>
+          <el-input v-model="menu_form.parent_id" v-show="false"></el-input>
+          <el-form-item label="上级菜单">
+            <span v-if="menu_form.parent_id">上级目录</span>
+            <span v-else>根目录</span>
+          </el-form-item>
+          <el-form-item label="菜单类型">
+            <span v-if="menu_form.type === 1">目录</span>
+            <span v-if="menu_form.type === 2">菜单</span>
+            <span v-if="menu_form.type === 3">按钮</span>
+          </el-form-item>
+          <el-form-item label="菜单名称">
+            <el-input v-model="menu_form.title" autoComplete="off" :readonly="!edit_menu"></el-input>
+          </el-form-item>
+          <el-form-item label="请求地址">
+            <el-input v-model="menu_form.url" autoComplete="off" :readonly="!edit_menu"></el-input>
+          </el-form-item>
+          <el-form-item label="权限标识">
+            <el-input v-model="menu_form.permission" autoComplete="off" :readonly="!edit_menu"></el-input>
+          </el-form-item>
+          <el-form-item label="菜单状态">
+            <el-radio v-model="menu_form.state" label="1" :disabled="!edit_menu">显示</el-radio>
+            <el-radio v-model="menu_form.state" label="2" :disabled="!edit_menu">隐藏</el-radio>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="edit_menu = true" v-if="!edit_menu">编辑</el-button>
+            <el-button type="primary" @click="submitData" v-if="edit_menu">保存</el-button>
+            <el-button @click="edit_menu = false" v-if="edit_menu">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -119,16 +89,18 @@ export default {
       search: {
         user_name: ""
       },
-      showDialog: false,
-      title: '',
-      dialog_form: {
-        parent_id: '',
-        title: '',
-        order: '',
-        type: '',
-        url: '',
-        permission: '',
-        state: ''
+      show_menu: false, // 显示菜单内容
+      edit_menu: false, // 更新菜单内容
+      menu_form: {
+        id: "",
+        parent_id: "",
+        parent_title: "",
+        title: "",
+        order: "",
+        type: "",
+        url: "",
+        permission: "",
+        state: ""
       }
     };
   },
@@ -144,30 +116,47 @@ export default {
         this.table_loading = false;
       });
     },
-    handleSizeChange(value) {
-      this.page.limit = value;
-      this.listDatas();
-    },
-    handleCurrentChange(value) {
-      this.page.offset = value;
-      this.listDatas();
-    },
     togggeSearchBox() {
       this.shrinkBox = !this.shrinkBox;
     },
-    updateMenu(data) {
-      this.showDialog = true;
-      this.title = "修改菜单信息";
-      this.dialog_form = data;
+    showMenu(data, exist) {
+      if (this.show_menu) {
+        this.edit_menu = false;
+      } else {
+        this.show_menu = true;
+      }
+      if (exist) {
+        // 修改
+        this.edit_menu = false;
+        this.menu_form = data;
+      } else {
+        // 新增
+        if (data.type === 3) {
+          this.$message({
+            type: "warning",
+            message: "按钮级别不能增加子目录！"
+          });
+          return;
+        }
+        this.edit_menu = true;
+        this.menu_form = {
+          parent_id: data.id,
+          parent_title: data.title,
+          type: data.type + 1
+        };
+      }
     },
-    listParentMenu() {
-      return [];
-    },
-    submitData() {
-      this.showDialog = false;
-      this.title = "";
-    },
-    deleteMenu(id) {
+
+    updateMenu(data) {},
+    submitData() {},
+    deleteMenu(data) {
+      if (data.children && data.children.length > 0) {
+        this.$message({
+          type: "warning",
+          message: "请先删除子节点！"
+        });
+        return;
+      }
       this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
