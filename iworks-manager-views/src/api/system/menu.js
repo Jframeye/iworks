@@ -8,14 +8,7 @@ import { get, post } from '../axios'
 export const listMenuByPage = p => post('api/system/menu/list', {})
 
 /**
- * 新增资源信息
- * @param p
- * @returns {*}
- */
-export const insertMenu = p => post('api/system/menu/insert', {})
-
-/**
- * 修改资源信息
+ * 更新资源信息
  * @param p
  * @returns {*}
  */

@@ -123,3 +123,15 @@ Mock.mock('api/system/menu/list', (req, res) => {
         msg: ''
     }
 })
+Mock.mock('api/system/menu/update', (req, res) => {
+    return {
+        code: 200,
+        msg: ''
+    }
+})
+Mock.mock('api/system/menu/delete', (req, res) => {
+    return {
+        code: 200,
+        msg: ''
+    }
+})

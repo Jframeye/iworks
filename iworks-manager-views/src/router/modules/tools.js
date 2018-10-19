@@ -9,7 +9,8 @@ const recordRouter = {
   name: 'tools',
   meta: {
     title: '系统工具',
-    icon: 'demo',
+    icon: 'menu',
+    alwaysShow: true,
     permission: 'sysuser'
   },
   children: [
@@ -17,7 +18,7 @@ const recordRouter = {
       path: 'generate',
       component: () => import('@/views/generate/index.vue'),
       name: 'generate',
-      meta: { title: '代码生成器',icon: 'demo', permission: 'sysuser' }
+      meta: { title: '代码生成器',icon: 'sub_menu', permission: 'sysuser' }
     }
   ]
 }

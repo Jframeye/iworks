@@ -120,15 +120,15 @@ export default {
         user_name: ""
       },
       showDialog: false,
-      title: '',
+      title: "",
       dialog_form: {
-        parent_id: '',
-        title: '',
-        order: '',
-        type: '',
-        url: '',
-        permission: '',
-        state: ''
+        parent_id: "",
+        title: "",
+        order: "",
+        type: "",
+        url: "",
+        permission: "",
+        state: ""
       }
     };
   },

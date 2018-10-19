@@ -20,13 +20,13 @@
     </div>
     <el-row>
       <el-col :span="10">
-        <el-tree :data="table_datas" node-key="id" :expand-on-click-node="false" style="width: 80%;">
+        <el-tree ref="tree" :data="table_datas" node-key="id" :expand-on-click-node="false" style="width: 80%;">
           <span slot-scope="{ node, data }" style="width: 100%; line-height: 30px;">
             {{ data.title }}
             <span style="float: right;">
-              <el-button type="text" size="mini" icon="el-icon-view" @click="showMenu(data, true)">查看</el-button>
-              <el-button type="text" size="mini" icon="el-icon-plus" @click="showMenu(data, false)">新增</el-button>
-              <el-button type="text" size="mini" icon="el-icon-delete" @click="deleteMenu(data)">删除</el-button>
+              <el-button type="text" size="mini" icon="el-icon-view" @click="showNode(data, true)">查看</el-button>
+              <el-button type="text" size="mini" icon="el-icon-plus" @click="showNode(data, false)">新增</el-button>
+              <el-button type="text" size="mini" icon="el-icon-delete" @click="deleteNode(node, data)">删除</el-button>
               <el-button-group>
               </el-button-group>
             </span>
@@ -37,16 +37,16 @@
         <el-form :model="menu_form" size="mini">
           <el-input v-model="menu_form.id" v-show="false"></el-input>
           <el-input v-model="menu_form.parent_id" v-show="false"></el-input>
-          <el-form-item label="上级菜单">
-            <span v-if="menu_form.parent_id">上级目录</span>
+          <el-form-item label="上级节点">
+            <span v-if="menu_form.parent_id">{{menu_form.parent_title}}</span>
             <span v-else>根目录</span>
           </el-form-item>
-          <el-form-item label="菜单类型">
+          <el-form-item label="节点类型">
             <span v-if="menu_form.type === 1">目录</span>
             <span v-if="menu_form.type === 2">菜单</span>
             <span v-if="menu_form.type === 3">按钮</span>
           </el-form-item>
-          <el-form-item label="菜单名称">
+          <el-form-item label="节点名称">
             <el-input v-model="menu_form.title" autoComplete="off" :readonly="!edit_menu"></el-input>
           </el-form-item>
           <el-form-item label="请求地址">
@@ -55,14 +55,14 @@
           <el-form-item label="权限标识">
             <el-input v-model="menu_form.permission" autoComplete="off" :readonly="!edit_menu"></el-input>
           </el-form-item>
-          <el-form-item label="菜单状态">
+          <el-form-item label="节点状态">
             <el-radio v-model="menu_form.state" label="1" :disabled="!edit_menu">显示</el-radio>
             <el-radio v-model="menu_form.state" label="2" :disabled="!edit_menu">隐藏</el-radio>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="edit_menu = true" v-if="!edit_menu">编辑</el-button>
             <el-button type="primary" @click="submitData" v-if="edit_menu">保存</el-button>
-            <el-button @click="edit_menu = false" v-if="edit_menu">取消</el-button>
+            <el-button @click="cancelEdit" v-if="edit_menu">取消</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { listMenuByPage } from "@/api/system/menu";
+import { listMenuByPage, updateMenu, deleteMenu } from "@/api/system/menu";
 import treeTable from "@/components/treetable/index.vue";
 
 export default {
@@ -119,18 +119,27 @@ export default {
     togggeSearchBox() {
       this.shrinkBox = !this.shrinkBox;
     },
-    showMenu(data, exist) {
-      if (this.show_menu) {
-        this.edit_menu = false;
+    showNode(data, exist) {
+      if (this.edit_menu) {
+        // 说明表单已经打开
+        this.$confirm("此操作将导致正在编辑的数据丢失, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(() => {
+          this.logicalProcessing(data, exist);
+        });
       } else {
-        this.show_menu = true;
+        this.logicalProcessing(data, exist);
       }
+    },
+    logicalProcessing(data, exist) {
+      // 表单逻辑处理
+      this.show_menu = true;
       if (exist) {
-        // 修改
         this.edit_menu = false;
         this.menu_form = data;
       } else {
-        // 新增
         if (data.type === 3) {
           this.$message({
             type: "warning",
@@ -138,6 +147,7 @@ export default {
           });
           return;
         }
+        this.$refs.tree.store.nodesMap[data.id].expanded = true; // 展开当前节点
         this.edit_menu = true;
         this.menu_form = {
           parent_id: data.id,
@@ -146,10 +156,23 @@ export default {
         };
       }
     },
-
-    updateMenu(data) {},
-    submitData() {},
-    deleteMenu(data) {
+    cancelEdit() {
+      this.edit_menu = false;
+      if (!this.menu_form.id) {
+        this.show_menu = false;
+      }
+    },
+    submitData() {
+      updateMenu(this.menu_form).then(result => {
+        this.listDatas();
+        this.edit_menu = false;
+        this.$message({
+          type: "success",
+          message: "更新成功！"
+        });
+      });
+    },
+    deleteNode(node, data) {
       if (data.children && data.children.length > 0) {
         this.$message({
           type: "warning",
@@ -161,19 +184,19 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      })
-        .then(() => {
+      }).then(() => {
+        deleteMenu(data.id).then(result => {
+          debugger
+          const parent = node.parent;
+          const children = parent.data.children || parent.data;
+          const index = children.findIndex(d => d.id === data.id);
+          children.splice(index, 1);
           this.$message({
             type: "success",
-            message: "删除成功!"
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
+            message: "删除成功！"
           });
         });
+      });
     }
   }
 };
