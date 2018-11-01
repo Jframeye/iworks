@@ -13,19 +13,11 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.5.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        !-- 日志文件保存路径 -->
-        <log4j2.logger.path>logs</log4j2.logger.path>
-        <!-- 日志文件名称（所有） -->
-        <log4j2.root.filename>${project.name}</log4j2.root.filename>
-        <!-- 日志文件名称（日志注解） -->
-        <log4j2.service.filename>${project.name}-recordlog</log4j2.service.filename>
 
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>

@@ -11,5 +11,23 @@
 
     <artifactId>iworks-basic-service-interimpl</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
+        <dependency>
+            <groupId>com.xiaoye.iworks</groupId>
+            <artifactId>iworks-basic-service-interface</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
+        <!-- 邮件发送服务 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+    </dependencies>
 </project>

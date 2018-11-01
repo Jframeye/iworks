@@ -1,6 +1,12 @@
 package com.xiaoye.iworks.basic.api;
 
+import com.xiaoye.iworks.basic.api.input.generate.GenerateQueryInput;
+import com.xiaoye.iworks.basic.service.GenerateService;
+import com.xiaoye.iworks.basic.service.vo.generate.GenerateVO;
 import com.xiaoye.iworks.core.api.BasicController;
+import com.xiaoye.iworks.core.api.result.Result;
+import com.xiaoye.iworks.core.basic.common.PageVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,28 +20,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "api/generate")
 public class GenerateController extends BasicController {
 
-    @RequestMapping(value = "list", method = RequestMethod.POST)
-    public void listByCondition() {
+    @Autowired
+    private GenerateService generateService;
 
-    }
-
-    @RequestMapping(value = "find", method = RequestMethod.POST)
-    public void findByCondition() {
-
-    }
-
-    @RequestMapping(value = "insert", method = RequestMethod.POST)
-    public void insert() {
-
-    }
-
-    @RequestMapping(value = "delete", method = RequestMethod.POST)
-    public void delete() {
-
-    }
-
-    @RequestMapping(value = "update", method = RequestMethod.POST)
-    public void update() {
-
+    /** 
+     * 分页查询数据库表列表
+     * @param 
+     * @return 
+     * @author yehl
+     * @date 2018/11/1 19:02
+     */
+    @RequestMapping(value = "listTablesByPage", method = { RequestMethod.GET, RequestMethod.POST})
+    public Result listTablesByPage(GenerateQueryInput input) {
+        GenerateVO generateVO = new GenerateVO();
+        // TODO
+        PageVO<GenerateVO> pageVO = generateService.listTablesByPage(generateVO);
+        return Result.success(pageVO);
     }
 }

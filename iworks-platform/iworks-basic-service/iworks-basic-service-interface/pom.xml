@@ -11,5 +11,11 @@
 
     <artifactId>iworks-basic-service-interface</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.xiaoye.iworks</groupId>
+            <artifactId>iworks-core-service-basic</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

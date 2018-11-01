@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @author yehl
  * @date 2018年6月23日
  */
-public class Result<T> implements Serializable {
+public class Result implements Serializable {
 
 	/** **/
 	private static final long serialVersionUID = 2953828433156103191L;
@@ -16,7 +16,7 @@ public class Result<T> implements Serializable {
 	
 	private String message = "success";
 	
-	private T data;
+	private Object data;
 
 	public int getStatus() {
 		return status;
@@ -34,18 +34,18 @@ public class Result<T> implements Serializable {
 		this.message = message;
 	}
 
-	public T getData() {
+	public Object getData() {
 		return data;
 	}
 
-	public void setData(T data) {
+	public void setData(Object data) {
 		this.data = data;
 	}
-	
+
 	public Result() {
 	}
 	
-	public Result(int status, String message, T data) {
+	public Result(int status, String message, Object data) {
 		this.status = status;
 		this.message = message;
 		this.data = data;
@@ -53,11 +53,19 @@ public class Result<T> implements Serializable {
 
 	/**
 	 * 成功返回
-	 * @param data
+	 * @param data 返回的数据
 	 * @return
 	 */
-	public static <T> Result<T> success(T data) {
-		return new Result<T>(200, "success", data);
+	public static Result success(Object data) {
+		return new Result(200, "success", data);
+	}
+
+	/**
+	 * 成功返回
+	 * @return
+	 */
+	public static Result success() {
+		return new Result(200, "success", null);
 	}
 	
 	/**
@@ -66,7 +74,7 @@ public class Result<T> implements Serializable {
 	 * @param message
 	 * @return
 	 */
-	public static <T> Result<T> failure(int status, String message) {
-		return new Result<T>(status, message, null);
+	public static Result failure(int status, String message) {
+		return new Result(status, message, null);
 	}
 }
