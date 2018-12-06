@@ -37,4 +37,12 @@ public class GenerateController extends BasicController {
         PageVO<GenerateVO> pageVO = generateService.listTablesByPage(generateVO);
         return Result.success(pageVO);
     }
+
+    @RequestMapping(value = "listTableColumns", method = { RequestMethod.GET, RequestMethod.POST})
+    public Result listTableColumns(GenerateQueryInput input) {
+        GenerateVO generateVO = new GenerateVO();
+        // TODO
+        PageVO<GenerateVO> pageVO = generateService.listTablesByPage(generateVO);
+        return Result.success(pageVO);
+    }
 }
