@@ -1,15 +1,24 @@
 <template>
-  <div>
-    <span>这是测试页面哦</span>
-    <div style="height: 600px"></div>
+  <div class="app-container">
+
   </div>
 </template>
 
 <script>
+
 export default {
-  name: "demo"
+  data() {
+    return {
+      
+    };
+  },
+  created() {
+  },
+  methods: {
+  }
 };
 </script>
 
-<style lang="scss">
+<style scoped>
+
 </style>

@@ -67,20 +67,11 @@ Mock.mock('api/system/user/list', (req, res) => {
     return {
         code: 200,
         data: {
-            total: 10,
+            total: 1,
             offset: 0,
             limit: 10,
             datas: [
-                { id: 1, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
-                { id: 2, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
-                { id: 3, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
-                { id: 4, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
-                { id: 5, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
-                { id: 6, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
-                { id: 7, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
-                { id: 8, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
-                { id: 9, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' },
-                { id: 10, title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' }
+                { id: 10, user_code: '0805014135', user_name: 'xiao08050141@126.com', nick_name: '叶宏梁', user_sex: '男', mobile:'18617049564', state: '1', create_time: '2018-09-06 14:00:00' }
             ]
         },
         msg: ''

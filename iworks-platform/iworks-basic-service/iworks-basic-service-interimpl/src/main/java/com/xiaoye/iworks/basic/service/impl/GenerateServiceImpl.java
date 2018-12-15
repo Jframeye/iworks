@@ -1,6 +1,8 @@
 package com.xiaoye.iworks.basic.service.impl;
 
 import com.xiaoye.iworks.basic.service.GenerateService;
+import com.xiaoye.iworks.basic.service.vo.generate.ColumnDto;
+import com.xiaoye.iworks.core.basic.common.PageVO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,4 +12,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GenerateServiceImpl implements GenerateService {
+    @Override
+    public PageVO<ColumnDto> listTablesByPage(ColumnDto tableCoulmnVO) {
+        return null;
+    }
 }

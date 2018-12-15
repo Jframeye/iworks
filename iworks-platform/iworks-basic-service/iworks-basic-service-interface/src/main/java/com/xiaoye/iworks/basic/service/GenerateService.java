@@ -1,7 +1,10 @@
 package com.xiaoye.iworks.basic.service;
 
-import com.xiaoye.iworks.basic.service.vo.generate.GenerateVO;
+import com.xiaoye.iworks.basic.service.vo.generate.ColumnDto;
+import com.xiaoye.iworks.basic.service.vo.generate.TableDto;
 import com.xiaoye.iworks.core.basic.common.PageVO;
+
+import java.util.List;
 
 /**
  * 代码生成器接口类
@@ -10,5 +13,7 @@ import com.xiaoye.iworks.core.basic.common.PageVO;
  */
 public interface GenerateService {
 
-    PageVO<GenerateVO> listTablesByPage(GenerateVO tableCoulmnVO);
+    List<TableDto> listTables(TableDto tableDto);
+
+    List<ColumnDto> listColumns(ColumnDto columnDto);
 }

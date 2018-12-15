@@ -5,5 +5,5 @@ package com.xiaoye.iworks.basic.service.vo.generate;
  * @author yehl
  * @date 2018/11/1 19:31
  */
-public class GenerateTableVO {
+public class ColumnDto {
 }

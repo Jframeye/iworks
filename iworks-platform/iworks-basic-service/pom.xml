@@ -12,6 +12,7 @@
 
     <artifactId>iworks-basic-service</artifactId>
     <packaging>pom</packaging>
+    <description>基础服务</description>
     <modules>
         <module>iworks-basic-service-api</module>
         <module>iworks-basic-service-interface</module>

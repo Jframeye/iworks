@@ -84,3 +84,12 @@
 .el-input {
   width: 80%;
 }
+
+// 查询
+.search-box .el-collapse-item__header {
+  height: 30px;
+  line-height: 30px;
+}
+.search-box .el-collapse-item__arrow {
+  line-height: 30px;
+}
