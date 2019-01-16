@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoye.iworks.persistent.mapper.TableNameMapper">
+	<resultMap id="BasicResultMap" type="com.xiaoye.iworks.persistent.entity.TableNameDO">
+	    <id column="pkid" jdbcType="BIGINT" property="pkid" />
+	    <result column="column_1" jdbcType="VARCHAR" property="column1" />
+	    <result column="column_2" jdbcType="VARCHAR" property="column2" />
+	    <result column="column_3" jdbcType="VARCHAR" property="column3" />
+	    <result column="sign" jdbcType="VARCHAR" property="sign" />
+	    <result column="state" jdbcType="SMALLINT" property="state" />
+	    <result column="lstate" jdbcType="SMALLINT" property="lstate" />
+	    <result column="create_time" jdbcType="DATETIME" property="createTime" />
+	    <result column="modify_time" jdbcType="DATETIME" property="modifyTime" />
+	</resultMap>
+	<sql id="Basic_Where_Clause">
+		<where>
+			<foreach collection="criterias" item="item" separator="or">
+				<if test="item.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="item.criterions" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Basic_Columns">
+		`pkid`,`column_1`,`column_2`,`column_3`,`sign`,`state`,`lstate`,`create_time`,`modify_time`
+	</sql>
+	<sql id="Database_Table_Choose">
+		<choose>
+			<when test="dbIndex == null and tbIndex == null">
+				`db_name`.`t_table_name`
+			</when>
+			<when test="dbIndex != null and tbIndex == null">
+				`db_name_#{dbIndex}`.`t_table_name`
+			</when>
+			<when test="dbIndex != null and tbIndex != null">
+				`db_name_#{dbIndex}`.`t_table_name_#{tbIndex}`
+			</when>
+			<when test="dbIndex == null and tbIndex != null">
+				`db_name`.`t_table_name_#{tbIndex}`
+			</when>
+		</choose>
+	</sql>
+</mapper>
