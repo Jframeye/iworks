@@ -1,6 +1,6 @@
 package com.xiaoye.iworks.basic;
 
-import com.xiaoye.iworks.api.BasicController;
+import com.xiaoye.iworks.common.api.BasicController;
 import com.xiaoye.iworks.api.result.Response;
 import com.xiaoye.iworks.basic.api.AppConstantService;
 import com.xiaoye.iworks.basic.api.input.AppConstantQueryInput;

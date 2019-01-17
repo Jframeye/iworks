@@ -22,6 +22,12 @@
 
         <dependency>
             <groupId>com.xiaoye.iworks</groupId>
+            <artifactId>iworks-core-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xiaoye.iworks</groupId>
             <artifactId>iworks-basic-persistent</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

@@ -12,17 +12,12 @@
     <artifactId>iworks-core-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <description>集成DUBBO服务</description>
+    <description>接口服务</description>
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.xiaoye.iworks</groupId>
-            <artifactId>iworks-core-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 </project>

@@ -1,7 +1,7 @@
 /**
  * 
 **/
-package com.xiaoye.iworks.api;
+package com.xiaoye.iworks.common.api;
 
 import com.xiaoye.iworks.api.result.Response;
 import com.xiaoye.iworks.common.exception.BizExceptionCode;

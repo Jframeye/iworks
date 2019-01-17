@@ -1,6 +1,6 @@
 package com.xiaoye.iworks.basic;
 
-import com.xiaoye.iworks.api.BasicController;
+import com.xiaoye.iworks.common.api.BasicController;
 import org.springframework.web.bind.annotation.RestController;
 
 /**

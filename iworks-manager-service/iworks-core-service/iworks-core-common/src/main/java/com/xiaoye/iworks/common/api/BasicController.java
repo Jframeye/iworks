@@ -1,7 +1,7 @@
 /**
  * 
 **/
-package com.xiaoye.iworks.api;
+package com.xiaoye.iworks.common.api;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -44,6 +44,7 @@
             <groupId>com.xiaoye.iworks</groupId>
             <artifactId>iworks-core-utils</artifactId>
             <version>${iworks-core-utils}</version>
+            <!--<scope>provided</scope>-->
         </dependency>
     </dependencies>
 
