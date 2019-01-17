@@ -4,14 +4,12 @@
 package com.xiaoye.iworks.persistent;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.xiaoye.iworks.persistent.provider.SQLProvider;
 import com.xiaoye.iworks.utils.DES3Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.SqlProvider;
 
 import javax.sql.DataSource;
 
@@ -34,8 +32,6 @@ public class DataSourceConfiguration {
 		dataSource.setUsername(environment.getRequiredProperty("datasource.username").trim());
 		dataSource.setPassword(DES3Utils.des3DecodeStr(environment.getRequiredProperty("datasource.password").trim()));
 		dataSource.setUrl(environment.getRequiredProperty("datasource.url").trim());
-		// TODO 其他配置
-		SQLProvider.debug = environment.getProperty("debug", Boolean.class, false);
 		return dataSource;
 	}
 }

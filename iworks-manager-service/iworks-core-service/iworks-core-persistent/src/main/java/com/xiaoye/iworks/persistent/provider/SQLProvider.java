@@ -26,7 +26,6 @@ import java.util.Map;
  */
 public class SQLProvider<E extends Entity, C extends Condition> {
 	public final Log LOGGER = LogFactory.getLog(getClass());
-	public static boolean debug = false;
 
 	/**
 	 * 通用查询脚本
@@ -57,17 +56,13 @@ public class SQLProvider<E extends Entity, C extends Condition> {
 		}
 		String sqlStr = sql.toString().replaceAll("OR ()", "");
 		if (!c.isPagination()) {
-			if(debug) {
-				LOGGER.info(sqlStr);
-			}
+			LOGGER.debug(sqlStr);
 			return sqlStr;
 		}
 		StringBuffer buffer = new StringBuffer(sqlStr);
 		buffer.append(" LIMIT ").append(c.getOffset()).append(", ").append(c.getLimit());
 		sqlStr = buffer.toString();
-		if(debug) {
-			LOGGER.info(sqlStr);
-		}
+		LOGGER.debug(sqlStr);
 		return sqlStr;
 	}
 	
@@ -91,9 +86,7 @@ public class SQLProvider<E extends Entity, C extends Condition> {
 			}
 		});
 		String sqlStr = sql.toString().replace("OR ()", "");
-		if(debug) {
-			LOGGER.info(sqlStr);
-		}
+		LOGGER.debug(sqlStr);
 		return sqlStr;
 	}
 	
@@ -141,9 +134,7 @@ public class SQLProvider<E extends Entity, C extends Condition> {
 			}
 		}
 		String sqlStr = sql.toString();
-		if(debug) {
-			LOGGER.info(sqlStr);
-		}
+		LOGGER.debug(sqlStr);
 		return sqlStr;
 	}
 	
@@ -162,9 +153,7 @@ public class SQLProvider<E extends Entity, C extends Condition> {
 			sql.VALUES(column, String.format("#{%s}", columnFieldMap.get(column)));
 		}
 		String sqlStr = sql.toString();
-		if(debug) {
-			LOGGER.info(sqlStr);
-		}
+		LOGGER.debug(sqlStr);
 		return sqlStr;
 	}
 	
@@ -214,9 +203,7 @@ public class SQLProvider<E extends Entity, C extends Condition> {
 		}
 		sql.WHERE(String.format("%s = #{%s}", primaryKey, columnFieldMap.get(primaryKey)));
 		String sqlStr = sql.toString();
-		if(debug) {
-			LOGGER.info(sqlStr);
-		}
+		LOGGER.debug(sqlStr);
 		return sqlStr;
 	}
 
@@ -250,9 +237,7 @@ public class SQLProvider<E extends Entity, C extends Condition> {
 			sql.OR();
 		});
 		String sqlStr = sql.toString().replace("OR ()", "");
-		if(debug) {
-			LOGGER.info(sqlStr);
-		}
+		LOGGER.debug(sqlStr);
 		return sqlStr;
 	}
 	
@@ -276,9 +261,7 @@ public class SQLProvider<E extends Entity, C extends Condition> {
 			}
 		});
 		String sqlStr = sql.toString().replace("OR ()", "");
-		if(debug) {
-			LOGGER.info(sqlStr);
-		}
+		LOGGER.debug(sqlStr);
 		return sqlStr;
 	}
 	

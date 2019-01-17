@@ -26,16 +26,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
 
         <!-- 基于DUBBO的分布式服务
@@ -57,14 +47,14 @@
         -->
 
         <!-- 基于Spring Cloud 的分布式服务 -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.xiaoye.iworks</groupId>
             <artifactId>iworks-core-utils</artifactId>
@@ -72,7 +62,7 @@
         </dependency>
     </dependencies>
 
-    <dependencyManagement>
+    <!--<dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -82,5 +72,5 @@
                 <scope>import</scope>
             </dependency>
         </dependencies>
-    </dependencyManagement>
+    </dependencyManagement>-->
 </project>
