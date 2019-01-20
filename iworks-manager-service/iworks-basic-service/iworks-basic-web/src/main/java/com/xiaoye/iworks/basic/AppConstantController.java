@@ -31,6 +31,10 @@ public class AppConstantController extends BasicController {
     @RequestMapping(value = "list")
     public Response list(@Valid AppConstantListQueryRequest request) {
         AppConstantQueryInput queryInput = new AppConstantQueryInput();
+        queryInput.setConstantKey(request.getConstant_key());
+        queryInput.setConstantValue(request.getConstant_value());
+        queryInput.setConstantDesc(request.getConstant_desc());
+        queryInput.setState(request.getState());
         return appConstantService.listAppConstant(queryInput);
     }
 
@@ -38,6 +42,8 @@ public class AppConstantController extends BasicController {
     @RequestMapping(value = "find")
     public Response find(@Valid AppConstantFindQueryRequest request) {
         AppConstantQueryInput queryInput = new AppConstantQueryInput();
+        queryInput.setPkid(request.getPkid());
+        queryInput.setConstantKey(request.getConstant_key());
         return appConstantService.findAppConstant(queryInput);
     }
 
@@ -45,6 +51,10 @@ public class AppConstantController extends BasicController {
     @RequestMapping(value = "insert")
     public Response insert(@Valid AppConstantUpdateRequest request) {
         AppConstantDto dto = new AppConstantDto();
+        dto.setConstantKey(request.getConstant_key());
+        dto.setConstantValue(request.getConstant_value());
+        dto.setConstantDesc(request.getConstant_desc());
+        dto.setState(request.getState());
         return appConstantService.insertAppConstant(dto);
     }
 
@@ -52,6 +62,11 @@ public class AppConstantController extends BasicController {
     @RequestMapping(value = "update")
     public Response update(@Valid AppConstantUpdateRequest request) {
         AppConstantDto dto = new AppConstantDto();
+        dto.setPkid(request.getPkid());
+        dto.setConstantKey(request.getConstant_key());
+        dto.setConstantValue(request.getConstant_value());
+        dto.setConstantDesc(request.getConstant_desc());
+        dto.setState(request.getState());
         return appConstantService.updateAppConstant(dto);
     }
 
@@ -59,6 +74,8 @@ public class AppConstantController extends BasicController {
     @RequestMapping(value = "delete")
     public Response delete(@Valid AppConstantListQueryRequest request) {
         AppConstantQueryInput queryInput = new AppConstantQueryInput();
+        queryInput.setPkid(request.getPkid());
+        queryInput.setPkids(request.getPkids());
         return appConstantService.deleteAppConstant(queryInput);
     }
 }

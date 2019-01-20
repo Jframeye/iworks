@@ -33,4 +33,4 @@ export const deleteDict = p => post('api/system/user/delete', {})
  * @param p
  * @returns {*}
  */
-export const getDict = p => post('api/system/user/list', {})
+export const findDict = p => post('api/system/user/list', {})

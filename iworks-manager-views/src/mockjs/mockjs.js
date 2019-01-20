@@ -4,13 +4,13 @@ import Mock from 'mockjs'
  */
 Mock.mock('api/loginByUsername', (req, res) => {
     return {
-        code: 200,
+        retcode: '0',
         data: 'token'
     }
 })
 Mock.mock('api/logout', (req, res) => {
     return {
-        code: 200,
+        retcode: '0',
         data: null
     }
 })
@@ -20,7 +20,7 @@ Mock.mock('api/logout', (req, res) => {
  */
 Mock.mock('api/system/usermenu/getUserInfo', (req, res) => {
     return {
-        code: 200,
+        retcode: '0',
         data: {
             userInfo: {
                 user_id: 1,
@@ -30,14 +30,14 @@ Mock.mock('api/system/usermenu/getUserInfo', (req, res) => {
             },
             permissions: ['system','sysuser','sysmenu', 'permission', 'dictionary', 'website', 'zlgedu']
         },
-        msg: ''
+        message: ''
     }
 })
 
 //export const listByPage = () => post('api/functions/record/listByPage', {})
 Mock.mock('api/functions/record/listByPage', (req, res) => {
     return {
-        code: 200,
+        retcode: '0',
         data: {
             total: 10,
             offset: 0,
@@ -55,7 +55,7 @@ Mock.mock('api/functions/record/listByPage', (req, res) => {
                 { title: 'aaa', author: 'yehl', state: '1', create_time: '2018-09-06 14:00:00' }
             ]
         },
-        msg: ''
+        message: ''
     }
 })
 
@@ -65,7 +65,7 @@ Mock.mock('api/functions/record/listByPage', (req, res) => {
 
 Mock.mock('api/system/user/list', (req, res) => {
     return {
-        code: 200,
+        retcode: '0',
         data: {
             total: 1,
             offset: 0,
@@ -74,13 +74,13 @@ Mock.mock('api/system/user/list', (req, res) => {
                 { id: 10, user_code: '0805014135', user_name: 'xiao08050141@126.com', nick_name: '叶宏梁', user_sex: '男', mobile:'18617049564', state: '1', create_time: '2018-09-06 14:00:00' }
             ]
         },
-        msg: ''
+        message: ''
     }
 });
 
 Mock.mock('api/system/menu/list', (req, res) => {
     return {
-        code: 200,
+        retcode: '0',
         data: {
             total: 10,
             offset: 0,
@@ -111,18 +111,18 @@ Mock.mock('api/system/menu/list', (req, res) => {
                 { id: 10, title: '用户管理', order: 10, url: 'http://localhost:8080/#', type: 1, state: '1', permission: 'system:user:view', create_time: '2018-09-06 14:00:00' }
             ]
         },
-        msg: ''
+        message: ''
     }
 })
 Mock.mock('api/system/menu/update', (req, res) => {
     return {
-        code: 200,
-        msg: ''
+        retcode: '0',
+        message: ''
     }
 })
 Mock.mock('api/system/menu/delete', (req, res) => {
     return {
-        code: 200,
-        msg: ''
+        retcode: '0',
+        message: ''
     }
 })

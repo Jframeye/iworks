@@ -6,6 +6,9 @@ import axios from 'axios'
 import router from '@/router'
 import QS from 'qs'
 import { getToken } from '@/common/store'
+import {Loading, Message} from 'element-ui'
+
+let loadinginstace; //load加载
 
 // 环境的切换
 // axios.defaults.baseURL = 'http://localhost:8080'
@@ -14,7 +17,8 @@ import { getToken } from '@/common/store'
 axios.defaults.timeout = 10000
 
 // post请求头
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 
 // 请求拦截器
 axios.interceptors.request.use(
@@ -24,6 +28,7 @@ axios.interceptors.request.use(
     // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
     const token = getToken()
     token && (config.headers.Authorization = token)
+    loadinginstace = Loading.service({fullscreen: true}) // 请求打开loading
     return config
   },
   error => {
@@ -33,7 +38,8 @@ axios.interceptors.request.use(
 // 响应拦截器
 axios.interceptors.response.use(
   response => {
-    if (response.status === 200) {
+    loadinginstace.close();  // 响应成功关闭loading
+    if (response.status === 200) { // 请求正常
       return Promise.resolve(response.data)
     } else {
       return Promise.reject(response)
@@ -106,11 +112,15 @@ export function get (url, params) {
  */
 export function post (url, params) {
   return new Promise((resolve, reject) => {
-    axios.post(url, QS.stringify(params))
-      .then(res => {
-        resolve(res.data)
+    axios.post(url, params)
+      .then(response => {
+        if(response.retcode == '0') {
+          resolve(response.data)
+        } else {
+          reject(response.message)
+        }
       }).catch(err => {
-        reject(err.data)
+        reject('请求异常，请联系开发人员')
       })
   })
 }

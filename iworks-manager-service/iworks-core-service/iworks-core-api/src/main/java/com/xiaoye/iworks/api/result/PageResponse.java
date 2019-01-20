@@ -3,6 +3,7 @@ package com.xiaoye.iworks.api.result;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,8 +16,14 @@ import java.util.List;
 public class PageResponse<T> extends Response {
     private static final long serialVersionUID = -1526467042701271359L;
 
-    private Integer offset;
-    private Integer limit;
-    private Integer total;
-    private List<T> dataList;
+    private Page<T> data = new Page<>();
+
+    @Data
+    @EqualsAndHashCode(callSuper = false)
+    public class Page<T> implements Serializable {
+        Integer offset;
+        Integer limit;
+        Integer total;
+        List<T> datas;
+    }
 }

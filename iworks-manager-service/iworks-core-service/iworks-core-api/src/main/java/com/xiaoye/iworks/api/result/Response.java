@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 功能描述: 响应结果
@@ -12,7 +13,7 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Response implements Serializable {
+public class Response<T> implements Serializable {
     private static final long serialVersionUID = -3310502415125126837L;
 
     private String retcode = "0";

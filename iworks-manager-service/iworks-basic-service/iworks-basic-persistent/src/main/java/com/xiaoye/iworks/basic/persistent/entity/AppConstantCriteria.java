@@ -226,51 +226,61 @@ public class AppConstantCriteria extends Condition {
         }
 
         public GeneratedCriteria andConstantValueEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_value` =", value, "constantValue");
             return this;
         }
 
         public GeneratedCriteria andConstantValueNotEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_value` <>", value, "constantValue");
             return this;
         }
 
         public GeneratedCriteria andConstantValueGreaterThan(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_value` >", value, "constantValue");
             return this;
         }
 
         public GeneratedCriteria andConstantValueGreaterThanOrEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_value` >=", value, "constantValue");
             return this;
         }
 
         public GeneratedCriteria andConstantValueLessThan(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_value` <", value, "constantValue");
             return this;
         }
 
         public GeneratedCriteria andConstantValueLessThanOrEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_value` <=", value, "constantValue");
             return this;
         }
 
         public GeneratedCriteria andConstantValueLike(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_value` like", String.format("%s%s%s", "%", value, "%"), "constantValue");
             return this;
         }
 
         public GeneratedCriteria andConstantValueNotLike(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_value` not like", String.format("%s%s%s", "%", value, "%"), "constantValue");
             return this;
         }
 
         public GeneratedCriteria andConstantValueIn(List<String> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
             addCriterion("`constant_value` in", values, "constantValue");
             return this;
         }
 
         public GeneratedCriteria andConstantValueNotIn(List<String> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
             addCriterion("`constant_value` not in", values, "constantValue");
             return this;
         }
@@ -298,51 +308,61 @@ public class AppConstantCriteria extends Condition {
         }
 
         public GeneratedCriteria andConstantDescEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_desc` =", value, "constantDesc");
             return this;
         }
 
         public GeneratedCriteria andConstantDescNotEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_desc` <>", value, "constantDesc");
             return this;
         }
 
         public GeneratedCriteria andConstantDescGreaterThan(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_desc` >", value, "constantDesc");
             return this;
         }
 
         public GeneratedCriteria andConstantDescGreaterThanOrEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_desc` >=", value, "constantDesc");
             return this;
         }
 
         public GeneratedCriteria andConstantDescLessThan(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_desc` <", value, "constantDesc");
             return this;
         }
 
         public GeneratedCriteria andConstantDescLessThanOrEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_desc` <=", value, "constantDesc");
             return this;
         }
 
         public GeneratedCriteria andConstantDescLike(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_desc` like", String.format("%s%s%s", "%", value, "%"), "constantDesc");
             return this;
         }
 
         public GeneratedCriteria andConstantDescNotLike(String value) {
+            if(StringUtils.isBlank(value)) return this;
             addCriterion("`constant_desc` not like", String.format("%s%s%s", "%", value, "%"), "constantDesc");
             return this;
         }
 
         public GeneratedCriteria andConstantDescIn(List<String> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
             addCriterion("`constant_desc` in", values, "constantDesc");
             return this;
         }
 
         public GeneratedCriteria andConstantDescNotIn(List<String> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
             addCriterion("`constant_desc` not in", values, "constantDesc");
             return this;
         }
@@ -370,61 +390,61 @@ public class AppConstantCriteria extends Condition {
         }
 
         public GeneratedCriteria andStateEqualTo(Integer value) {
+            if(value == null) return this;
             addCriterion("`state` =", value, "state");
             return this;
         }
 
         public GeneratedCriteria andStateNotEqualTo(Integer value) {
+            if(value == null) return this;
             addCriterion("`state` <>", value, "state");
             return this;
         }
 
         public GeneratedCriteria andStateGreaterThan(Integer value) {
+            if(value == null) return this;
             addCriterion("`state` >", value, "state");
             return this;
         }
 
         public GeneratedCriteria andStateGreaterThanOrEqualTo(Integer value) {
+            if(value == null) return this;
             addCriterion("`state` >=", value, "state");
             return this;
         }
 
         public GeneratedCriteria andStateLessThan(Integer value) {
+            if(value == null) return this;
             addCriterion("`state` <", value, "state");
             return this;
         }
 
         public GeneratedCriteria andStateLessThanOrEqualTo(Integer value) {
+            if(value == null) return this;
             addCriterion("`state` <=", value, "state");
             return this;
         }
 
-        public GeneratedCriteria andStateLike(Integer value) {
-            addCriterion("`state` like", String.format("%s%s%s", "%", value, "%"), "state");
-            return this;
-        }
-
-        public GeneratedCriteria andStateNotLike(Integer value) {
-            addCriterion("`state` not like", String.format("%s%s%s", "%", value, "%"), "state");
-            return this;
-        }
-
         public GeneratedCriteria andStateIn(List<Integer> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
             addCriterion("`state` in", values, "state");
             return this;
         }
 
         public GeneratedCriteria andStateNotIn(List<Integer> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
             addCriterion("`state` not in", values, "state");
             return this;
         }
 
         public GeneratedCriteria andStateBetween(Integer value1, Integer value2) {
+            if(value1 == null || value2 == null) return this;
             addCriterion("`state` between", value1, value2, "state");
             return this;
         }
 
         public GeneratedCriteria andStateNotBetween(Integer value1, Integer value2) {
+            if(value1 == null || value2 == null) return this;
             addCriterion("`state` not between", value1, value2, "state");
             return this;
         }
@@ -490,11 +510,13 @@ public class AppConstantCriteria extends Condition {
         }
 
         public GeneratedCriteria andLstateBetween(Integer value1, Integer value2) {
+            if(value1 == null || value2 == null) return this;
             addCriterion("`lstate` between", value1, value2, "lstate");
             return this;
         }
 
         public GeneratedCriteria andLstateNotBetween(Integer value1, Integer value2) {
+            if(value1 == null || value2 == null) return this;
             addCriterion("`lstate` not between", value1, value2, "lstate");
             return this;
         }

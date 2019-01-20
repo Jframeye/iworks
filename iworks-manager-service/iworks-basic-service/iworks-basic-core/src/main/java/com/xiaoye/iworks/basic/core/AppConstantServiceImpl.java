@@ -42,6 +42,8 @@ public class AppConstantServiceImpl implements AppConstantService {
             AppConstantCriteria criteria = new AppConstantCriteria();
             criteria.createCriteriaInternal().andLstateEqualTo(PersistentConstant.Lstate.NORMAL)
                     .andConstantKeyLike(queryInput.getConstantKey())
+                    .andConstantValueLike(queryInput.getConstantValue())
+                    .andStateEqualTo(queryInput.getState())
                     .andCreateByLike(queryInput.getCreateBy())
                     .andModifyByLike(queryInput.getModifyBy());
             criteria.setPagination(queryInput.isPagenation());
@@ -49,9 +51,9 @@ public class AppConstantServiceImpl implements AppConstantService {
             criteria.setLimit(queryInput.getLimit());
             if(queryInput.isPagenation()) {
                 Integer total = appConstantMapper.count(criteria);
-                response.setOffset(queryInput.getOffset());
-                response.setLimit(queryInput.getLimit());
-                response.setTotal(total);
+                response.getData().setOffset(queryInput.getOffset());
+                response.getData().setLimit(queryInput.getLimit());
+                response.getData().setTotal(total);
                 if(total == 0) {
                     return response;
                 }
@@ -62,7 +64,7 @@ public class AppConstantServiceImpl implements AppConstantService {
                 BeanUtils.copyProperties(entity, dto);
                 return dto;
             });
-            response.setDataList(dataList);
+            response.getData().setDatas(dataList);
         } catch (ServiceException e) {
             response.setRetcode(e.getCode());
             response.setMessage(e.getMessage());

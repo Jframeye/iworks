@@ -5,7 +5,7 @@ import Layout from '@/pages/layout/Layout'
 const recordRouter = {
   path: '/system',
   component: Layout,
-  redirect: '/system/user',
+  redirect: '/system/constant',
   name: 'system',
   meta: {
     title: '系统管理',
@@ -13,6 +13,18 @@ const recordRouter = {
     permission: 'sysuser'
   },
   children: [
+    {
+      path: 'constant',
+      component: () => import('@/views/system/constant/index.vue'),
+      name: 'constant',
+      meta: { title: '系统常量', icon: 'sub_menu', permission: 'sysuser' }
+    },
+    {
+      path: 'dictionary',
+      component: () => import('@/views/system/dictionary/index.vue'),
+      name: 'dictionary',
+      meta: { title: '字典常量', icon: 'sub_menu', permission: 'sysuser' }
+    },
     {
       path: 'user',
       component: () => import('@/views/system/user/index.vue'),
