@@ -111,7 +111,7 @@ def generate_service(table_list, package_name, file_out_put_path):
 
 
 def _generate_service_input4table(db_table, package_name, file_output_path):
-    abs_path = os.path.abspath(file_output_path)
+    abs_path = os.path.abspath(file_output_path) + '/input'
     if not os.path.exists(abs_path):
         os.makedirs(abs_path)
 
@@ -120,7 +120,7 @@ def _generate_service_input4table(db_table, package_name, file_output_path):
         entity_name = entity_name[2:]
     entity_name = convert(entity_name, '_', True)  # 实体类名称
     file_name = entity_name + 'QueryInput.java'
-    file_path = os.path.join(abs_path, '/input', file_name)
+    file_path = os.path.join(abs_path, file_name)
     file = open(file_path, 'w', encoding='utf-8')
 
     table_info = db_table.tableinfo
@@ -146,7 +146,7 @@ def _generate_service_input4table(db_table, package_name, file_output_path):
 
 
 def _generate_service_dto4table(db_table, package_name, file_output_path):
-    abs_path = os.path.abspath(file_output_path)
+    abs_path = os.path.abspath(file_output_path) + '/input'
     if not os.path.exists(abs_path):
         os.makedirs(abs_path)
 
@@ -155,7 +155,7 @@ def _generate_service_dto4table(db_table, package_name, file_output_path):
         entity_name = entity_name[2:]
     entity_name = convert(entity_name, '_', True)  # 实体类名称
     file_name = entity_name + 'Dto.java'
-    file_path = os.path.join(abs_path, '/input', file_name)
+    file_path = os.path.join(abs_path, file_name)
     file = open(file_path, 'w', encoding='utf-8')
 
     table_info = db_table.tableinfo

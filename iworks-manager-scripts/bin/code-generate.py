@@ -64,4 +64,4 @@ if __name__ == '__main__':
     generate_entity(db_table_list, arg_list['package_name'], arg_list['file_output_path'])
     generate_mapper(db_table_list, arg_list['package_name'], arg_list['file_output_path'])
     generate_service(db_table_list, arg_list['package_name'], arg_list['file_output_path'])
-    generate_controller(db_table_list, arg_list['package_name'], arg_list['file_output_path'])
+    # generate_controller(db_table_list, arg_list['package_name'], arg_list['file_output_path'])
