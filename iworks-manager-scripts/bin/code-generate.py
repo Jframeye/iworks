@@ -12,6 +12,7 @@ from app.code_generate.table2sql import generate_sql
 from app.code_generate.table2entity import generate_entity
 from app.code_generate.table2mybatis import generate_mapper
 from app.code_generate.table2service import generate_service
+from app.code_generate.table2controller import generate_controller
 
 
 def usage():
@@ -54,7 +55,7 @@ def get_args():
 
 if __name__ == '__main__':
     # arg_list = get_args()
-    arg_list = {'package_name': 'com.xiaoye.iworks', 'file_input_path': '../input/test.xlsx',
+    arg_list = {'package_name': 'com.xiaoye.iworks.basic', 'file_input_path': '../input/test.xlsx',
                 'file_output_path': '../output/code-generate-output'}
     db_table_list = app.code_generate.code_generate_excel_parse.parse(arg_list['file_input_path'])
 
@@ -64,4 +65,4 @@ if __name__ == '__main__':
     generate_entity(db_table_list, arg_list['package_name'], arg_list['file_output_path'])
     generate_mapper(db_table_list, arg_list['package_name'], arg_list['file_output_path'])
     generate_service(db_table_list, arg_list['package_name'], arg_list['file_output_path'])
-    # generate_controller(db_table_list, arg_list['package_name'], arg_list['file_output_path'])
+    generate_controller(db_table_list, arg_list['package_name'], arg_list['file_output_path'])

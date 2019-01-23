@@ -1,4 +1,4 @@
-package com.xiaoye.iworks.persistent.entity;
+package com.xiaoye.iworks.basic.persistent.entity;
 import com.google.common.collect.Lists;
 import com.xiaoye.iworks.persistent.entity.Condition;
 import com.xiaoye.iworks.persistent.entity.Entity;
@@ -8,16 +8,16 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 功能描述: 实体类查询条件【系统常量信息】
+ * 功能描述: 实体类查询条件【字典分类】
  * @auther: auto create by python 
- * @date: 2019-01-10 13:34:22 
+ * @date: 2019-01-22 09:56:47 
  */
-public class TableNameCriteria extends Condition {
+public class DictConstantCriteria extends Condition {
     @Override
     public Class<? extends Entity> geEntityClass() {
-        return TableNameDO.class;
+        return DictConstantDO.class;
     }
-    public TableNameCriteria() {
+    public DictConstantCriteria() {
         criterias = Lists.newArrayList();
     }
     public void or(GeneratedCriteria GeneratedCriteria) {
@@ -98,148 +98,148 @@ public class TableNameCriteria extends Condition {
             addCriterion("`pkid` not between", value1, value2, "pkid");
             return this;
         }
-        public GeneratedCriteria andColumn1IsNull() {
-            addCriterion("`column_1` is null");
+        public GeneratedCriteria andDictNameIsNull() {
+            addCriterion("`dict_name` is null");
             return this;
         }
-        public GeneratedCriteria andColumn1IsNotNull() {
-            addCriterion("`column_1` is not null");
+        public GeneratedCriteria andDictNameIsNotNull() {
+            addCriterion("`dict_name` is not null");
             return this;
         }
-        public GeneratedCriteria andColumn1EqualTo(String value) {
+        public GeneratedCriteria andDictNameEqualTo(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`column_1` =", value, "column1");
+            addCriterion("`dict_name` =", value, "dictName");
             return this;
         }
-        public GeneratedCriteria andColumn1NotEqualTo(String value) {
+        public GeneratedCriteria andDictNameNotEqualTo(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`column_1` <>", value, "column1");
+            addCriterion("`dict_name` <>", value, "dictName");
             return this;
         }
-        public GeneratedCriteria andColumn1Like(String value) {
+        public GeneratedCriteria andDictNameLike(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`column_1` like", String.format("%s%s%s", "%", value, "%"), "column1");
+            addCriterion("`dict_name` like", String.format("%s%s%s", "%", value, "%"), "dictName");
             return this;
         }
-        public GeneratedCriteria andColumn1NotLike(String value) {
+        public GeneratedCriteria andDictNameNotLike(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`column_1` not like", String.format("%s%s%s", "%", value, "%"), "column1");
+            addCriterion("`dict_name` not like", String.format("%s%s%s", "%", value, "%"), "dictName");
             return this;
         }
-        public GeneratedCriteria andColumn1In(List<String> values) {
+        public GeneratedCriteria andDictNameIn(List<String> values) {
             if(CollectionUtils.isEmpty(values)) return this;
-            addCriterion("`column_1` in", values, "column1");
+            addCriterion("`dict_name` in", values, "dictName");
             return this;
         }
-        public GeneratedCriteria andColumn1NotIn(List<String> values) {
+        public GeneratedCriteria andDictNameNotIn(List<String> values) {
             if(CollectionUtils.isEmpty(values)) return this;
-            addCriterion("`column_1` not in", values, "column1");
+            addCriterion("`dict_name` not in", values, "dictName");
             return this;
         }
-        public GeneratedCriteria andColumn1Between(String value1, String value2) {
+        public GeneratedCriteria andDictNameBetween(String value1, String value2) {
             if(StringUtils.hasBlankString(value1, value2)) return this;
-            addCriterion("`column_1` between", value1, value2, "column1");
+            addCriterion("`dict_name` between", value1, value2, "dictName");
             return this;
         }
-        public GeneratedCriteria andColumn1NotBetween(String value1, String value2) {
+        public GeneratedCriteria andDictNameNotBetween(String value1, String value2) {
             if(StringUtils.hasBlankString(value1, value2)) return this;
-            addCriterion("`column_1` not between", value1, value2, "column1");
+            addCriterion("`dict_name` not between", value1, value2, "dictName");
             return this;
         }
-        public GeneratedCriteria andColumn2IsNull() {
-            addCriterion("`column_2` is null");
+        public GeneratedCriteria andDictCodeIsNull() {
+            addCriterion("`dict_code` is null");
             return this;
         }
-        public GeneratedCriteria andColumn2IsNotNull() {
-            addCriterion("`column_2` is not null");
+        public GeneratedCriteria andDictCodeIsNotNull() {
+            addCriterion("`dict_code` is not null");
             return this;
         }
-        public GeneratedCriteria andColumn2EqualTo(String value) {
+        public GeneratedCriteria andDictCodeEqualTo(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`column_2` =", value, "column2");
+            addCriterion("`dict_code` =", value, "dictCode");
             return this;
         }
-        public GeneratedCriteria andColumn2NotEqualTo(String value) {
+        public GeneratedCriteria andDictCodeNotEqualTo(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`column_2` <>", value, "column2");
+            addCriterion("`dict_code` <>", value, "dictCode");
             return this;
         }
-        public GeneratedCriteria andColumn2Like(String value) {
+        public GeneratedCriteria andDictCodeLike(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`column_2` like", String.format("%s%s%s", "%", value, "%"), "column2");
+            addCriterion("`dict_code` like", String.format("%s%s%s", "%", value, "%"), "dictCode");
             return this;
         }
-        public GeneratedCriteria andColumn2NotLike(String value) {
+        public GeneratedCriteria andDictCodeNotLike(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`column_2` not like", String.format("%s%s%s", "%", value, "%"), "column2");
+            addCriterion("`dict_code` not like", String.format("%s%s%s", "%", value, "%"), "dictCode");
             return this;
         }
-        public GeneratedCriteria andColumn2In(List<String> values) {
+        public GeneratedCriteria andDictCodeIn(List<String> values) {
             if(CollectionUtils.isEmpty(values)) return this;
-            addCriterion("`column_2` in", values, "column2");
+            addCriterion("`dict_code` in", values, "dictCode");
             return this;
         }
-        public GeneratedCriteria andColumn2NotIn(List<String> values) {
+        public GeneratedCriteria andDictCodeNotIn(List<String> values) {
             if(CollectionUtils.isEmpty(values)) return this;
-            addCriterion("`column_2` not in", values, "column2");
+            addCriterion("`dict_code` not in", values, "dictCode");
             return this;
         }
-        public GeneratedCriteria andColumn2Between(String value1, String value2) {
+        public GeneratedCriteria andDictCodeBetween(String value1, String value2) {
             if(StringUtils.hasBlankString(value1, value2)) return this;
-            addCriterion("`column_2` between", value1, value2, "column2");
+            addCriterion("`dict_code` between", value1, value2, "dictCode");
             return this;
         }
-        public GeneratedCriteria andColumn2NotBetween(String value1, String value2) {
+        public GeneratedCriteria andDictCodeNotBetween(String value1, String value2) {
             if(StringUtils.hasBlankString(value1, value2)) return this;
-            addCriterion("`column_2` not between", value1, value2, "column2");
+            addCriterion("`dict_code` not between", value1, value2, "dictCode");
             return this;
         }
-        public GeneratedCriteria andColumn3IsNull() {
-            addCriterion("`column_3` is null");
+        public GeneratedCriteria andDictDescIsNull() {
+            addCriterion("`dict_desc` is null");
             return this;
         }
-        public GeneratedCriteria andColumn3IsNotNull() {
-            addCriterion("`column_3` is not null");
+        public GeneratedCriteria andDictDescIsNotNull() {
+            addCriterion("`dict_desc` is not null");
             return this;
         }
-        public GeneratedCriteria andColumn3EqualTo(String value) {
+        public GeneratedCriteria andDictDescEqualTo(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`column_3` =", value, "column3");
+            addCriterion("`dict_desc` =", value, "dictDesc");
             return this;
         }
-        public GeneratedCriteria andColumn3NotEqualTo(String value) {
+        public GeneratedCriteria andDictDescNotEqualTo(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`column_3` <>", value, "column3");
+            addCriterion("`dict_desc` <>", value, "dictDesc");
             return this;
         }
-        public GeneratedCriteria andColumn3Like(String value) {
+        public GeneratedCriteria andDictDescLike(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`column_3` like", String.format("%s%s%s", "%", value, "%"), "column3");
+            addCriterion("`dict_desc` like", String.format("%s%s%s", "%", value, "%"), "dictDesc");
             return this;
         }
-        public GeneratedCriteria andColumn3NotLike(String value) {
+        public GeneratedCriteria andDictDescNotLike(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`column_3` not like", String.format("%s%s%s", "%", value, "%"), "column3");
+            addCriterion("`dict_desc` not like", String.format("%s%s%s", "%", value, "%"), "dictDesc");
             return this;
         }
-        public GeneratedCriteria andColumn3In(List<String> values) {
+        public GeneratedCriteria andDictDescIn(List<String> values) {
             if(CollectionUtils.isEmpty(values)) return this;
-            addCriterion("`column_3` in", values, "column3");
+            addCriterion("`dict_desc` in", values, "dictDesc");
             return this;
         }
-        public GeneratedCriteria andColumn3NotIn(List<String> values) {
+        public GeneratedCriteria andDictDescNotIn(List<String> values) {
             if(CollectionUtils.isEmpty(values)) return this;
-            addCriterion("`column_3` not in", values, "column3");
+            addCriterion("`dict_desc` not in", values, "dictDesc");
             return this;
         }
-        public GeneratedCriteria andColumn3Between(String value1, String value2) {
+        public GeneratedCriteria andDictDescBetween(String value1, String value2) {
             if(StringUtils.hasBlankString(value1, value2)) return this;
-            addCriterion("`column_3` between", value1, value2, "column3");
+            addCriterion("`dict_desc` between", value1, value2, "dictDesc");
             return this;
         }
-        public GeneratedCriteria andColumn3NotBetween(String value1, String value2) {
+        public GeneratedCriteria andDictDescNotBetween(String value1, String value2) {
             if(StringUtils.hasBlankString(value1, value2)) return this;
-            addCriterion("`column_3` not between", value1, value2, "column3");
+            addCriterion("`dict_desc` not between", value1, value2, "dictDesc");
             return this;
         }
         public GeneratedCriteria andSignIsNull() {
@@ -406,6 +406,54 @@ public class TableNameCriteria extends Condition {
             addCriterion("`lstate` not between", value1, value2, "lstate");
             return this;
         }
+        public GeneratedCriteria andCreateByIsNull() {
+            addCriterion("`create_by` is null");
+            return this;
+        }
+        public GeneratedCriteria andCreateByIsNotNull() {
+            addCriterion("`create_by` is not null");
+            return this;
+        }
+        public GeneratedCriteria andCreateByEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`create_by` =", value, "createBy");
+            return this;
+        }
+        public GeneratedCriteria andCreateByNotEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`create_by` <>", value, "createBy");
+            return this;
+        }
+        public GeneratedCriteria andCreateByLike(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`create_by` like", String.format("%s%s%s", "%", value, "%"), "createBy");
+            return this;
+        }
+        public GeneratedCriteria andCreateByNotLike(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`create_by` not like", String.format("%s%s%s", "%", value, "%"), "createBy");
+            return this;
+        }
+        public GeneratedCriteria andCreateByIn(List<String> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
+            addCriterion("`create_by` in", values, "createBy");
+            return this;
+        }
+        public GeneratedCriteria andCreateByNotIn(List<String> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
+            addCriterion("`create_by` not in", values, "createBy");
+            return this;
+        }
+        public GeneratedCriteria andCreateByBetween(String value1, String value2) {
+            if(StringUtils.hasBlankString(value1, value2)) return this;
+            addCriterion("`create_by` between", value1, value2, "createBy");
+            return this;
+        }
+        public GeneratedCriteria andCreateByNotBetween(String value1, String value2) {
+            if(StringUtils.hasBlankString(value1, value2)) return this;
+            addCriterion("`create_by` not between", value1, value2, "createBy");
+            return this;
+        }
         public GeneratedCriteria andCreateTimeIsNull() {
             addCriterion("`create_time` is null");
             return this;
@@ -462,6 +510,54 @@ public class TableNameCriteria extends Condition {
         public GeneratedCriteria andCreateTimeNotBetween(Date value1, Date value2) {
             if(value1 == null || value2 == null) return this;
             addCriterion("`create_time` not between", value1, value2, "createTime");
+            return this;
+        }
+        public GeneratedCriteria andModifyByIsNull() {
+            addCriterion("`modify_by` is null");
+            return this;
+        }
+        public GeneratedCriteria andModifyByIsNotNull() {
+            addCriterion("`modify_by` is not null");
+            return this;
+        }
+        public GeneratedCriteria andModifyByEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`modify_by` =", value, "modifyBy");
+            return this;
+        }
+        public GeneratedCriteria andModifyByNotEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`modify_by` <>", value, "modifyBy");
+            return this;
+        }
+        public GeneratedCriteria andModifyByLike(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`modify_by` like", String.format("%s%s%s", "%", value, "%"), "modifyBy");
+            return this;
+        }
+        public GeneratedCriteria andModifyByNotLike(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`modify_by` not like", String.format("%s%s%s", "%", value, "%"), "modifyBy");
+            return this;
+        }
+        public GeneratedCriteria andModifyByIn(List<String> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
+            addCriterion("`modify_by` in", values, "modifyBy");
+            return this;
+        }
+        public GeneratedCriteria andModifyByNotIn(List<String> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
+            addCriterion("`modify_by` not in", values, "modifyBy");
+            return this;
+        }
+        public GeneratedCriteria andModifyByBetween(String value1, String value2) {
+            if(StringUtils.hasBlankString(value1, value2)) return this;
+            addCriterion("`modify_by` between", value1, value2, "modifyBy");
+            return this;
+        }
+        public GeneratedCriteria andModifyByNotBetween(String value1, String value2) {
+            if(StringUtils.hasBlankString(value1, value2)) return this;
+            addCriterion("`modify_by` not between", value1, value2, "modifyBy");
             return this;
         }
         public GeneratedCriteria andModifyTimeIsNull() {

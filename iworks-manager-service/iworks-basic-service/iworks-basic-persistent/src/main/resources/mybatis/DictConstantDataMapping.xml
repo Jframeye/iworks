@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xiaoye.iworks.basic.persistent.mapper.AppConstantMapper">
+<mapper namespace="com.xiaoye.iworks.basic.persistent.mapper.DictConstantDataMapper">
 
-	<resultMap id="BasicResultMap" type="com.xiaoye.iworks.basic.persistent.entity.AppConstantDO">
+	<resultMap id="BasicResultMap" type="com.xiaoye.iworks.basic.persistent.entity.DictConstantDataDO">
 	    <id column="pkid" jdbcType="BIGINT" property="pkid" />
-	    <result column="constant_key" jdbcType="VARCHAR" property="constantKey" />
-	    <result column="constant_value" jdbcType="VARCHAR" property="constantValue" />
-	    <result column="constant_desc" jdbcType="VARCHAR" property="constantDesc" />
+	    <result column="dict_code" jdbcType="VARCHAR" property="dictCode" />
+	    <result column="dict_key" jdbcType="VARCHAR" property="dictKey" />
+	    <result column="dict_value" jdbcType="VARCHAR" property="dictValue" />
+	    <result column="dict_order" jdbcType="SMALLINT" property="dictOrder" />
+	    <result column="dict_desc" jdbcType="VARCHAR" property="dictDesc" />
 	    <result column="sign" jdbcType="VARCHAR" property="sign" />
 	    <result column="state" jdbcType="SMALLINT" property="state" />
 	    <result column="lstate" jdbcType="SMALLINT" property="lstate" />
@@ -48,22 +50,22 @@
 	</sql>
 
 	<sql id="Basic_Columns">
-		`pkid`,`constant_key`,`constant_value`,`constant_desc`,`sign`,`state`,`lstate`,`create_by`,`create_time`,`modify_by`,`modify_time`
+		`pkid`,`dict_code`,`dict_key`,`dict_value`,`dict_order`,`dict_desc`,`sign`,`state`,`lstate`,`create_by`,`create_time`,`modify_by`,`modify_time`
 	</sql>
 
 	<sql id="Database_Table_Choose">
 		<choose>
 			<when test="dbIndex == null and tbIndex == null">
-				`basic`.`t_app_constant`
+				`basic`.`t_dict_constant_data`
 			</when>
 			<when test="dbIndex != null and tbIndex == null">
-				`basic_#{dbIndex}`.`t_app_constant`
+				`basic_#{dbIndex}`.`t_dict_constant_data`
 			</when>
 			<when test="dbIndex != null and tbIndex != null">
-				`basic_#{dbIndex}`.`t_app_constant_#{tbIndex}`
+				`basic_#{dbIndex}`.`t_dict_constant_data_#{tbIndex}`
 			</when>
 			<when test="dbIndex == null and tbIndex != null">
-				`basic`.`t_app_constant_#{tbIndex}`
+				`basic`.`t_dict_constant_data_#{tbIndex}`
 			</when>
 		</choose>
 	</sql>

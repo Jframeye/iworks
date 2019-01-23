@@ -66,8 +66,7 @@ def generate_mapper(table_list, package_name, file_out_put_path):
         _generate_mapping4table(db_table, package_name, mapping_out_put_path)
         table_size += 1
 
-    print('generate %d table mapper to %s' % (table_size, os.path.abspath(mapper_out_put_path)))
-    print('generate %d table mapping to %s' % (table_size, os.path.abspath(mapping_out_put_path)))
+    print('generate %d mybatis to %s' % (table_size, os.path.abspath(mapper_out_put_path)))
 
 
 def _generate_mapper4table(db_table, package_name, file_output_path):
@@ -166,6 +165,8 @@ def _generate_mapping4table(db_table, package_name, file_output_path):
 
     for table_column in table_columns:
         data_type = get_key(DB_COLUMN_DATA_TYPE_MAP, table_column.datatype)
+        if data_type == 'datetime':
+            data_type = 'TIMESTAMP'
         java_name = convert(table_column.columnname, '_')
         if table_column.primary:
             file.write('	    <id column="%s" jdbcType="%s" property="%s" />\n' % (

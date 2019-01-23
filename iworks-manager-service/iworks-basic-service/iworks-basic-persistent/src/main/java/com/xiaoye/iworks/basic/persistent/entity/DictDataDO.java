@@ -9,26 +9,30 @@ import lombok.EqualsAndHashCode;
 import java.util.Date;
 
 /**
- * 功能描述: 实体类【系统常量数据】
+ * 功能描述: 实体类【字典分类数据】
  * @auther: auto create by python 
  * @date: 2019-01-21 12:55:16 
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "t_app_constant", database = "basic")
-public class AppConstantDO extends Entity {
+@Table(name = "t_dict_data", database = "clearworld")
+public class DictDataDO extends Entity {
 	private static final long serialVersionUID = 1L;
 
 	@Key(name = "pkid", comments = "自增主键[auto_increment]")
     private Long pkid;
-	@Column(name = "constant_key", comments = "常量编码")
-    private String constantKey;
-	@Column(name = "constant_value", comments = "常量值")
-    private String constantValue;
-	@Column(name = "constant_desc", comments = "常量说明")
-    private String constantDesc;
-	@Column(name = "sign", comments = "数据签名")
-    private String sign;
+	@Column(name = "dict_code", comments = "字典编码")
+    private String dictCode;
+	@Column(name = "dict_key", comments = "字典标签")
+    private String dictKey;
+	@Column(name = "dict_value", comments = "字典键值")
+    private String dictValue;
+	@Column(name = "dict_order", comments = "字典排序")
+    private Integer dictOrder;
+	@Column(name = "dict_desc", comments = "字典描述")
+    private String dictDesc;
+	@Column(name = "Fsign", comments = "数据签名")
+    private String fsign;
 	@Column(name = "state", comments = "状态[1-可用；2-禁用]")
     private Integer state;
 	@Column(name = "lstate", comments = "逻辑状态[1-正常；2-删除]")

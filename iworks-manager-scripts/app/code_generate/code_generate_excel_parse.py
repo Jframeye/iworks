@@ -99,15 +99,15 @@ def _get_table_info(sheet, row, col):
         cell_value = cell_value.strip()
         if _is_item_flag(cell_value):
             break
-        if cell_value == u"表名":
+        if cell_value.endswith(u"表名"):
             db_table_name = sheet.cell(current_row, col + 1).value
             # 解析数据库名称和表名称
             table_info = _parse_db_table_name(db_table_name)
             db_name = table_info[0]
             table_name = table_info[1]
-        elif cell_value == u"描述":
+        elif cell_value.endswith(u"描述"):
             table_desc = sheet.cell(current_row, col + 1).value
-        elif cell_value == u"创建":
+        elif cell_value.endswith(u"创建"):
             auto_create = sheet.cell(current_row, col + 1).value
         current_row += 1
 
@@ -146,15 +146,15 @@ def _get_table_indexs(sheet, row, col):
         if _is_item_flag(cell_value):
             break
 
-        if cell_value == u"主键":
+        if cell_value.endswith(u"主键"):
             if parse_primary_key:
                 print('table primary key must be one row')
                 raise TypeError('主键栏只能一行，多个主键使用英文逗号相连')
             table_index = _parse_table_index(sheet, 1, current_row, col + 1)
             parse_primary_key = True
-        elif cell_value == u"唯一索引":
+        elif cell_value.endswith(u"唯一索引"):
             table_index = _parse_table_index(sheet, 2, current_row, col + 1)
-        elif cell_value == u"索引":
+        elif cell_value.endswith(u"索引"):
             table_index = _parse_table_index(sheet, 3, current_row, col + 1)
         else:
             table_index = None

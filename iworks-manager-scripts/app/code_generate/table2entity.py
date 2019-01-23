@@ -66,7 +66,6 @@ def generate_entity(table_list, package_name, file_out_put_path):
         table_size += 1
 
     print('generate %d table entity to %s' % (table_size, os.path.abspath(file_out_put_path)))
-    print('generate %d table criteria to %s' % (table_size, os.path.abspath(file_out_put_path)))
 
 
 def _generate_entity4table(db_table, package_name, file_output_path):
@@ -91,6 +90,7 @@ def _generate_entity4table(db_table, package_name, file_output_path):
     file.write('import com.xiaoye.iworks.persistent.annotation.Column;\n')
     file.write('import com.xiaoye.iworks.persistent.annotation.Key;\n')
     file.write('import com.xiaoye.iworks.persistent.annotation.Table;\n')
+    file.write('import com.xiaoye.iworks.persistent.entity.Entity;\n')
     file.write('import lombok.Data;\n')
     file.write('import lombok.EqualsAndHashCode;\n')
     if table_info.hasdecimal:

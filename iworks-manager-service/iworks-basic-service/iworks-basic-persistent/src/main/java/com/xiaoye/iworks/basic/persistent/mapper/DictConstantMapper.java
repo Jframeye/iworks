@@ -1,34 +1,34 @@
 package com.xiaoye.iworks.basic.persistent.mapper;
-import com.xiaoye.iworks.basic.persistent.entity.AppConstantDO;
-import com.xiaoye.iworks.basic.persistent.entity.AppConstantCriteria;
+import com.xiaoye.iworks.basic.persistent.entity.DictConstantDO;
+import com.xiaoye.iworks.basic.persistent.entity.DictConstantCriteria;
 import com.xiaoye.iworks.persistent.provider.SQLProvider;
 import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 /**
- * 功能描述: 实体类数据库接口【系统常量数据】
+ * 功能描述: 实体类数据库接口【字典分类】
  * @auther: auto create by python 
- * @date: 2019-01-21 12:55:16 
+ * @date: 2019-01-22 09:56:47 
  */
 @Mapper
-public interface AppConstantMapper {
+public interface DictConstantMapper {
     @InsertProvider(method = "insert", type = SQLProvider.class)
-    public int insert(AppConstantDO entity);
+    public int insert(DictConstantDO entity);
     @InsertProvider(method = "insertSelective", type = SQLProvider.class)
-    public int insertSelective(AppConstantDO entity);
+    public int insertSelective(DictConstantDO entity);
     @UpdateProvider(method = "update", type = SQLProvider.class)
-    public int update(AppConstantDO entity);
+    public int update(DictConstantDO entity);
     @UpdateProvider(method = "updateSelective", type = SQLProvider.class)
-    public int updateSelective(AppConstantDO entity);
+    public int updateSelective(DictConstantDO entity);
     @DeleteProvider(method = "deleteByCriteria", type = SQLProvider.class)
-    public int delete(AppConstantCriteria criteria);
+    public int delete(DictConstantCriteria criteria);
     @SelectProvider(method = "selectByCriteria", type = SQLProvider.class)
     @ResultMap("BasicResultMap")
-    public AppConstantDO selectForOne(AppConstantCriteria criteria);
+    public DictConstantDO selectForOne(DictConstantCriteria criteria);
     @SelectProvider(method = "selectByCriteria", type = SQLProvider.class)
     @ResultMap("BasicResultMap")
-    public List<AppConstantDO> selectForList(AppConstantCriteria criteria);
+    public List<DictConstantDO> selectForList(DictConstantCriteria criteria);
     @SelectProvider(method = "countByCriteria", type = SQLProvider.class)
     @ResultMap("BasicResultMap")
-    public int count(AppConstantCriteria criteria);
+    public int count(DictConstantCriteria criteria);
 }

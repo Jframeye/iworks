@@ -8,16 +8,16 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 功能描述: 实体类查询条件【系统常量数据】
+ * 功能描述: 实体类查询条件【字典分类数据】
  * @auther: auto create by python 
- * @date: 2019-01-21 12:55:16 
+ * @date: 2019-01-22 11:11:24 
  */
-public class AppConstantCriteria extends Condition {
+public class DictConstantDataCriteria extends Condition {
     @Override
     public Class<? extends Entity> geEntityClass() {
-        return AppConstantDO.class;
+        return DictConstantDataDO.class;
     }
-    public AppConstantCriteria() {
+    public DictConstantDataCriteria() {
         criterias = Lists.newArrayList();
     }
     public void or(GeneratedCriteria GeneratedCriteria) {
@@ -98,148 +98,254 @@ public class AppConstantCriteria extends Condition {
             addCriterion("`pkid` not between", value1, value2, "pkid");
             return this;
         }
-        public GeneratedCriteria andConstantKeyIsNull() {
-            addCriterion("`constant_key` is null");
+        public GeneratedCriteria andDictCodeIsNull() {
+            addCriterion("`dict_code` is null");
             return this;
         }
-        public GeneratedCriteria andConstantKeyIsNotNull() {
-            addCriterion("`constant_key` is not null");
+        public GeneratedCriteria andDictCodeIsNotNull() {
+            addCriterion("`dict_code` is not null");
             return this;
         }
-        public GeneratedCriteria andConstantKeyEqualTo(String value) {
+        public GeneratedCriteria andDictCodeEqualTo(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`constant_key` =", value, "constantKey");
+            addCriterion("`dict_code` =", value, "dictCode");
             return this;
         }
-        public GeneratedCriteria andConstantKeyNotEqualTo(String value) {
+        public GeneratedCriteria andDictCodeNotEqualTo(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`constant_key` <>", value, "constantKey");
+            addCriterion("`dict_code` <>", value, "dictCode");
             return this;
         }
-        public GeneratedCriteria andConstantKeyLike(String value) {
+        public GeneratedCriteria andDictCodeLike(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`constant_key` like", String.format("%s%s%s", "%", value, "%"), "constantKey");
+            addCriterion("`dict_code` like", String.format("%s%s%s", "%", value, "%"), "dictCode");
             return this;
         }
-        public GeneratedCriteria andConstantKeyNotLike(String value) {
+        public GeneratedCriteria andDictCodeNotLike(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`constant_key` not like", String.format("%s%s%s", "%", value, "%"), "constantKey");
+            addCriterion("`dict_code` not like", String.format("%s%s%s", "%", value, "%"), "dictCode");
             return this;
         }
-        public GeneratedCriteria andConstantKeyIn(List<String> values) {
+        public GeneratedCriteria andDictCodeIn(List<String> values) {
             if(CollectionUtils.isEmpty(values)) return this;
-            addCriterion("`constant_key` in", values, "constantKey");
+            addCriterion("`dict_code` in", values, "dictCode");
             return this;
         }
-        public GeneratedCriteria andConstantKeyNotIn(List<String> values) {
+        public GeneratedCriteria andDictCodeNotIn(List<String> values) {
             if(CollectionUtils.isEmpty(values)) return this;
-            addCriterion("`constant_key` not in", values, "constantKey");
+            addCriterion("`dict_code` not in", values, "dictCode");
             return this;
         }
-        public GeneratedCriteria andConstantKeyBetween(String value1, String value2) {
+        public GeneratedCriteria andDictCodeBetween(String value1, String value2) {
             if(StringUtils.hasBlankString(value1, value2)) return this;
-            addCriterion("`constant_key` between", value1, value2, "constantKey");
+            addCriterion("`dict_code` between", value1, value2, "dictCode");
             return this;
         }
-        public GeneratedCriteria andConstantKeyNotBetween(String value1, String value2) {
+        public GeneratedCriteria andDictCodeNotBetween(String value1, String value2) {
             if(StringUtils.hasBlankString(value1, value2)) return this;
-            addCriterion("`constant_key` not between", value1, value2, "constantKey");
+            addCriterion("`dict_code` not between", value1, value2, "dictCode");
             return this;
         }
-        public GeneratedCriteria andConstantValueIsNull() {
-            addCriterion("`constant_value` is null");
+        public GeneratedCriteria andDictKeyIsNull() {
+            addCriterion("`dict_key` is null");
             return this;
         }
-        public GeneratedCriteria andConstantValueIsNotNull() {
-            addCriterion("`constant_value` is not null");
+        public GeneratedCriteria andDictKeyIsNotNull() {
+            addCriterion("`dict_key` is not null");
             return this;
         }
-        public GeneratedCriteria andConstantValueEqualTo(String value) {
+        public GeneratedCriteria andDictKeyEqualTo(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`constant_value` =", value, "constantValue");
+            addCriterion("`dict_key` =", value, "dictKey");
             return this;
         }
-        public GeneratedCriteria andConstantValueNotEqualTo(String value) {
+        public GeneratedCriteria andDictKeyNotEqualTo(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`constant_value` <>", value, "constantValue");
+            addCriterion("`dict_key` <>", value, "dictKey");
             return this;
         }
-        public GeneratedCriteria andConstantValueLike(String value) {
+        public GeneratedCriteria andDictKeyLike(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`constant_value` like", String.format("%s%s%s", "%", value, "%"), "constantValue");
+            addCriterion("`dict_key` like", String.format("%s%s%s", "%", value, "%"), "dictKey");
             return this;
         }
-        public GeneratedCriteria andConstantValueNotLike(String value) {
+        public GeneratedCriteria andDictKeyNotLike(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`constant_value` not like", String.format("%s%s%s", "%", value, "%"), "constantValue");
+            addCriterion("`dict_key` not like", String.format("%s%s%s", "%", value, "%"), "dictKey");
             return this;
         }
-        public GeneratedCriteria andConstantValueIn(List<String> values) {
+        public GeneratedCriteria andDictKeyIn(List<String> values) {
             if(CollectionUtils.isEmpty(values)) return this;
-            addCriterion("`constant_value` in", values, "constantValue");
+            addCriterion("`dict_key` in", values, "dictKey");
             return this;
         }
-        public GeneratedCriteria andConstantValueNotIn(List<String> values) {
+        public GeneratedCriteria andDictKeyNotIn(List<String> values) {
             if(CollectionUtils.isEmpty(values)) return this;
-            addCriterion("`constant_value` not in", values, "constantValue");
+            addCriterion("`dict_key` not in", values, "dictKey");
             return this;
         }
-        public GeneratedCriteria andConstantValueBetween(String value1, String value2) {
+        public GeneratedCriteria andDictKeyBetween(String value1, String value2) {
             if(StringUtils.hasBlankString(value1, value2)) return this;
-            addCriterion("`constant_value` between", value1, value2, "constantValue");
+            addCriterion("`dict_key` between", value1, value2, "dictKey");
             return this;
         }
-        public GeneratedCriteria andConstantValueNotBetween(String value1, String value2) {
+        public GeneratedCriteria andDictKeyNotBetween(String value1, String value2) {
             if(StringUtils.hasBlankString(value1, value2)) return this;
-            addCriterion("`constant_value` not between", value1, value2, "constantValue");
+            addCriterion("`dict_key` not between", value1, value2, "dictKey");
             return this;
         }
-        public GeneratedCriteria andConstantDescIsNull() {
-            addCriterion("`constant_desc` is null");
+        public GeneratedCriteria andDictValueIsNull() {
+            addCriterion("`dict_value` is null");
             return this;
         }
-        public GeneratedCriteria andConstantDescIsNotNull() {
-            addCriterion("`constant_desc` is not null");
+        public GeneratedCriteria andDictValueIsNotNull() {
+            addCriterion("`dict_value` is not null");
             return this;
         }
-        public GeneratedCriteria andConstantDescEqualTo(String value) {
+        public GeneratedCriteria andDictValueEqualTo(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`constant_desc` =", value, "constantDesc");
+            addCriterion("`dict_value` =", value, "dictValue");
             return this;
         }
-        public GeneratedCriteria andConstantDescNotEqualTo(String value) {
+        public GeneratedCriteria andDictValueNotEqualTo(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`constant_desc` <>", value, "constantDesc");
+            addCriterion("`dict_value` <>", value, "dictValue");
             return this;
         }
-        public GeneratedCriteria andConstantDescLike(String value) {
+        public GeneratedCriteria andDictValueLike(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`constant_desc` like", String.format("%s%s%s", "%", value, "%"), "constantDesc");
+            addCriterion("`dict_value` like", String.format("%s%s%s", "%", value, "%"), "dictValue");
             return this;
         }
-        public GeneratedCriteria andConstantDescNotLike(String value) {
+        public GeneratedCriteria andDictValueNotLike(String value) {
             if(StringUtils.isBlank(value)) return this;
-            addCriterion("`constant_desc` not like", String.format("%s%s%s", "%", value, "%"), "constantDesc");
+            addCriterion("`dict_value` not like", String.format("%s%s%s", "%", value, "%"), "dictValue");
             return this;
         }
-        public GeneratedCriteria andConstantDescIn(List<String> values) {
+        public GeneratedCriteria andDictValueIn(List<String> values) {
             if(CollectionUtils.isEmpty(values)) return this;
-            addCriterion("`constant_desc` in", values, "constantDesc");
+            addCriterion("`dict_value` in", values, "dictValue");
             return this;
         }
-        public GeneratedCriteria andConstantDescNotIn(List<String> values) {
+        public GeneratedCriteria andDictValueNotIn(List<String> values) {
             if(CollectionUtils.isEmpty(values)) return this;
-            addCriterion("`constant_desc` not in", values, "constantDesc");
+            addCriterion("`dict_value` not in", values, "dictValue");
             return this;
         }
-        public GeneratedCriteria andConstantDescBetween(String value1, String value2) {
+        public GeneratedCriteria andDictValueBetween(String value1, String value2) {
             if(StringUtils.hasBlankString(value1, value2)) return this;
-            addCriterion("`constant_desc` between", value1, value2, "constantDesc");
+            addCriterion("`dict_value` between", value1, value2, "dictValue");
             return this;
         }
-        public GeneratedCriteria andConstantDescNotBetween(String value1, String value2) {
+        public GeneratedCriteria andDictValueNotBetween(String value1, String value2) {
             if(StringUtils.hasBlankString(value1, value2)) return this;
-            addCriterion("`constant_desc` not between", value1, value2, "constantDesc");
+            addCriterion("`dict_value` not between", value1, value2, "dictValue");
+            return this;
+        }
+        public GeneratedCriteria andDictOrderIsNull() {
+            addCriterion("`dict_order` is null");
+            return this;
+        }
+        public GeneratedCriteria andDictOrderIsNotNull() {
+            addCriterion("`dict_order` is not null");
+            return this;
+        }
+        public GeneratedCriteria andDictOrderEqualTo(Integer value) {
+            if(value == null) return this;
+            addCriterion("`dict_order` =", value, "dictOrder");
+            return this;
+        }
+        public GeneratedCriteria andDictOrderNotEqualTo(Integer value) {
+            if(value == null) return this;
+            addCriterion("`dict_order` <>", value, "dictOrder");
+            return this;
+        }
+        public GeneratedCriteria andDictOrderGreaterThan(Integer value) {
+            if(value == null) return this;
+            addCriterion("`dict_order` >", value, "dictOrder");
+            return this;
+        }
+        public GeneratedCriteria andDictOrderGreaterThanOrEqualTo(Integer value) {
+            if(value == null) return this;
+            addCriterion("`dict_order` >=", value, "dictOrder");
+            return this;
+        }
+        public GeneratedCriteria andDictOrderLessThan(Integer value) {
+            if(value == null) return this;
+            addCriterion("`dict_order` <", value, "dictOrder");
+            return this;
+        }
+        public GeneratedCriteria andDictOrderLessThanOrEqualTo(Integer value) {
+            if(value == null) return this;
+            addCriterion("`dict_order` <=", value, "dictOrder");
+            return this;
+        }
+        public GeneratedCriteria andDictOrderIn(List<Integer> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
+            addCriterion("`dict_order` in", values, "dictOrder");
+            return this;
+        }
+        public GeneratedCriteria andDictOrderNotIn(List<Integer> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
+            addCriterion("`dict_order` not in", values, "dictOrder");
+            return this;
+        }
+        public GeneratedCriteria andDictOrderBetween(Integer value1, Integer value2) {
+            if(value1 == null || value2 == null) return this;
+            addCriterion("`dict_order` between", value1, value2, "dictOrder");
+            return this;
+        }
+        public GeneratedCriteria andDictOrderNotBetween(Integer value1, Integer value2) {
+            if(value1 == null || value2 == null) return this;
+            addCriterion("`dict_order` not between", value1, value2, "dictOrder");
+            return this;
+        }
+        public GeneratedCriteria andDictDescIsNull() {
+            addCriterion("`dict_desc` is null");
+            return this;
+        }
+        public GeneratedCriteria andDictDescIsNotNull() {
+            addCriterion("`dict_desc` is not null");
+            return this;
+        }
+        public GeneratedCriteria andDictDescEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`dict_desc` =", value, "dictDesc");
+            return this;
+        }
+        public GeneratedCriteria andDictDescNotEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`dict_desc` <>", value, "dictDesc");
+            return this;
+        }
+        public GeneratedCriteria andDictDescLike(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`dict_desc` like", String.format("%s%s%s", "%", value, "%"), "dictDesc");
+            return this;
+        }
+        public GeneratedCriteria andDictDescNotLike(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`dict_desc` not like", String.format("%s%s%s", "%", value, "%"), "dictDesc");
+            return this;
+        }
+        public GeneratedCriteria andDictDescIn(List<String> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
+            addCriterion("`dict_desc` in", values, "dictDesc");
+            return this;
+        }
+        public GeneratedCriteria andDictDescNotIn(List<String> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
+            addCriterion("`dict_desc` not in", values, "dictDesc");
+            return this;
+        }
+        public GeneratedCriteria andDictDescBetween(String value1, String value2) {
+            if(StringUtils.hasBlankString(value1, value2)) return this;
+            addCriterion("`dict_desc` between", value1, value2, "dictDesc");
+            return this;
+        }
+        public GeneratedCriteria andDictDescNotBetween(String value1, String value2) {
+            if(StringUtils.hasBlankString(value1, value2)) return this;
+            addCriterion("`dict_desc` not between", value1, value2, "dictDesc");
             return this;
         }
         public GeneratedCriteria andSignIsNull() {

@@ -1,19 +1,16 @@
 package com.xiaoye.iworks.basic;
 
-import com.xiaoye.iworks.basic.api.dto.AppConstantDto;
-import com.xiaoye.iworks.basic.request.AppConstantFindQueryRequest;
-import com.xiaoye.iworks.basic.request.AppConstantListQueryRequest;
-import com.xiaoye.iworks.basic.request.AppConstantUpdateRequest;
-import com.xiaoye.iworks.common.api.BasicController;
 import com.xiaoye.iworks.api.result.Response;
 import com.xiaoye.iworks.basic.api.AppConstantService;
+import com.xiaoye.iworks.basic.api.dto.AppConstantDto;
 import com.xiaoye.iworks.basic.api.input.AppConstantQueryInput;
+import com.xiaoye.iworks.basic.request.AppConstantQueryRequest;
+import com.xiaoye.iworks.basic.request.AppConstantUpdateRequest;
+import com.xiaoye.iworks.common.api.BasicController;
 import com.xiaoye.iworks.common.logger.annotation.RecordLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 /**
  * 功能描述: 系统常量
@@ -29,7 +26,7 @@ public class AppConstantController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "list")
-    public Response list(@Valid AppConstantListQueryRequest request) {
+    public Response list(AppConstantQueryRequest request) {
         AppConstantQueryInput queryInput = new AppConstantQueryInput();
         queryInput.setConstantKey(request.getConstant_key());
         queryInput.setConstantValue(request.getConstant_value());
@@ -40,7 +37,7 @@ public class AppConstantController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "find")
-    public Response find(@Valid AppConstantFindQueryRequest request) {
+    public Response find(AppConstantQueryRequest request) {
         AppConstantQueryInput queryInput = new AppConstantQueryInput();
         queryInput.setPkid(request.getPkid());
         queryInput.setConstantKey(request.getConstant_key());
@@ -48,31 +45,23 @@ public class AppConstantController extends BasicController {
     }
 
     @RecordLogger
-    @RequestMapping(value = "insert")
-    public Response insert(@Valid AppConstantUpdateRequest request) {
-        AppConstantDto dto = new AppConstantDto();
-        dto.setConstantKey(request.getConstant_key());
-        dto.setConstantValue(request.getConstant_value());
-        dto.setConstantDesc(request.getConstant_desc());
-        dto.setState(request.getState());
-        return appConstantService.insertAppConstant(dto);
-    }
-
-    @RecordLogger
     @RequestMapping(value = "update")
-    public Response update(@Valid AppConstantUpdateRequest request) {
+    public Response update(AppConstantUpdateRequest request) {
         AppConstantDto dto = new AppConstantDto();
         dto.setPkid(request.getPkid());
         dto.setConstantKey(request.getConstant_key());
         dto.setConstantValue(request.getConstant_value());
         dto.setConstantDesc(request.getConstant_desc());
         dto.setState(request.getState());
+        if(dto.getPkid() == null) {
+            return appConstantService.insertAppConstant(dto);
+        }
         return appConstantService.updateAppConstant(dto);
     }
 
     @RecordLogger
     @RequestMapping(value = "delete")
-    public Response delete(@Valid AppConstantListQueryRequest request) {
+    public Response delete(AppConstantQueryRequest request) {
         AppConstantQueryInput queryInput = new AppConstantQueryInput();
         queryInput.setPkid(request.getPkid());
         queryInput.setPkids(request.getPkids());
