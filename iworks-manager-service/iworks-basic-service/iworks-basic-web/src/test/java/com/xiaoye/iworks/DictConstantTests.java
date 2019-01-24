@@ -7,6 +7,7 @@ import com.xiaoye.iworks.basic.api.DictConstantService;
 import com.xiaoye.iworks.basic.api.constant.DictConstant;
 import com.xiaoye.iworks.basic.api.dto.DictConstantDataDto;
 import com.xiaoye.iworks.basic.api.dto.DictConstantDto;
+import com.xiaoye.iworks.basic.api.input.DictConstantDataQueryInput;
 import com.xiaoye.iworks.basic.api.input.DictConstantQueryInput;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class IworksApplicationTests {
+public class DictConstantTests {
 
 	@Autowired
 	private DictConstantService service;
@@ -67,7 +68,11 @@ public class IworksApplicationTests {
 	}
 
 	@Test
-	public void listByPage() {
+	public void listData() {
+		DictConstantDataQueryInput input = new DictConstantDataQueryInput();
+		input.setDictCode("USER_SEX");
+		PageResponse<DictConstantDataDto> response = service.listDictConstantDatas(input);
+		System.out.println(JSON.toJSONString(response));
 	}
 }
 

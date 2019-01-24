@@ -3,7 +3,6 @@ package com.xiaoye.iworks.basic.core;
 import com.xiaoye.iworks.api.result.DataResponse;
 import com.xiaoye.iworks.api.result.PageResponse;
 import com.xiaoye.iworks.basic.api.DictConstantService;
-import com.xiaoye.iworks.basic.api.constant.AppConstant;
 import com.xiaoye.iworks.basic.api.constant.DictConstant;
 import com.xiaoye.iworks.basic.api.dto.DictConstantDataDto;
 import com.xiaoye.iworks.basic.api.dto.DictConstantDto;
@@ -59,10 +58,10 @@ public class DictConstantServiceImpl implements DictConstantService {
                     .andStateEqualTo(queryInput.getState())
                     .andCreateByLike(queryInput.getCreateBy())
                     .andModifyByLike(queryInput.getModifyBy());
-            criteria.setPagination(queryInput.isPagenation());
-            criteria.setOffset(queryInput.getOffset());
-            criteria.setLimit(queryInput.getLimit());
             if(queryInput.isPagenation()) {
+                criteria.setPagination(queryInput.isPagenation());
+                criteria.setOffset(queryInput.getOffset());
+                criteria.setLimit(queryInput.getLimit());
                 Integer total = dictConstantMapper.count(criteria);
                 response.getData().setOffset(queryInput.getOffset());
                 response.getData().setLimit(queryInput.getLimit());
@@ -131,6 +130,13 @@ public class DictConstantServiceImpl implements DictConstantService {
                     .andPkidEqualTo(queryInput.getPkid())
                     .andDictCodeEqualTo(queryInput.getDictCode());
             DictConstantDO result = dictConstantMapper.selectForOne(criteria);
+            if(result == null) {
+                if(queryInput.isCheckNull()) {
+                    response.setRetcode(DictConstantErrorCode.DATA_UNEXIST_ERROR);
+                }
+                response.setMessage("字典常量数据详情查询异常");
+                return response;
+            }
             DictConstantDto dto = new DictConstantDto();
             BeanUtils.copyProperties(result, dto);
             if(DictConstant.LIST_DICT_DATA.equals(queryInput.getListDictData())) {
@@ -188,7 +194,7 @@ public class DictConstantServiceImpl implements DictConstantService {
             }
             dictConstantDO = new DictConstantDO();
             BeanUtils.copyProperties(dto, dictConstantDO);
-            dictConstantDO.setState(AppConstant.State.NORMAL);
+            dictConstantDO.setState(DictConstant.State.NORMAL);
             dictConstantDO.setLstate(PersistentConstant.Lstate.NORMAL);
             dictConstantDO.setCreateTime(DateTimeUtils.currentDate());
             dictConstantDO.setModifyTime(DateTimeUtils.currentDate());
@@ -199,7 +205,7 @@ public class DictConstantServiceImpl implements DictConstantService {
             response.setMessage(e.getMessage());
             LOGGER.error(e.getCode(), e);
         } catch (Exception e) {
-            response.setRetcode(DictConstantErrorCode.DATA_QRY_ERROR);
+            response.setRetcode(DictConstantErrorCode.DATA_INSERT_ERROR);
             response.setMessage("字典常量数据新增异常");
             LOGGER.error(DictConstantErrorCode.DATA_INSERT_ERROR, e);
         }
@@ -228,7 +234,7 @@ public class DictConstantServiceImpl implements DictConstantService {
             }
             dictConstantDataDO = new DictConstantDataDO();
             BeanUtils.copyProperties(dto, dictConstantDataDO);
-            dictConstantDataDO.setState(AppConstant.State.NORMAL);
+            dictConstantDataDO.setState(DictConstant.State.NORMAL);
             dictConstantDataDO.setLstate(PersistentConstant.Lstate.NORMAL);
             dictConstantDataDO.setCreateTime(DateTimeUtils.currentDate());
             dictConstantDataDO.setModifyTime(DateTimeUtils.currentDate());

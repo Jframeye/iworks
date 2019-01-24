@@ -15,11 +15,10 @@ def parse(file_path):
     # 获取excel工作簿名称
     sheet_names = workbook.sheet_names()
     print(u'sheet 数量：' + str(sheet_names))
-    for sheet_name in sheet_names:
+    for index, sheet_name in enumerate(sheet_names):
         # 获取工作簿
         sheet = workbook.sheet_by_name(sheet_name)
-        db_table = _parse_sheet(sheet)
-        print(db_table)
+        db_table = _parse_sheet(sheet, index + 1)
         if db_table is None:
             continue
         key = db_table.tableinfo.dbname + '.' + db_table.tableinfo.tablename
@@ -37,7 +36,7 @@ def parse(file_path):
 '''
 
 
-def _parse_sheet(sheet):
+def _parse_sheet(sheet, index):
     if sheet is None:
         return None
 
@@ -70,6 +69,7 @@ def _parse_sheet(sheet):
     if table_info is None or table_columns is None or len(table_columns) == 0:
         return None
 
+    table_info.index = index
     primary_keys = [index.indexcolumns for index in table_indexs if index.indextype == 1]
     if len(primary_keys) > 0:
         primary_keys = primary_keys[0][0].split(',')

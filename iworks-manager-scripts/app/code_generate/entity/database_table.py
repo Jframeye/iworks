@@ -29,6 +29,7 @@ class TableInfo(object):
         self._has_date = has_date
         self._has_decimal = has_decimal
         self._primary_keys = primary_keys
+        self._index = 0
 
     @property
     def dbname(self):
@@ -65,6 +66,14 @@ class TableInfo(object):
     @property
     def primarykeys(self):
         return self._primary_keys
+
+    @property
+    def index(self):
+        return self._index
+
+    @index.setter
+    def index(self, value):
+        self._index = value
 
 
 class TableIndex(object):

@@ -19,6 +19,9 @@ public class Input implements Serializable {
     private Integer offset = 0;
     private Integer limit = 20;
 
+    /** 是否校验null **/
+    boolean checkNull = false;
+
     /** 自定义参数 **/
     private String attach;
 }

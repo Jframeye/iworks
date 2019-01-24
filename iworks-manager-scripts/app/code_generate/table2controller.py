@@ -160,7 +160,11 @@ def _generate_controller4table(db_table, package_name, file_output_path):
     file.write('    public Response update(%sUpdateRequest request) {\n' % up_entity_name)
     file.write('        %sDto dto = new %sDto();\n' % (up_entity_name, up_entity_name))
     file.write('        // TODO 参数填充(判断新增or修改)\r\n')
-    file.write('        return null;\n')
+    file.write('        if(dto.getPkid() == null) {\n')
+    file.write('            return %sService.insert%s(dto);\n' % (lo_entity_name, up_entity_name))
+    file.write('        } else {\n')
+    file.write('            return %sService.update%s(dto);\n' % (lo_entity_name, up_entity_name))
+    file.write('        }\n')
     file.write('    }\r\n')
 
     file.write('    @RecordLogger\n')

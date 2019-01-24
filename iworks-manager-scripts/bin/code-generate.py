@@ -55,7 +55,7 @@ def get_args():
 
 if __name__ == '__main__':
     # arg_list = get_args()
-    arg_list = {'package_name': 'com.xiaoye.iworks.basic', 'file_input_path': '../input/test.xlsx',
+    arg_list = {'package_name': 'com.xiaoye.iworks.basic', 'file_input_path': '../input/表格设计.xlsx',
                 'file_output_path': '../output/code-generate-output'}
     db_table_list = app.code_generate.code_generate_excel_parse.parse(arg_list['file_input_path'])
 
