@@ -30,7 +30,7 @@
 		<module>iworks-core-configuration</module>
 		<module>iworks-core-utils</module>
 		<module>iworks-core-persistent</module>
-	</modules>
+    </modules>
 
 	<build>
 		<plugins>

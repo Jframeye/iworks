@@ -17,6 +17,11 @@ public interface DictConstantService {
     /**
      * 功能描述: 列表查询 <br>
      *     查询条件：
+     *     dict_name[like]
+     *     dict_code[like]
+     *     state[equal]
+     *     create_by[like]
+     *     modify_name[like]
      * @param: queryInput
      * @return: 
      * @auther: auto create by python 
@@ -27,6 +32,8 @@ public interface DictConstantService {
     /**
      * 功能描述: 列表查询 <br>
      *     查询条件：
+     *     dict_code[equal]
+     *     dict_key[like]
      * @param: queryInput
      * @return:
      * @auther: auto create by python

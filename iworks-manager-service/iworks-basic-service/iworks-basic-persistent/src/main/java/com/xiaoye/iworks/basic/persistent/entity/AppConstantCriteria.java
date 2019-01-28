@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 功能描述: 实体类查询条件【系统常量数据】
  * @auther: auto create by python 
- * @date: 2019-01-21 12:55:16 
+ * @date: 2019-01-25 16:57:59 
  */
 public class AppConstantCriteria extends Condition {
     @Override
@@ -288,6 +288,54 @@ public class AppConstantCriteria extends Condition {
         public GeneratedCriteria andSignNotBetween(String value1, String value2) {
             if(StringUtils.hasBlankString(value1, value2)) return this;
             addCriterion("`sign` not between", value1, value2, "sign");
+            return this;
+        }
+        public GeneratedCriteria andTagTypeIsNull() {
+            addCriterion("`tag_type` is null");
+            return this;
+        }
+        public GeneratedCriteria andTagTypeIsNotNull() {
+            addCriterion("`tag_type` is not null");
+            return this;
+        }
+        public GeneratedCriteria andTagTypeEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`tag_type` =", value, "tagType");
+            return this;
+        }
+        public GeneratedCriteria andTagTypeNotEqualTo(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`tag_type` <>", value, "tagType");
+            return this;
+        }
+        public GeneratedCriteria andTagTypeLike(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`tag_type` like", String.format("%s%s%s", "%", value, "%"), "tagType");
+            return this;
+        }
+        public GeneratedCriteria andTagTypeNotLike(String value) {
+            if(StringUtils.isBlank(value)) return this;
+            addCriterion("`tag_type` not like", String.format("%s%s%s", "%", value, "%"), "tagType");
+            return this;
+        }
+        public GeneratedCriteria andTagTypeIn(List<String> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
+            addCriterion("`tag_type` in", values, "tagType");
+            return this;
+        }
+        public GeneratedCriteria andTagTypeNotIn(List<String> values) {
+            if(CollectionUtils.isEmpty(values)) return this;
+            addCriterion("`tag_type` not in", values, "tagType");
+            return this;
+        }
+        public GeneratedCriteria andTagTypeBetween(String value1, String value2) {
+            if(StringUtils.hasBlankString(value1, value2)) return this;
+            addCriterion("`tag_type` between", value1, value2, "tagType");
+            return this;
+        }
+        public GeneratedCriteria andTagTypeNotBetween(String value1, String value2) {
+            if(StringUtils.hasBlankString(value1, value2)) return this;
+            addCriterion("`tag_type` not between", value1, value2, "tagType");
             return this;
         }
         public GeneratedCriteria andStateIsNull() {

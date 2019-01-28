@@ -53,6 +53,8 @@ def _generate_service_input4table(db_table, package_name, file_output_path):
     file.write(' * @date: %s \n' % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
     file.write(' */\n')
 
+    file.write('@Data\n')
+    file.write('@EqualsAndHashCode(callSuper = false)\n')
     file.write('public class %sQueryInput extends Input {\n' % entity_name)
     file.write('    private static final long serialVersionUID = 1L;\r\n')
 
@@ -288,7 +290,7 @@ def _generate_service_impl4table(db_table, package_name, file_output_path):
     if entity_name.startswith('t_'):
         entity_name = entity_name[2:]
     up_entity_name = convert(entity_name, '_', True)  # 实体类名称
-    lo_entity_name = convert(entity_name, '_', True)  # 实体类名称
+    lo_entity_name = convert(entity_name, '_')  # 实体类名称
     file_name = up_entity_name + 'ServiceImpl.java'
     file_path = os.path.join(abs_path, file_name)
     file = open(file_path, 'w', encoding='utf-8')
@@ -379,6 +381,7 @@ def _generate_service_impl4table(db_table, package_name, file_output_path):
         '    public DataResponse<%sDto> find%s(%sQueryInput queryInput) {\n' % (up_entity_name, up_entity_name, up_entity_name))
     file.write('        DataResponse<%sDto> response = new DataResponse<>();\n' % up_entity_name)
     file.write('        try {\n')
+    file.write('            // 必要参数校验\r\n')
     file.write('            %sCriteria criteria = new %sCriteria();\n' % (up_entity_name, up_entity_name))
     file.write('            // TODO do something here \r\n')
     file.write('            %sDO result = %sMapper.selectForOne(criteria);\n' % (up_entity_name, lo_entity_name))
@@ -386,7 +389,7 @@ def _generate_service_impl4table(db_table, package_name, file_output_path):
     file.write('                if(queryInput.isCheckNull()) {\n')
     file.write('                    response.setRetcode(%sErrorCode.DATA_UNEXIST_ERROR);\n' % up_entity_name)
     file.write('                }\n')
-    file.write('                response.setMessage("%s数据详情不存在");\n' % table_info.tabledesc)
+    file.write('                response.setMessage("%s数据不存在");\n' % table_info.tabledesc)
     file.write('                return response;\n')
     file.write('            }\n')
     file.write('            %sDto dto = new %sDto();\n' % (up_entity_name, up_entity_name))
@@ -435,6 +438,7 @@ def _generate_service_impl4table(db_table, package_name, file_output_path):
     file.write('    public DataResponse<Integer> update%s(%sDto dto) {\n' % (up_entity_name, up_entity_name))
     file.write('        DataResponse<Integer> response = new DataResponse<>();\n')
     file.write('        try {\n')
+    file.write('            // 必要参数校验\r\n')
     file.write('            %sDO %sDO = new %sDO();\n' % (up_entity_name, lo_entity_name, up_entity_name))
     file.write('            BeanUtils.copyProperties(dto, %sDO);\n' % lo_entity_name)
     file.write('            %sDO.setModifyTime(DateTimeUtils.currentDate());\n' % lo_entity_name)

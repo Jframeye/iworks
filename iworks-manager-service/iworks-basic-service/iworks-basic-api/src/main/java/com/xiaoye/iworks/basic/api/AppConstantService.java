@@ -16,6 +16,8 @@ public interface AppConstantService {
      * 功能描述: 列表查询 <br>
      *     查询条件：
      *     constant_key[like]
+     *     constant_value[like]
+     *     constant_desc[like]
      *     create_by[like]
      *     modify_by[like]
      * @param: queryInput
@@ -24,17 +26,6 @@ public interface AppConstantService {
      * @date: 2019/1/4 12:59
      */
     public PageResponse<AppConstantDto> listAppConstant(AppConstantQueryInput queryInput);
-
-    /**
-     * 功能描述: 数量统计 <br>
-     *     统计条件：
-     *     constant_key[like]
-     * @param: queryInput
-     * @return: 
-     * @auther: yehl
-     * @date: 2019/1/4 13:00
-     */
-    public DataResponse<Integer> countAppConstant(AppConstantQueryInput queryInput);
 
     /**
      * 功能描述: 明细查询 <br>

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 功能描述: 实体类查询条件【系统用户登录信息】
  * @auther: auto create by python 
- * @date: 2019-01-24 17:38:50 
+ * @date: 2019-01-25 17:06:25 
  */
 public class UserLoginInfoCriteria extends Condition {
     @Override

@@ -37,7 +37,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
     /**
-	 * 描述: 获取{@link length} 长度的随机数字<br>
+	 * 描述: 获取 length 长度的随机数字<br>
 	 * @param length
 	 * @return
 	 */

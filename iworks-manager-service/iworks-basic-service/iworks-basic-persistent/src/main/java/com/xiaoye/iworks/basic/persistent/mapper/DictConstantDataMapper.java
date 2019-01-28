@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 功能描述: 实体类数据库接口【字典分类数据】
  * @auther: auto create by python 
- * @date: 2019-01-22 09:56:47 
+ * @date: 2019-01-25 16:57:59 
  */
 @Mapper
 public interface DictConstantDataMapper {

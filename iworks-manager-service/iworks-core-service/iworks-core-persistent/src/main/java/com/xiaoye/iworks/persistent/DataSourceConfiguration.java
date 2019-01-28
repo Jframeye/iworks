@@ -32,6 +32,7 @@ public class DataSourceConfiguration {
 		dataSource.setUsername(environment.getRequiredProperty("datasource.username").trim());
 		dataSource.setPassword(DES3Utils.des3DecodeStr(environment.getRequiredProperty("datasource.password").trim()));
 		dataSource.setUrl(environment.getRequiredProperty("datasource.url").trim());
+		dataSource.setValidationQuery("SELECT 1");
 		return dataSource;
 	}
 }

@@ -8,7 +8,9 @@ import com.xiaoye.iworks.basic.request.AppConstantQueryRequest;
 import com.xiaoye.iworks.basic.request.AppConstantUpdateRequest;
 import com.xiaoye.iworks.common.api.BasicController;
 import com.xiaoye.iworks.common.logger.annotation.RecordLogger;
+import com.xiaoye.iworks.common.session.annotation.CheckSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,33 +20,36 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2019/1/2 21:01
  */
 @RestController
-@RequestMapping(value = "app_constant", produces = "application/json")
+@RequestMapping(value = "app_constant", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class AppConstantController extends BasicController {
 
     @Autowired
     private AppConstantService appConstantService;
 
     @RecordLogger
+    @CheckSession(permission = "")
     @RequestMapping(value = "list")
     public Response list(AppConstantQueryRequest request) {
-        AppConstantQueryInput queryInput = new AppConstantQueryInput();
-        queryInput.setConstantKey(request.getConstant_key());
-        queryInput.setConstantValue(request.getConstant_value());
-        queryInput.setConstantDesc(request.getConstant_desc());
-        queryInput.setState(request.getState());
-        return appConstantService.listAppConstant(queryInput);
+        AppConstantQueryInput input = new AppConstantQueryInput();
+        input.setConstantKey(request.getConstant_key());
+        input.setConstantValue(request.getConstant_value());
+        input.setConstantDesc(request.getConstant_desc());
+        input.setState(request.getState());
+        return appConstantService.listAppConstant(input);
     }
 
     @RecordLogger
+    @CheckSession(permission = "")
     @RequestMapping(value = "find")
     public Response find(AppConstantQueryRequest request) {
-        AppConstantQueryInput queryInput = new AppConstantQueryInput();
-        queryInput.setPkid(request.getPkid());
-        queryInput.setConstantKey(request.getConstant_key());
-        return appConstantService.findAppConstant(queryInput);
+        AppConstantQueryInput input = new AppConstantQueryInput();
+        input.setPkid(request.getPkid());
+        input.setConstantKey(request.getConstant_key());
+        return appConstantService.findAppConstant(input);
     }
 
     @RecordLogger
+    @CheckSession(permission = "")
     @RequestMapping(value = "update")
     public Response update(AppConstantUpdateRequest request) {
         AppConstantDto dto = new AppConstantDto();
@@ -60,11 +65,12 @@ public class AppConstantController extends BasicController {
     }
 
     @RecordLogger
+    @CheckSession(permission = "")
     @RequestMapping(value = "delete")
     public Response delete(AppConstantQueryRequest request) {
-        AppConstantQueryInput queryInput = new AppConstantQueryInput();
-        queryInput.setPkid(request.getPkid());
-        queryInput.setPkids(request.getPkids());
-        return appConstantService.deleteAppConstant(queryInput);
+        AppConstantQueryInput input = new AppConstantQueryInput();
+        input.setPkid(request.getPkid());
+        input.setPkids(request.getPkids());
+        return appConstantService.deleteAppConstant(input);
     }
 }

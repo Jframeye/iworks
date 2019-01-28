@@ -20,6 +20,8 @@ import com.xiaoye.iworks.common.exception.BizServiceException;
 import com.xiaoye.iworks.persistent.constant.PersistentConstant;
 import com.xiaoye.iworks.utils.CollectionUtils;
 import com.xiaoye.iworks.utils.DateTimeUtils;
+import com.xiaoye.iworks.utils.StringUtils;
+import com.xiaoye.iworks.utils.exception.ServiceErrorCode;
 import com.xiaoye.iworks.utils.exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,24 +49,24 @@ public class DictConstantServiceImpl implements DictConstantService {
     private DictConstantAuxiliaryService auxiliaryService;
 
     @Override
-    public PageResponse<DictConstantDto> listDictConstants(DictConstantQueryInput queryInput) {
+    public PageResponse<DictConstantDto> listDictConstants(DictConstantQueryInput input) {
         PageResponse<DictConstantDto> response = new PageResponse<>();
         try {
             // 查询字典分类
             DictConstantCriteria criteria = new DictConstantCriteria();
             criteria.createCriteriaInternal().andLstateEqualTo(PersistentConstant.Lstate.NORMAL)
-                    .andDictNameLike(queryInput.getDictName())
-                    .andDictCodeLike(queryInput.getDictCode())
-                    .andStateEqualTo(queryInput.getState())
-                    .andCreateByLike(queryInput.getCreateBy())
-                    .andModifyByLike(queryInput.getModifyBy());
-            if(queryInput.isPagenation()) {
-                criteria.setPagination(queryInput.isPagenation());
-                criteria.setOffset(queryInput.getOffset());
-                criteria.setLimit(queryInput.getLimit());
+                    .andDictNameLike(input.getDictName())
+                    .andDictCodeLike(input.getDictCode())
+                    .andStateEqualTo(input.getState())
+                    .andCreateByLike(input.getCreateBy())
+                    .andModifyByLike(input.getModifyBy());
+            if(input.isPagenation()) {
+                criteria.setPagination(input.isPagenation());
+                criteria.setOffset(input.getOffset());
+                criteria.setLimit(input.getLimit());
                 Integer total = dictConstantMapper.count(criteria);
-                response.getData().setOffset(queryInput.getOffset());
-                response.getData().setLimit(queryInput.getLimit());
+                response.getData().setOffset(input.getOffset());
+                response.getData().setLimit(input.getLimit());
                 response.getData().setTotal(total);
                 if(total == 0) {
                     return response;
@@ -74,7 +76,7 @@ public class DictConstantServiceImpl implements DictConstantService {
             List<DictConstantDto> datas = CollectionUtils.transform(results, (entity) -> {
                 DictConstantDto dto = new DictConstantDto();
                 BeanUtils.copyProperties(entity, dto);
-                if(DictConstant.LIST_DICT_DATA.equals(queryInput.getListDictData())) {
+                if(DictConstant.LIST_DICT_DATA.equals(input.getListDictData())) {
                     List<DictConstantDataDto> dictDataList = auxiliaryService.listDictDatasByDictCode(dto);
                     dto.setDictDataList(dictDataList);
                 }
@@ -94,14 +96,14 @@ public class DictConstantServiceImpl implements DictConstantService {
     }
 
     @Override
-    public PageResponse<DictConstantDataDto> listDictConstantDatas(DictConstantDataQueryInput queryInput) {
+    public PageResponse<DictConstantDataDto> listDictConstantDatas(DictConstantDataQueryInput input) {
         PageResponse<DictConstantDataDto> response = new PageResponse<>();
         try {
             // 查询字典分类
             DictConstantDataCriteria dataCriteria = new DictConstantDataCriteria();
             dataCriteria.createCriteriaInternal()
-                    .andDictCodeEqualTo(queryInput.getDictCode())
-                    .andDictKeyLike(queryInput.getDictKey());
+                    .andDictCodeEqualTo(input.getDictCode())
+                    .andDictKeyLike(input.getDictKey());
             List<DictConstantDataDO> dataResults = dictConstantDataMapper.selectForList(dataCriteria);
             List<DictConstantDataDto> datas = CollectionUtils.transform(dataResults, (data) -> {
                 DictConstantDataDto dataDto = new DictConstantDataDto();
@@ -122,24 +124,27 @@ public class DictConstantServiceImpl implements DictConstantService {
     }
 
     @Override
-    public DataResponse<DictConstantDto> findDictConstant(DictConstantQueryInput queryInput) {
+    public DataResponse<DictConstantDto> findDictConstant(DictConstantQueryInput input) {
         DataResponse<DictConstantDto> response = new DataResponse<>();
         try {
+            if(input.getPkid() == null && StringUtils.isBlank(input.getDictCode())) {
+                throw new BizServiceException(ServiceErrorCode.PARAM_ERROR, "必要参数未传");
+            }
             DictConstantCriteria criteria = new DictConstantCriteria();
             criteria.createCriteriaInternal().andLstateEqualTo(PersistentConstant.Lstate.NORMAL)
-                    .andPkidEqualTo(queryInput.getPkid())
-                    .andDictCodeEqualTo(queryInput.getDictCode());
+                    .andPkidEqualTo(input.getPkid())
+                    .andDictCodeEqualTo(input.getDictCode());
             DictConstantDO result = dictConstantMapper.selectForOne(criteria);
             if(result == null) {
-                if(queryInput.isCheckNull()) {
+                if(input.isCheckNull()) {
                     response.setRetcode(DictConstantErrorCode.DATA_UNEXIST_ERROR);
                 }
-                response.setMessage("字典常量数据详情查询异常");
+                response.setMessage("字典常量数据不存在");
                 return response;
             }
             DictConstantDto dto = new DictConstantDto();
             BeanUtils.copyProperties(result, dto);
-            if(DictConstant.LIST_DICT_DATA.equals(queryInput.getListDictData())) {
+            if(DictConstant.LIST_DICT_DATA.equals(input.getListDictData())) {
                 List<DictConstantDataDto> dictDataList = auxiliaryService.listDictDatasByDictCode(dto);
                 dto.setDictDataList(dictDataList);
             }
@@ -157,15 +162,25 @@ public class DictConstantServiceImpl implements DictConstantService {
     }
 
     @Override
-    public DataResponse<DictConstantDataDto> findDictConstantData(DictConstantDataQueryInput queryInput) {
+    public DataResponse<DictConstantDataDto> findDictConstantData(DictConstantDataQueryInput input) {
         DataResponse<DictConstantDataDto> response = new DataResponse<>();
         try {
+            if(input.getPkid() == null && StringUtils.hasBlankString(input.getDictCode(), input.getDictKey())) {
+                throw new BizServiceException(ServiceErrorCode.PARAM_ERROR, "必要参数未传");
+            }
             DictConstantDataCriteria dataCriteria = new DictConstantDataCriteria();
             dataCriteria.createCriteriaInternal()
-                    .andPkidEqualTo(queryInput.getPkid())
-                    .andDictCodeEqualTo(queryInput.getDictCode())
-                    .andDictKeyEqualTo(queryInput.getDictKey());
+                    .andPkidEqualTo(input.getPkid())
+                    .andDictCodeEqualTo(input.getDictCode())
+                    .andDictKeyEqualTo(input.getDictKey());
             DictConstantDataDO dictConstantDataDO = dictConstantDataMapper.selectForOne(dataCriteria);
+            if(dictConstantDataDO == null) {
+                if(input.isCheckNull()) {
+                    response.setRetcode(DictConstantErrorCode.DATA_UNEXIST_ERROR);
+                }
+                response.setMessage("字典常量分类数据不存在");
+                return response;
+            }
             DictConstantDataDto dataDto = new DictConstantDataDto();
             BeanUtils.copyProperties(dictConstantDataDO, dataDto);
             response.setData(dataDto);
@@ -216,7 +231,9 @@ public class DictConstantServiceImpl implements DictConstantService {
     public DataResponse<Long> insertDictConstantData(DictConstantDataDto dto) {
         DataResponse<Long> response = new DataResponse<>();
         try {
-            // TODO 参数校验
+            if(StringUtils.isBlank(dto.getDictCode())) {
+                throw new BizServiceException(ServiceErrorCode.PARAM_ERROR, "必要参数未传");
+            }
             // 查询字典常量是否存在
             DictConstantCriteria criteria = new DictConstantCriteria();
             criteria.createCriteriaInternal().andDictCodeEqualTo(dto.getDictCode());
@@ -256,6 +273,9 @@ public class DictConstantServiceImpl implements DictConstantService {
     public DataResponse<Integer> updateDictConstant(DictConstantDto dto) {
         DataResponse<Integer> response = new DataResponse<>();
         try {
+            if( dto.getPkid() == null && StringUtils.isBlank(dto.getDictCode())) {
+                throw new BizServiceException(ServiceErrorCode.PARAM_ERROR, "必要参数未传");
+            }
             DictConstantCriteria criteria = new DictConstantCriteria();
             criteria.createCriteriaInternal().andLstateEqualTo(PersistentConstant.Lstate.NORMAL)
                     .andPkidEqualTo(dto.getPkid())
@@ -285,6 +305,9 @@ public class DictConstantServiceImpl implements DictConstantService {
     public DataResponse<Integer> updateDictConstantData(DictConstantDataDto dto) {
         DataResponse<Integer> response = new DataResponse<>();
         try {
+            if(dto.getPkid() == null && (StringUtils.hasBlankString(dto.getDictCode(), dto.getDictKey()))) {
+                throw new BizServiceException(ServiceErrorCode.PARAM_ERROR, "必要参数未传");
+            }
             DictConstantDataCriteria criteria = new DictConstantDataCriteria();
             criteria.createCriteriaInternal().andLstateEqualTo(PersistentConstant.Lstate.NORMAL)
                     .andPkidEqualTo(dto.getPkid())
@@ -311,10 +334,15 @@ public class DictConstantServiceImpl implements DictConstantService {
     }
 
     @Override
-    public DataResponse<Integer> deleteDictConstant(DictConstantQueryInput queryInput) {
+    public DataResponse<Integer> deleteDictConstant(DictConstantQueryInput input) {
         DataResponse<Integer> response = new DataResponse<>();
         try {
-            Integer result = auxiliaryService.deleteDictConstant(queryInput);
+            if(input.getPkid() == null && CollectionUtils.isEmpty(input.getPkids())
+                    && StringUtils.isBlank(input.getDictCode())
+                    && CollectionUtils.isEmpty(input.getDictCodes())) {
+                throw new BizServiceException(ServiceErrorCode.PARAM_ERROR, "必要参数未传");
+            }
+            Integer result = auxiliaryService.deleteDictConstant(input);
             response.setData(result);
         } catch (ServiceException e) {
             response.setRetcode(e.getCode());
@@ -329,17 +357,24 @@ public class DictConstantServiceImpl implements DictConstantService {
     }
 
     @Override
-    public DataResponse<Integer> deleteDictConstantData(DictConstantDataQueryInput queryInput) {
+    public DataResponse<Integer> deleteDictConstantData(DictConstantDataQueryInput input) {
         DataResponse<Integer> response = new DataResponse<>();
         try {
+            if(input.getPkid() == null && CollectionUtils.isEmpty(input.getPkids())
+                    && StringUtils.isBlank(input.getDictCode())
+                    && CollectionUtils.isEmpty(input.getDictCodes())
+                    && StringUtils.isBlank(input.getDictKey())
+                    && CollectionUtils.isEmpty(input.getDictKeys())) {
+                throw new BizServiceException(ServiceErrorCode.PARAM_ERROR, "必要参数未传");
+            }
             DictConstantDataCriteria criteria = new DictConstantDataCriteria();
             criteria.createCriteriaInternal().andLstateEqualTo(PersistentConstant.Lstate.NORMAL)
-                    .andPkidEqualTo(queryInput.getPkid())
-                    .andPkidIn(queryInput.getPkids())
-                    .andDictCodeEqualTo(queryInput.getDictCode())
-                    .andDictCodeIn(queryInput.getDictCodes())
-                    .andDictKeyEqualTo(queryInput.getDictKey())
-                    .andDictKeyIn(queryInput.getDictKeys());
+                    .andPkidEqualTo(input.getPkid())
+                    .andPkidIn(input.getPkids())
+                    .andDictCodeEqualTo(input.getDictCode())
+                    .andDictCodeIn(input.getDictCodes())
+                    .andDictKeyEqualTo(input.getDictKey())
+                    .andDictKeyIn(input.getDictKeys());
             Integer result = dictConstantDataMapper.delete(criteria);
             response.setData(result);
         } catch (ServiceException e) {

@@ -14,6 +14,9 @@ import com.xiaoye.iworks.common.exception.BizServiceException;
 import com.xiaoye.iworks.persistent.constant.PersistentConstant;
 import com.xiaoye.iworks.utils.CollectionUtils;
 import com.xiaoye.iworks.utils.DateTimeUtils;
+import com.xiaoye.iworks.utils.ObjectUtils;
+import com.xiaoye.iworks.utils.StringUtils;
+import com.xiaoye.iworks.utils.exception.ServiceErrorCode;
 import com.xiaoye.iworks.utils.exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,23 +39,24 @@ public class AppConstantServiceImpl implements AppConstantService {
     private AppConstantMapper appConstantMapper;
 
     @Override
-    public PageResponse<AppConstantDto> listAppConstant(AppConstantQueryInput queryInput) {
+    public PageResponse<AppConstantDto> listAppConstant(AppConstantQueryInput input) {
         PageResponse<AppConstantDto> response = new PageResponse<>();
         try {
             AppConstantCriteria criteria = new AppConstantCriteria();
             criteria.createCriteriaInternal().andLstateEqualTo(PersistentConstant.Lstate.NORMAL)
-                    .andConstantKeyLike(queryInput.getConstantKey())
-                    .andConstantValueLike(queryInput.getConstantValue())
-                    .andStateEqualTo(queryInput.getState())
-                    .andCreateByLike(queryInput.getCreateBy())
-                    .andModifyByLike(queryInput.getModifyBy());
-            criteria.setPagination(queryInput.isPagenation());
-            criteria.setOffset(queryInput.getOffset());
-            criteria.setLimit(queryInput.getLimit());
-            if(queryInput.isPagenation()) {
+                    .andConstantKeyLike(input.getConstantKey())
+                    .andConstantValueLike(input.getConstantValue())
+                    .andConstantDescLike(input.getConstantDesc())
+                    .andStateEqualTo(input.getState())
+                    .andCreateByLike(input.getCreateBy())
+                    .andModifyByLike(input.getModifyBy());
+            if(input.isPagenation()) {
+                criteria.setPagination(input.isPagenation());
+                criteria.setOffset(input.getOffset());
+                criteria.setLimit(input.getLimit());
                 Integer total = appConstantMapper.count(criteria);
-                response.getData().setOffset(queryInput.getOffset());
-                response.getData().setLimit(queryInput.getLimit());
+                response.getData().setOffset(input.getOffset());
+                response.getData().setLimit(input.getLimit());
                 response.getData().setTotal(total);
                 if(total == 0) {
                     return response;
@@ -78,34 +82,18 @@ public class AppConstantServiceImpl implements AppConstantService {
     }
 
     @Override
-    public DataResponse<Integer> countAppConstant(AppConstantQueryInput queryInput) {
-        DataResponse<Integer> response = new DataResponse<>();
-        try {
-            AppConstantCriteria criteria = new AppConstantCriteria();
-            criteria.createCriteriaInternal().andLstateEqualTo(PersistentConstant.Lstate.NORMAL)
-                    .andConstantKeyLike(queryInput.getConstantKey());
-            Integer result = appConstantMapper.count(criteria);
-            response.setData(result);
-        } catch (ServiceException e) {
-            response.setRetcode(e.getCode());
-            response.setMessage(e.getMessage());
-            LOGGER.error(e.getCode(), e);
-        } catch (Exception e) {
-            response.setRetcode(AppConstantErrorCode.DATA_COUNT_ERROR);
-            response.setMessage("系统常量数据统计异常");
-            LOGGER.error(AppConstantErrorCode.DATA_COUNT_ERROR, e);
-        }
-        return response;
-    }
-
-    @Override
-    public DataResponse<AppConstantDto> findAppConstant(AppConstantQueryInput queryInput) {
+    public DataResponse<AppConstantDto> findAppConstant(AppConstantQueryInput input) {
         DataResponse<AppConstantDto> response = new DataResponse<>();
         try {
+            if (input.getPkid() == null && CollectionUtils.isEmpty(input.getPkids())
+                    && StringUtils.isBlank(input.getConstantKey())
+                    && CollectionUtils.isEmpty(input.getConstantKeys())) {
+                throw new BizServiceException(ServiceErrorCode.PARAM_ERROR, "必要参数未传");
+            }
             AppConstantCriteria criteria = new AppConstantCriteria();
             criteria.createCriteriaInternal().andLstateEqualTo(PersistentConstant.Lstate.NORMAL)
-                    .andPkidEqualTo(queryInput.getPkid())
-                    .andConstantKeyEqualTo(queryInput.getConstantKey());
+                    .andPkidEqualTo(input.getPkid())
+                    .andConstantKeyEqualTo(input.getConstantKey());
             AppConstantDO result = appConstantMapper.selectForOne(criteria);
             AppConstantDto dto = new AppConstantDto();
             BeanUtils.copyProperties(result, dto);
@@ -123,15 +111,21 @@ public class AppConstantServiceImpl implements AppConstantService {
     }
 
     @Override
-    public DataResponse<Integer> deleteAppConstant(AppConstantQueryInput queryInput) {
+    public DataResponse<Integer> deleteAppConstant(AppConstantQueryInput input) {
         DataResponse<Integer> response = new DataResponse<>();
         try {
+            // 参数校验
+            if (input.getPkid() == null && CollectionUtils.isEmpty(input.getPkids())
+                    && StringUtils.isBlank(input.getConstantKey())
+                    && CollectionUtils.isEmpty(input.getConstantKeys())) {
+                throw new BizServiceException(ServiceErrorCode.PARAM_ERROR, "必要参数未传");
+            }
             AppConstantCriteria criteria = new AppConstantCriteria();
             criteria.createCriteriaInternal().andLstateEqualTo(PersistentConstant.Lstate.NORMAL)
-                    .andPkidEqualTo(queryInput.getPkid())
-                    .andPkidIn(queryInput.getPkids())
-                    .andConstantKeyEqualTo(queryInput.getConstantKey())
-                    .andConstantKeyIn(queryInput.getConstantKeys());
+                    .andPkidEqualTo(input.getPkid())
+                    .andPkidIn(input.getPkids())
+                    .andConstantKeyEqualTo(input.getConstantKey())
+                    .andConstantKeyIn(input.getConstantKeys());
             Integer result = appConstantMapper.delete(criteria);
             response.setData(result);
         } catch (ServiceException e) {
@@ -150,6 +144,10 @@ public class AppConstantServiceImpl implements AppConstantService {
     public DataResponse<Integer> updateAppConstant(AppConstantDto dto) {
         DataResponse<Integer> response = new DataResponse<>();
         try {
+            // 参数校验
+            if (dto.getPkid() == null && StringUtils.isBlank(dto.getConstantKey())) {
+                throw new BizServiceException(ServiceErrorCode.PARAM_ERROR, "必要参数未传");
+            }
             AppConstantCriteria criteria = new AppConstantCriteria();
             criteria.createCriteriaInternal().andLstateEqualTo(PersistentConstant.Lstate.NORMAL)
                     .andPkidEqualTo(dto.getPkid())

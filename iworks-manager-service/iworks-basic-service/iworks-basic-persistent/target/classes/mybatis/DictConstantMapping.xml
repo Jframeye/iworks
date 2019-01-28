@@ -1,22 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xiaoye.iworks.basic.persistent.mapper.DictConstantMapper">
-
+<mapper namespace="com.xiaoye.iworks.basic.persistent.mapper.DictConstantMapper">
 	<resultMap id="BasicResultMap" type="com.xiaoye.iworks.basic.persistent.entity.DictConstantDO">
 	    <id column="pkid" jdbcType="BIGINT" property="pkid" />
 	    <result column="dict_name" jdbcType="VARCHAR" property="dictName" />
 	    <result column="dict_code" jdbcType="VARCHAR" property="dictCode" />
 	    <result column="dict_desc" jdbcType="VARCHAR" property="dictDesc" />
 	    <result column="sign" jdbcType="VARCHAR" property="sign" />
+	    <result column="tag_type" jdbcType="VARCHAR" property="tagType" />
 	    <result column="state" jdbcType="SMALLINT" property="state" />
 	    <result column="lstate" jdbcType="SMALLINT" property="lstate" />
 	    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
 	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
 	    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
 	    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
-	</resultMap>
-
+	</resultMap>
 	<sql id="Basic_Where_Clause">
 		<where>
 			<foreach collection="criterias" item="item" separator="or">
@@ -45,12 +43,10 @@
 				</if>
 			</foreach>
 		</where>
-	</sql>
-
+	</sql>
 	<sql id="Basic_Columns">
-		`pkid`,`dict_name`,`dict_code`,`dict_desc`,`sign`,`state`,`lstate`,`create_by`,`create_time`,`modify_by`,`modify_time`
-	</sql>
-
+		`pkid`,`dict_name`,`dict_code`,`dict_desc`,`sign`,`tag_type`,`state`,`lstate`,`create_by`,`create_time`,`modify_by`,`modify_time`
+	</sql>
 	<sql id="Database_Table_Choose">
 		<choose>
 			<when test="dbIndex == null and tbIndex == null">

@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * 功能描述: 实体类【字典分类】
  * @auther: auto create by python 
- * @date: 2019-01-22 09:56:47 
+ * @date: 2019-01-25 16:57:59 
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -27,6 +27,8 @@ public class DictConstantDO extends Entity {
     private String dictDesc;
 	@Column(name = "sign", comments = "数据签名")
     private String sign;
+	@Column(name = "tag_type", comments = "标签类型[success,info,warning,danger]")
+    private String tagType;
 	@Column(name = "state", comments = "状态[1-可用；2-禁用]")
     private Integer state;
 	@Column(name = "lstate", comments = "逻辑状态[1-正常；2-删除]")

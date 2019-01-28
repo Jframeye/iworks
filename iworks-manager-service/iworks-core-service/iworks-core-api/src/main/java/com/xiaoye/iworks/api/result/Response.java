@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Response<T> implements Serializable {
+public class Response implements Serializable {
     private static final long serialVersionUID = -3310502415125126837L;
 
     private String retcode = "0";

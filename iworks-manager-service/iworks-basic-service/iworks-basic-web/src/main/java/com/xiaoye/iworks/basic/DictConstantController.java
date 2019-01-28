@@ -12,7 +12,9 @@ import com.xiaoye.iworks.basic.request.DictConstantQueryRequest;
 import com.xiaoye.iworks.basic.request.DictConstantUpdateRequest;
 import com.xiaoye.iworks.common.api.BasicController;
 import com.xiaoye.iworks.common.logger.annotation.RecordLogger;
+import com.xiaoye.iworks.common.session.annotation.CheckSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,13 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2019-01-21 21:36:16 
  */
 @RestController
-@RequestMapping(value = "dict_constant", produces = "application/json")
+@RequestMapping(value = "dict_constant", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class DictConstantController extends BasicController {
 
     @Autowired
     private DictConstantService dictConstantService;
 
     @RecordLogger
+    @CheckSession
     @RequestMapping(value = "list")
     public Response list(DictConstantQueryRequest request) {
         DictConstantQueryInput queryInput = new DictConstantQueryInput();

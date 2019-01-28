@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoye.iworks.basic.persistent.mapper.UserLoginLogsMapper">
+	<resultMap id="BasicResultMap" type="com.xiaoye.iworks.basic.persistent.entity.UserLoginLogsDO">
+	    <id column="pkid" jdbcType="BIGINT" property="pkid" />
+	    <result column="user_pkid" jdbcType="BIGINT" property="userPkid" />
+	    <result column="user_no" jdbcType="VARCHAR" property="userNo" />
+	    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+	    <result column="ip" jdbcType="VARCHAR" property="ip" />
+	    <result column="address" jdbcType="VARCHAR" property="address" />
+	    <result column="browser" jdbcType="VARCHAR" property="browser" />
+	    <result column="system" jdbcType="VARCHAR" property="system" />
+	    <result column="message" jdbcType="VARCHAR" property="message" />
+	    <result column="sign" jdbcType="VARCHAR" property="sign" />
+	    <result column="state" jdbcType="SMALLINT" property="state" />
+	    <result column="lstate" jdbcType="SMALLINT" property="lstate" />
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+	</resultMap>
+	<sql id="Basic_Where_Clause">
+		<where>
+			<foreach collection="criterias" item="item" separator="or">
+				<if test="item.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="item.criterions" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Basic_Columns">
+		`pkid`,`user_pkid`,`user_no`,`user_name`,`ip`,`address`,`browser`,`system`,`message`,`sign`,`state`,`lstate`,`create_time`,`modify_time`
+	</sql>
+	<sql id="Database_Table_Choose">
+		<choose>
+			<when test="dbIndex == null and tbIndex == null">
+				`basic`.`t_user_login_logs`
+			</when>
+			<when test="dbIndex != null and tbIndex == null">
+				`basic_#{dbIndex}`.`t_user_login_logs`
+			</when>
+			<when test="dbIndex != null and tbIndex != null">
+				`basic_#{dbIndex}`.`t_user_login_logs_#{tbIndex}`
+			</when>
+			<when test="dbIndex == null and tbIndex != null">
+				`basic`.`t_user_login_logs_#{tbIndex}`
+			</when>
+		</choose>
+	</sql>
+</mapper>

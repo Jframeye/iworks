@@ -17,6 +17,8 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -71,25 +73,28 @@ public class RecordLoggerAspect implements Ordered {
 
 	@Around("@annotation(com.xiaoye.iworks.common.logger.annotation.RecordLogger)")
 	public Object executeAround(ProceedingJoinPoint joinPoint) throws Throwable {
-		// 判断方法上的是否有日志注解
-		Object object = null;
-		RecordLogger recordLogger = null;
-		if((recordLogger = getRecordLogger(joinPoint)) != null) {
-			if(recordLogger.inputLogger()) {
-				LOGGER.info(JSON.toJSONString(this.getArgs(joinPoint)));
-			}
-			if(recordLogger.recordInput()) {
-				// TODO
-			}
-			// 记录方法执行前日志 
-			object = joinPoint.proceed(); // 执行目标方法
-			// 记录方法执行后日志 
-			if(recordLogger.resultLogger()) {
-				LOGGER.info(JSON.toJSONString(object));
-			}
-			if(recordLogger.recordResult()) {
-				// TODO
-			}
+		Object object;
+		ServletRequestAttributes requestAttributes = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes());
+		HttpServletRequest request = requestAttributes.getRequest();
+		String url = "";
+		if(request != null) {
+			url = request.getRequestURI();
+		}
+		RecordLogger recordLogger = getRecordLogger(joinPoint);
+		if(recordLogger.inputLogger()) {
+			LOGGER.info(String.format("request: %s | input: %s", url, JSON.toJSONString(this.getArgs(joinPoint))));
+		}
+		if(recordLogger.recordInput()) {
+			// TODO
+		}
+		// 记录方法执行前日志
+		object = joinPoint.proceed(); // 执行目标方法
+		// 记录方法执行后日志
+		if(recordLogger.resultLogger()) {
+			LOGGER.info(String.format("request: %s | result: %s", url, JSON.toJSONString(object)));
+		}
+		if(recordLogger.recordResult()) {
+			// TODO
 		}
 		return object;
 	}
