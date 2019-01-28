@@ -6,6 +6,7 @@ import com.xiaoye.iworks.common.session.annotation.CheckSession;
 import com.xiaoye.iworks.common.session.token.TokenFactory;
 import com.xiaoye.iworks.common.support.SpringContextHolder;
 import com.xiaoye.iworks.service.RedisCacheService;
+import com.xiaoye.iworks.utils.CollectionUtils;
 import com.xiaoye.iworks.utils.StringUtils;
 import com.xiaoye.iworks.utils.WebUtils;
 import com.xiaoye.iworks.utils.exception.ServiceErrorCode;
@@ -54,21 +55,24 @@ public class SessionUtils {
             String ip = WebUtils.getRequestIp(request);
             if(!token_cache_ip.equals(ip)) {
                 redisCacheService.delete(token); // 删除token缓存
-                throw new BizServiceException(ServiceErrorCode.AUTH_ERROR, "登录失效，请重新登录");
+                throw new BizServiceException(ServiceErrorCode.AUTH_ERROR, "登录失效");
             }
 
             String user_no = claims.getBody().getSubject();
             String user_name = claims.getBody().get("username", String.class);
-            List<?> scopes = claims.getBody().get("scopes", List.class);
+            List<String> scopes = claims.getBody().get("scopes", List.class);
 
             String permission = checkSession.permission();
             if(StringUtils.isNotBlank(permission)) {
-                // TODO 权限校验
+                String hit = CollectionUtils.firstMatched(scopes, (auth) -> permission.equals(auth));
+                if(StringUtils.isBlank(hit)) {
+                    throw new BizServiceException(ServiceErrorCode.AUTH_ERROR, "无操作权限");
+                }
             }
         } catch (ExpiredJwtException e) {
-            throw new BizServiceException(ServiceErrorCode.AUTH_ERROR, "token过期");
+            throw new BizServiceException(ServiceErrorCode.AUTH_ERROR, "登录过期");
         } catch (Exception e) {
-            throw new BizServiceException(ServiceErrorCode.AUTH_ERROR, "token异常");
+            throw new BizServiceException(ServiceErrorCode.AUTH_ERROR, "登陆失效");
         }
     }
 }
