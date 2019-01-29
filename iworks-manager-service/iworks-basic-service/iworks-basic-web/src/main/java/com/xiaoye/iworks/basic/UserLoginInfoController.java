@@ -7,18 +7,24 @@ import com.xiaoye.iworks.basic.api.constant.UserLoginInfoConstant;
 import com.xiaoye.iworks.basic.api.dto.UserLoginInfoDto;
 import com.xiaoye.iworks.basic.api.dto.UserLoginLogsDto;
 import com.xiaoye.iworks.basic.api.input.UserLoginInfoQueryInput;
+import com.xiaoye.iworks.basic.auxiliary.UserLoginAuxiliary;
 import com.xiaoye.iworks.basic.core.exception.UserLoginInfoErrorCode;
 import com.xiaoye.iworks.basic.request.UserLoginInfoQueryRequest;
 import com.xiaoye.iworks.basic.request.UserLoginInfoUpdateRequest;
 import com.xiaoye.iworks.common.api.BasicController;
+import com.xiaoye.iworks.common.constant.SessionConstant;
+import com.xiaoye.iworks.common.exception.BizServiceException;
 import com.xiaoye.iworks.common.logger.annotation.RecordLogger;
 import com.xiaoye.iworks.common.session.token.Token;
 import com.xiaoye.iworks.common.session.token.TokenFactory;
 import com.xiaoye.iworks.common.support.ResponseCheck;
+import com.xiaoye.iworks.service.RedisCacheService;
 import com.xiaoye.iworks.utils.DateTimeUtils;
 import com.xiaoye.iworks.utils.EncryptUtil;
 import com.xiaoye.iworks.utils.StringUtils;
 import com.xiaoye.iworks.utils.WebUtils;
+import com.xiaoye.iworks.utils.exception.ServiceErrorCode;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +45,8 @@ public class UserLoginInfoController extends BasicController {
     @Autowired
     private UserLoginInfoService userLoginInfoService;
     @Autowired
-    private TokenFactory tokenFactory;
+    private UserLoginAuxiliary userLoginAuxiliary;
+
 
     @RecordLogger
     @RequestMapping(value = "register", method = RequestMethod.POST)
@@ -95,13 +102,6 @@ public class UserLoginInfoController extends BasicController {
         }
         UserLoginInfoDto infoDto = dataResponse.getData();
 
-        // 记录登录日志
-        UserLoginLogsDto userLoginLogsDto = new UserLoginLogsDto();
-        userLoginLogsDto.setUserPkid(infoDto.getPkid());
-        userLoginLogsDto.setUserNo(infoDto.getUserNo());
-        userLoginLogsDto.setUserName(infoDto.getUserName());
-        userLoginLogsDto.setIp(WebUtils.getRequestIp(servletRequest));
-
         // 判断账号状态
         if(UserLoginInfoConstant.State.FREEZE.equals(infoDto.getState())) {
             response.setRetcode(UserLoginInfoErrorCode.USER_LOGIN_ERROR);
@@ -138,15 +138,18 @@ public class UserLoginInfoController extends BasicController {
                 loginInfoDto.setState(UserLoginInfoConstant.State.LOCKED);
                 loginInfoDto.setLockTime(DateTimeUtils.currentDate());
             }
-            userLoginLogsDto.setMessage("密码不正确");
             userLoginInfoService.updateUserLoginInfo(loginInfoDto);
             return response;
         }
-        // 生成token
-        Token token = new Token(infoDto.getUserNo(), infoDto.getUserName());
-        token.setIp(WebUtils.getRequestIp(servletRequest));
-        response.setData(tokenFactory.createToken(token, false));
-        userLoginLogsDto.setMessage("登录成功");
+        response.setData(userLoginAuxiliary.createToken(infoDto, false, servletRequest));
+        return response;
+    }
+
+    @RecordLogger
+    @RequestMapping(value = "getToken", method = RequestMethod.POST)
+    public Response getToken(HttpServletRequest servletRequest) {
+        DataResponse response = new DataResponse();
+        response.setData(userLoginAuxiliary.createToken(null, true, servletRequest));
         return response;
     }
 }

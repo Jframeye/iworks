@@ -185,7 +185,6 @@ public class AppConstantServiceImpl implements AppConstantService {
             }
             appConstantDO = new AppConstantDO();
             BeanUtils.copyProperties(dto, appConstantDO);
-            appConstantDO.setState(AppConstant.State.NORMAL);
             appConstantDO.setLstate(PersistentConstant.Lstate.NORMAL);
             appConstantDO.setCreateTime(DateTimeUtils.currentDate());
             appConstantDO.setModifyTime(DateTimeUtils.currentDate());

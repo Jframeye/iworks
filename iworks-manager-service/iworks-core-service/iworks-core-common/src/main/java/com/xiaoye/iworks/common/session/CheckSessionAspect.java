@@ -1,10 +1,14 @@
 package com.xiaoye.iworks.common.session;
 
 import com.google.common.collect.Lists;
+import com.xiaoye.iworks.api.input.Input;
 import com.xiaoye.iworks.common.constant.SessionConstant;
 import com.xiaoye.iworks.common.exception.BizServiceException;
 import com.xiaoye.iworks.common.session.annotation.CheckSession;
+import com.xiaoye.iworks.common.session.token.Token;
 import com.xiaoye.iworks.common.session.token.TokenFactory;
+import com.xiaoye.iworks.utils.CollectionUtils;
+import com.xiaoye.iworks.utils.ReflectionUtils;
 import com.xiaoye.iworks.utils.StringUtils;
 import com.xiaoye.iworks.utils.exception.ServiceErrorCode;
 import org.aspectj.lang.JoinPoint;
@@ -29,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 日志AOP处理类
@@ -90,7 +95,18 @@ public class CheckSessionAspect implements Ordered {
                 LOGGER.debug("HttpServletRequest is null");
                 return null;
             }
-            SessionUtils.validate(checkSession, request);
+            Token token = SessionUtils.validate(checkSession, request);
+            if(token != null) { // 设置用户信息
+                List<Object> args = this.getArgs(joinPoint);
+                if(CollectionUtils.isNotEmpty(args)) {
+                    Optional<Object> optional = args.stream().filter(item -> item.getClass().isAssignableFrom(Input.class)).findFirst();
+                    if(optional.get() != null) {
+                        ReflectionUtils.setField("currentUserNo", optional.get(), token.getUser_no());
+                        ReflectionUtils.setField("currentNickName", optional.get(), token.getNick_name());
+                        ReflectionUtils.setField("currentUserName", optional.get(), token.getUser_name());
+                    }
+                }
+            }
         }
         // 调用原函数
         return joinPoint.proceed();

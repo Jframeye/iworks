@@ -11,7 +11,9 @@ import com.xiaoye.iworks.common.logger.annotation.RecordLogger;
 import com.xiaoye.iworks.common.session.annotation.CheckSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -27,7 +29,6 @@ public class AppConstantController extends BasicController {
     private AppConstantService appConstantService;
 
     @RecordLogger
-    @CheckSession(permission = "")
     @RequestMapping(value = "list")
     public Response list(AppConstantQueryRequest request) {
         AppConstantQueryInput input = new AppConstantQueryInput();
@@ -39,7 +40,6 @@ public class AppConstantController extends BasicController {
     }
 
     @RecordLogger
-    @CheckSession(permission = "")
     @RequestMapping(value = "find")
     public Response find(AppConstantQueryRequest request) {
         AppConstantQueryInput input = new AppConstantQueryInput();
@@ -49,9 +49,9 @@ public class AppConstantController extends BasicController {
     }
 
     @RecordLogger
-    @CheckSession(permission = "")
-    @RequestMapping(value = "update")
-    public Response update(AppConstantUpdateRequest request) {
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public Response update(@RequestBody AppConstantUpdateRequest request) {
+        // TODO 参数校验
         AppConstantDto dto = new AppConstantDto();
         dto.setPkid(request.getPkid());
         dto.setConstantKey(request.getConstant_key());
@@ -65,7 +65,6 @@ public class AppConstantController extends BasicController {
     }
 
     @RecordLogger
-    @CheckSession(permission = "")
     @RequestMapping(value = "delete")
     public Response delete(AppConstantQueryRequest request) {
         AppConstantQueryInput input = new AppConstantQueryInput();

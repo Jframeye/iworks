@@ -3,6 +3,7 @@ package com.xiaoye.iworks.common.session;
 import com.xiaoye.iworks.common.constant.SessionConstant;
 import com.xiaoye.iworks.common.exception.BizServiceException;
 import com.xiaoye.iworks.common.session.annotation.CheckSession;
+import com.xiaoye.iworks.common.session.token.Token;
 import com.xiaoye.iworks.common.session.token.TokenFactory;
 import com.xiaoye.iworks.common.support.SpringContextHolder;
 import com.xiaoye.iworks.service.RedisCacheService;
@@ -13,6 +14,8 @@ import com.xiaoye.iworks.utils.exception.ServiceErrorCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -24,6 +27,8 @@ import java.util.List;
  */
 public class SessionUtils {
 
+    private static Logger LOGGER = LoggerFactory.getLogger(SessionUtils.class);
+
     private static TokenFactory tokenFactory;
     private static RedisCacheService redisCacheService;
 
@@ -32,47 +37,48 @@ public class SessionUtils {
         redisCacheService = SpringContextHolder.getBean(RedisCacheService.class);
     }
 
-    public static void validate(CheckSession checkSession, HttpServletRequest request) {
-        String header = request.getHeader(SessionConstant.AUTH_HEADER_NAME);
-        if (StringUtils.isEmpty(header)) {
-            throw new BizServiceException(ServiceErrorCode.PARAM_ERROR, "Authorization header cannot be blank!");
-        }
-
-        if (header.length() < SessionConstant.AUTH_HEADER_PREFIX.length()) {
-            throw new BizServiceException(ServiceErrorCode.PARAM_ERROR, "Invalid authorization header size.");
-        }
+    public static Token validate(CheckSession checkSession, HttpServletRequest request) {
         // 获取请求头中的token
-        String token = header.substring(SessionConstant.AUTH_HEADER_PREFIX.length(), header.length());
+        String str = tokenFactory.checkToken(request);
+        Token token;
         try {
             // 解析token
-            Jws<Claims> claims = tokenFactory.parseToken(token);
-            String refresh = claims.getBody().getId();
-            if (StringUtils.isNotEmpty(refresh)) {
-                throw new BizServiceException(ServiceErrorCode.AUTH_ERROR);
-            }
+            Jws<Claims> claims = tokenFactory.parseToken(str);
 
-            String token_cache_ip = redisCacheService.getString(token);
-            String ip = WebUtils.getRequestIp(request);
-            if(!token_cache_ip.equals(ip)) {
-                redisCacheService.delete(token); // 删除token缓存
-                throw new BizServiceException(ServiceErrorCode.AUTH_ERROR, "登录失效");
-            }
-
+            String user_pkid = claims.getBody().getId();
             String user_no = claims.getBody().getSubject();
+            String nick_name = claims.getBody().get("nickname", String.class);
             String user_name = claims.getBody().get("username", String.class);
+            token = new Token(user_pkid, user_no, nick_name, user_name);
             List<String> scopes = claims.getBody().get("scopes", List.class);
+
+            // 防止token被盗用, IP不一样必须重新登录
+            String token_cache_ip = redisCacheService.getString(str);
+            String ip = String.format("%s_%s", token.getUser_pkid(), WebUtils.getRequestIp(request));
+            if(!token_cache_ip.equals(ip)) {
+                LOGGER.error(ServiceErrorCode.INVALID_LOGIN_ERROR, "登录失效【Invalid authorization header size】");
+                throw new BizServiceException(ServiceErrorCode.INVALID_LOGIN_ERROR, "登录失效，请重新登录");
+            }
+            // 判断与缓存中的token是否一致
+            String key = String.format("login_key_%s", token.getUser_no());
+            String token_str = redisCacheService.getString(key);
+            if(!str.equals(token_str)) { // 传进来的token与缓存中的token不一致
+                LOGGER.error(ServiceErrorCode.INVALID_LOGIN_ERROR, "登录失效【请求的token与缓存中的token不一致】");
+                throw new BizServiceException(ServiceErrorCode.INVALID_LOGIN_ERROR, "登录失效，请重新登录");
+            }
 
             String permission = checkSession.permission();
             if(StringUtils.isNotBlank(permission)) {
                 String hit = CollectionUtils.firstMatched(scopes, (auth) -> permission.equals(auth));
                 if(StringUtils.isBlank(hit)) {
-                    throw new BizServiceException(ServiceErrorCode.AUTH_ERROR, "无操作权限");
+                    throw new BizServiceException(ServiceErrorCode.NO_PERMISSION_ERROR, "无操作权限");
                 }
             }
         } catch (ExpiredJwtException e) {
-            throw new BizServiceException(ServiceErrorCode.AUTH_ERROR, "登录过期");
+            throw new BizServiceException(ServiceErrorCode.EXPIRED_LOGIN_ERROR, "登录过期");
         } catch (Exception e) {
-            throw new BizServiceException(ServiceErrorCode.AUTH_ERROR, "登陆失效");
+            throw new BizServiceException(ServiceErrorCode.INVALID_LOGIN_ERROR, "登陆失效");
         }
+        return token;
     }
 }

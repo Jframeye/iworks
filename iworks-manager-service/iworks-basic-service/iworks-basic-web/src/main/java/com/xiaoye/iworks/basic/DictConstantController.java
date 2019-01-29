@@ -31,7 +31,6 @@ public class DictConstantController extends BasicController {
     private DictConstantService dictConstantService;
 
     @RecordLogger
-    @CheckSession
     @RequestMapping(value = "list")
     public Response list(DictConstantQueryRequest request) {
         DictConstantQueryInput queryInput = new DictConstantQueryInput();

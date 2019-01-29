@@ -18,10 +18,13 @@ public class Input implements Serializable {
     private boolean pagenation = false; // 是否分页查询
     private Integer offset = 0;
     private Integer limit = 20;
+    /** 自定义参数 **/
+    private String attach;
 
     /** 是否校验null **/
     boolean checkNull = false;
-
-    /** 自定义参数 **/
-    private String attach;
+    /** 当前操作人信息 **/
+    private String currentUserNo;
+    private String currentNickName;
+    private String currentUserName;
 }
