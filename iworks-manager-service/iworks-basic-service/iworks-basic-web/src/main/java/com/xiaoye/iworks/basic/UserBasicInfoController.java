@@ -4,12 +4,14 @@ import com.xiaoye.iworks.api.result.Response;
 import com.xiaoye.iworks.basic.api.UserBasicInfoService;
 import com.xiaoye.iworks.basic.api.dto.UserBasicInfoDto;
 import com.xiaoye.iworks.basic.api.input.UserBasicInfoQueryInput;
+import com.xiaoye.iworks.basic.core.support.UserInfoAuxiliaryService;
 import com.xiaoye.iworks.basic.request.UserBasicInfoQueryRequest;
 import com.xiaoye.iworks.basic.request.UserBasicInfoUpdateRequest;
 import com.xiaoye.iworks.common.api.BasicController;
 import com.xiaoye.iworks.common.logger.annotation.RecordLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +26,8 @@ public class UserBasicInfoController extends BasicController {
 
     @Autowired
     private UserBasicInfoService userBasicInfoService;
+    @Autowired
+    private UserInfoAuxiliaryService userInfoAuxiliaryService;
 
     @RecordLogger
     @RequestMapping(value = "list")
@@ -36,7 +40,7 @@ public class UserBasicInfoController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "find")
-    public Response find(UserBasicInfoQueryRequest request) {
+    public Response find(@RequestBody UserBasicInfoQueryRequest request) {
         UserBasicInfoQueryInput queryInput = new UserBasicInfoQueryInput();
         // TODO 参数校验以及参数填充
 
@@ -65,4 +69,12 @@ public class UserBasicInfoController extends BasicController {
         return userBasicInfoService.deleteUserBasicInfo(queryInput);
     }
 
+    @RecordLogger
+    @RequestMapping(value = "findUserInfoAndPermissions")
+    public Response findUserInfoAndPermissions(@RequestBody UserBasicInfoQueryRequest request) {
+        UserBasicInfoQueryInput queryInput = new UserBasicInfoQueryInput();
+        // TODO 参数校验以及参数填充
+
+        return userInfoAuxiliaryService.findUserInfoAndPermissions(queryInput);
+    }
 }

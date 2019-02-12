@@ -46,6 +46,8 @@ const biz = {
         loginByUsername(userInfo).then(result => {
           commit('SET_TOKEN', result); // 设置 token
           resolve();
+        }).catch(err => {
+          reject(err)
         })
       })
     },
@@ -59,6 +61,8 @@ const biz = {
           commit('SET_USERIFNO', result.userInfo);
           commit('SET_PERMISSIONS', result.permissions);
           resolve(result);
+        }).catch(err => {
+          reject(err)
         })
       })
     },

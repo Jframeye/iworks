@@ -30,7 +30,7 @@ public class AppConstantController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "list")
-    public Response list(AppConstantQueryRequest request) {
+    public Response list(@RequestBody AppConstantQueryRequest request) {
         AppConstantQueryInput input = new AppConstantQueryInput();
         input.setConstantKey(request.getConstant_key());
         input.setConstantValue(request.getConstant_value());
@@ -41,23 +41,31 @@ public class AppConstantController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "find")
-    public Response find(AppConstantQueryRequest request) {
+    public Response find(@RequestBody AppConstantQueryRequest request) {
         AppConstantQueryInput input = new AppConstantQueryInput();
         input.setPkid(request.getPkid());
         input.setConstantKey(request.getConstant_key());
         return appConstantService.findAppConstant(input);
     }
 
+//    @CheckSession(permission = "")
     @RecordLogger
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public Response update(@RequestBody AppConstantUpdateRequest request) {
         // TODO 参数校验
+        {
+            // TODO 测试代码，需删除
+            request.setCurrentNickName("叶宏梁");
+        }
+
         AppConstantDto dto = new AppConstantDto();
         dto.setPkid(request.getPkid());
         dto.setConstantKey(request.getConstant_key());
         dto.setConstantValue(request.getConstant_value());
         dto.setConstantDesc(request.getConstant_desc());
         dto.setState(request.getState());
+        dto.setCreateBy(request.getCurrentNickName());
+        dto.setModifyBy(request.getCurrentNickName());
         if(dto.getPkid() == null) {
             return appConstantService.insertAppConstant(dto);
         }
@@ -66,7 +74,7 @@ public class AppConstantController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "delete")
-    public Response delete(AppConstantQueryRequest request) {
+    public Response delete(@RequestBody AppConstantQueryRequest request) {
         AppConstantQueryInput input = new AppConstantQueryInput();
         input.setPkid(request.getPkid());
         input.setPkids(request.getPkids());

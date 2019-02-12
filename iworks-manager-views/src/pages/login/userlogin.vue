@@ -1,20 +1,20 @@
 <template>
   <el-form class="login-form" status-icon :rules="loginRules" ref="loginForm" :model="loginForm" label-width="0">
-    <el-form-item prop="username">
-      <el-input size="small" @keyup.enter.native="handleLogin" v-model="loginForm.username" auto-complete="off" placeholder="请输入用户名">
+    <el-form-item prop="user_name">
+      <el-input size="small" @keyup.enter.native="handleLogin" v-model="loginForm.user_name" auto-complete="off" placeholder="请输入用户名">
         <i slot="prefix" class="icon-yonghu"></i>
       </el-input>
     </el-form-item>
-    <el-form-item prop="password">
-      <el-input size="small" @keyup.enter.native="handleLogin" :type="passwordType" v-model="loginForm.password" auto-complete="off" placeholder="请输入密码">
+    <el-form-item prop="pass_word">
+      <el-input size="small" @keyup.enter.native="handleLogin" :type="passwordType" v-model="loginForm.pass_word" auto-complete="off" placeholder="请输入密码">
         <i class="el-icon-view el-input__icon" slot="suffix" @click="showPassword"></i>
         <i slot="prefix" class="icon-mima"></i>
       </el-input>
     </el-form-item>
-    <el-form-item prop="verifycode">
+    <el-form-item prop="verify_code">
       <el-row :span="24">
         <el-col :span="14">
-          <el-input size="small" @keyup.enter.native="handleLogin" :maxlength="verifycode.length" v-model="loginForm.verifycode" auto-complete="off" placeholder="请输入验证码">
+          <el-input size="small" @keyup.enter.native="handleLogin" :maxlength="verifycode.length" v-model="loginForm.verify_code" auto-complete="off" placeholder="请输入验证码">
             <i slot="prefix" class="icon-yanzhengma"></i>
           </el-input>
         </el-col>
@@ -43,7 +43,7 @@ export default {
   data() {
     const validateVerifyCode = (rule, value, callback) => {
       if (this.verifycode.value != value) {
-        this.loginForm.verifycode = "";
+        this.loginForm.verify_code = "";
         this.refreshCode();
         callback(new Error("验证码错误"));
       } else {
@@ -52,9 +52,9 @@ export default {
     };
     return {
       loginForm: {
-        username: "",
-        password: "",
-        verifycode: ""
+        user_name: "",
+        pass_word: "",
+        verify_code: ""
       },
       checked: false,
       verifycode: {
@@ -64,12 +64,12 @@ export default {
         type: "text" // 线上无需设置值
       },
       loginRules: {
-        username: [{ required: true, message: "请输入账号", trigger: "blur" }],
-        password: [
+        user_name: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        pass_word: [
           { required: true, message: "请输入密码", trigger: "blur" },
           { min: 6, message: "密码长度最少为6位", trigger: "blur" }
         ],
-        verifycode: [
+        verify_code: [
           { required: true, message: "请输入验证码", trigger: "blur" },
           { min: 4, max: 4, message: "验证码长度为4位", trigger: "blur" },
           { required: true, trigger: "blur", validator: validateVerifyCode }
@@ -89,7 +89,7 @@ export default {
       // 当验证码由后端给与时，设置“ this.verifycode.type == "" ”
       if (this.verifycode.type === "text") {
         this.verifycode.value = randomNumber(this.verifycode.len);
-        this.loginForm.verifycode = this.verifycode.value;
+        this.loginForm.verify_code = this.verifycode.value;
       } else {
         this.$store.dispatch("RefreshVerifyCode").then(result => {
           this.verifycode.src = result;
@@ -104,10 +104,14 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.$store
-            .dispatch("LoginByUsername", this.loginForm)
+          this.$store.dispatch("LoginByUsername", this.loginForm)
             .then(result => {
               this.$router.push({ path: "index" });
+            }).catch(err => {
+              this.$message({
+                type: "error",
+                message: err
+              });
             });
         }
       });

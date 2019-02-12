@@ -158,6 +158,7 @@ public class AppConstantServiceImpl implements AppConstantService {
             }
             BeanUtils.copyProperties(dto, appConstantDO);
             appConstantDO.setModifyTime(DateTimeUtils.currentDate());
+            appConstantDO.setModifyBy(dto.getModifyBy());
             Integer result = appConstantMapper.updateSelective(appConstantDO);
             response.setData(result);
         } catch (ServiceException e) {
@@ -186,7 +187,9 @@ public class AppConstantServiceImpl implements AppConstantService {
             appConstantDO = new AppConstantDO();
             BeanUtils.copyProperties(dto, appConstantDO);
             appConstantDO.setLstate(PersistentConstant.Lstate.NORMAL);
+            appConstantDO.setCreateBy(dto.getCreateBy());
             appConstantDO.setCreateTime(DateTimeUtils.currentDate());
+            appConstantDO.setModifyBy(dto.getModifyBy());
             appConstantDO.setModifyTime(DateTimeUtils.currentDate());
             appConstantMapper.insertSelective(appConstantDO);
             response.setData(appConstantDO.getPkid());

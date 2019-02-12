@@ -9,10 +9,13 @@
           <div style="margin: 10px 10px -25px">
             <el-form :inline=true size="mini" v-model="search">
               <el-form-item label="常量编码">
-                <el-input style="width: 250px;" v-model="search.user_name" placeholder="请输入常量编码"></el-input>
+                <el-input style="width: 250px;" v-model="search.constant_key" placeholder="请输入常量编码"></el-input>
+              </el-form-item>
+              <el-form-item label="常量值">
+                <el-input style="width: 250px;" v-model="search.constant_value" placeholder="请输入常量值"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button icon="el-icon-search" round>查询</el-button>
+                <el-button icon="el-icon-search" round @click="listDatas()">查询</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -21,7 +24,7 @@
     </div>
     <div class="operationBox">
       <el-button-group style="border-bottom: 0px;">
-        <el-button size="mini" icon="el-icon-plus" @click="updateData">新增</el-button>
+        <el-button size="mini" icon="el-icon-plus" @click="updateData()">新增</el-button>
         <el-button type="danger" size="mini" icon="el-icon-delete" @click="deleteData">删除</el-button>
       </el-button-group>
     </div>
@@ -33,7 +36,7 @@
 
       <el-table-column align="center" label="状态">
         <template slot-scope="scope">
-          <span><el-tag :type="formatter(scope.row).tag_type">{{formatter(scope.row).dict_key}}</el-tag></span>
+          <span><el-tag :type="formatter(scope.row).tag_type">{{formatter(scope.row).dict_value}}</el-tag></span>
         </template>
       </el-table-column>
 
@@ -69,7 +72,7 @@
         </el-form-item>
         <el-form-item label="状态" prop="state">
           <el-radio-group v-model="saveorupdate.form.state">
-            <el-radio :label="item.dict_value" v-for="(item, key, index) in dictionary.state" :key="index">{{item.dict_key}}</el-radio>
+            <el-radio :label="item.dict_key" v-for="(item, key, index) in dictionary.state" :key="index">{{item.dict_value}}</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -132,8 +135,8 @@ export default {
       },
       dictionary: {
         state: [
-          { dict_code: 'constant_state', dict_key: '正常', dict_value: 1, tag_type: 'success' }, 
-          { dict_code: 'constant_state', dict_key: '禁用', dict_value: 2, tag_type: 'danger' }
+          { dict_code: 'constant_state', dict_key: 1, dict_value: '正常', tag_type: 'success' }, 
+          { dict_code: 'constant_state', dict_key: 2, dict_value: '禁用', tag_type: 'danger' }
         ]
       }
     };
@@ -143,8 +146,9 @@ export default {
   },
   methods: {
     formatter(row, column) {
+      console.log(row)
       return this.dictionary.state.find(function(dict) {
-        return dict.dict_value = row.state
+        return dict.dict_key == row.state
       });
     },
     listDatas() {
@@ -167,6 +171,9 @@ export default {
       this.selected = value;
     },
     updateData(data) {
+      this.$nextTick(()=>{
+        this.$refs['form-data'].resetFields();
+      })
       if(data) {
         this.saveorupdate.title = '修改系统常量';
         this.saveorupdate.form = Object.assign({}, data);
@@ -177,36 +184,24 @@ export default {
         this.saveorupdate.update = false;
       }
       this.saveorupdate.saveorupdate_dialog_show = true;
-      this.$refs['form-data'].resetFields();
-      this.$refs['form-data'].clearValidate(valid);
     },
     submitData() {
       let _this = this;
       this.$refs['form-data'].validate((valid) => {
           if (valid) {
-            if(_this.saveorupdate.update) {
-              updateConstant(_this.saveorupdate.form).then(result => {
-                this.$message({
-                  type: "success",
-                  message: "修改成功!"
-                });
-                _this.saveorupdate.saveorupdate_dialog_show = false;
-                _this.listDatas();
-              }).catch(err => {
-                this.$message.error(err);
+            updateConstant(_this.saveorupdate.form).then(result => {
+              this.$message({
+                type: "success",
+                message: _this.saveorupdate.update ? "修改成功!" : "新增成功!",
+                showClose: true,
+                onClose: function() {
+                  _this.listDatas();
+                  _this.saveorupdate.saveorupdate_dialog_show = false;
+                }
               });
-            } else {
-              insertConstant(_this.saveorupdate.form).then(result => {
-                this.$message({
-                  type: "success",
-                  message: "新增成功!"
-                });
-                _this.saveorupdate.saveorupdate_dialog_show = false;
-                _this.listDatas();
-              }).catch(err => {
-                this.$message.error(err);
-              });
-            }
+            }).catch(err => {
+              this.$message.error(err);
+            });
           } else {
             return false;
           }
@@ -230,18 +225,17 @@ export default {
             _this.selected.forEach(row => {
               ids.push(row.pkid);
             });
-            deleteConstant(ids).then(result => {
+            deleteConstant({'pkids': ids}).then(result => {
               this.$message({
                 type: "success",
                 message: "删除成功!"
               });
               _this.listDatas();
-            });
-          })
-          .catch(() => {
-            this.$message({
-              type: "info",
-              message: "已取消删除"
+            }).catch(err => {
+              this.$message({
+                type: "error",
+                message: err
+              });
             });
           });
       }

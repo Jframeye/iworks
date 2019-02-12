@@ -5,6 +5,9 @@ import { get, post } from '../axios'
  * @param p
  * @returns {*}
  */
-export const loginByUsername = p => post('api/loginByUsername', p)
+export const loginByUsername = p => post('http://localhost:8080/api/basic/user_login_info/loginByUsername', p)
 
-export const logout = () => get('api/logout', {})
+/**
+ * 登出接口
+ */
+export const logout = () => get('http://localhost:8080/api/basic/user_login_info/logout')

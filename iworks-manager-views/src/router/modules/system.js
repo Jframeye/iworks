@@ -26,6 +26,13 @@ const recordRouter = {
       meta: { title: '字典常量', icon: 'sub_menu', permission: 'sysuser' }
     },
     {
+      path: 'dictionary_data',
+      component: () => import('@/views/system/dictionary/data.vue'),
+      name: 'dictionary_data',
+      hidden: true,
+      meta: { title: '字典常量数据', icon: 'sub_menu', permission: 'sysuser' }
+    },
+    {
       path: 'user',
       component: () => import('@/views/system/user/index.vue'),
       name: 'user',
@@ -86,13 +93,6 @@ const recordRouter = {
       name: 'permissions',
       hidden: false,
       meta: { title: '权限管理', icon: 'sub_menu', permission: 'sysuser' }
-    },
-    {
-      path: 'dictionary',
-      component: () => import('@/views/record/insert.vue'),
-      name: 'dictionary',
-      hidden: false,
-      meta: { title: '字典管理', icon: 'sub_menu', permission: 'sysuser' }
     }
   ]
 }

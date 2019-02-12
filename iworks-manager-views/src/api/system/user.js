@@ -40,4 +40,4 @@ export const deleteUser = p => post('api/system/user/delete', {})
  * @param p
  * @returns {*}
  */
-export const findUser = p => post('api/system/user/find', {})
+export const findUser = p => post('http://localhost:8080/api/basic/user_basic_info/find', {})

@@ -14,6 +14,7 @@ import com.xiaoye.iworks.common.exception.BizServiceException;
 import com.xiaoye.iworks.persistent.constant.PersistentConstant;
 import com.xiaoye.iworks.utils.CollectionUtils;
 import com.xiaoye.iworks.utils.DateTimeUtils;
+import com.xiaoye.iworks.utils.EncryptUtil;
 import com.xiaoye.iworks.utils.exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,6 +112,7 @@ public class UserBasicInfoServiceImpl implements UserBasicInfoService {
             UserBasicInfoDO.setLstate(PersistentConstant.Lstate.NORMAL);
             UserBasicInfoDO.setCreateTime(DateTimeUtils.currentDate());
             UserBasicInfoDO.setModifyTime(DateTimeUtils.currentDate());
+            UserBasicInfoDO.setSign(EncryptUtil.MD5(UserBasicInfoDO.genSign()));
             UserBasicInfoMapper.insertSelective(UserBasicInfoDO);
             response.setData(UserBasicInfoDO.getPkid());
         } catch (ServiceException e) {

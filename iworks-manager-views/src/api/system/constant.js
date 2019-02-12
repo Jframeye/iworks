@@ -8,14 +8,7 @@ import { get, post } from '../axios'
 export const listConstantByPage = p => post('http://localhost:8080/api/basic/app_constant/list', p)
 
 /**
- * 新增系统常量信息
- * @param p
- * @returns {*}
- */
-export const insertConstant = p => post('http://localhost:8080/api/basic/app_constant/insert', p)
-
-/**
- * 修改系统常量信息
+ * 更新系统常量信息
  * @param p
  * @returns {*}
  */

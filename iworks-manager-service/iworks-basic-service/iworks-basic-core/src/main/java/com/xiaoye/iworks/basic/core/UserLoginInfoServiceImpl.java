@@ -3,13 +3,17 @@ package com.xiaoye.iworks.basic.core;
 import com.xiaoye.iworks.api.result.DataResponse;
 import com.xiaoye.iworks.api.result.PageResponse;
 import com.xiaoye.iworks.basic.api.UserLoginInfoService;
+import com.xiaoye.iworks.basic.api.constant.UserBasicInfoConstant;
 import com.xiaoye.iworks.basic.api.constant.UserLoginInfoConstant;
 import com.xiaoye.iworks.basic.api.dto.UserLoginInfoDto;
 import com.xiaoye.iworks.basic.api.input.UserLoginInfoQueryInput;
 import com.xiaoye.iworks.basic.core.exception.UserLoginInfoErrorCode;
 import com.xiaoye.iworks.basic.core.support.UserInfoAuxiliaryService;
+import com.xiaoye.iworks.basic.persistent.entity.UserBasicInfoCriteria;
+import com.xiaoye.iworks.basic.persistent.entity.UserBasicInfoDO;
 import com.xiaoye.iworks.basic.persistent.entity.UserLoginInfoCriteria;
 import com.xiaoye.iworks.basic.persistent.entity.UserLoginInfoDO;
+import com.xiaoye.iworks.basic.persistent.mapper.UserBasicInfoMapper;
 import com.xiaoye.iworks.basic.persistent.mapper.UserLoginInfoMapper;
 import com.xiaoye.iworks.common.exception.BizServiceException;
 import com.xiaoye.iworks.persistent.constant.PersistentConstant;
@@ -37,6 +41,8 @@ public class UserLoginInfoServiceImpl implements UserLoginInfoService {
 
     @Resource
     private UserLoginInfoMapper userLoginInfoMapper;
+    @Resource
+    private UserBasicInfoMapper userBasicInfoMapper;
     @Autowired
     private UserInfoAuxiliaryService userInfoAuxiliaryService;
 
@@ -94,18 +100,34 @@ public class UserLoginInfoServiceImpl implements UserLoginInfoService {
                 if(input.isCheckNull()) {
                     response.setRetcode(UserLoginInfoErrorCode.DATA_UNEXIST_ERROR);
                 }
-                response.setMessage("系统用户登录信息数据不存在");
+                response.setMessage("用户登录信息数据不存在");
                 return response;
             }
             // 校验签名串
             String sign = EncryptUtil.MD5(result.genSign());
             if(!sign.equals(result.getSign())) {
                 response.setRetcode(UserLoginInfoErrorCode.DATA_CHANGE_ERROR);
-                response.setMessage("系统用户登录信息数据不存在");
+                response.setMessage("用户登录信息数据被篡改");
                 return response;
             }
             UserLoginInfoDto dto = new UserLoginInfoDto();
             BeanUtils.copyProperties(result, dto);
+
+            // 查询用户基本信息
+            UserBasicInfoCriteria userBasicInfoCriteria = new UserBasicInfoCriteria();
+            userBasicInfoCriteria.createCriteriaInternal().andLstateEqualTo(PersistentConstant.Lstate.NORMAL)
+                    .andUserPkidEqualTo(dto.getPkid())
+                    .andUserNoEqualTo(dto.getUserNo())
+                    .andStateEqualTo(UserBasicInfoConstant.State.NORMAL);
+            UserBasicInfoDO userBasicInfoDO = userBasicInfoMapper.selectForOne(userBasicInfoCriteria);
+            if(userBasicInfoDO == null) {
+                if(input.isCheckNull()) {
+                    response.setRetcode(UserLoginInfoErrorCode.DATA_UNEXIST_ERROR);
+                }
+                response.setMessage("用户基本信息数据不存在");
+                return response;
+            }
+            BeanUtils.copyProperties(userBasicInfoDO, dto);
             response.setData(dto);
         } catch (ServiceException e) {
             response.setRetcode(e.getCode());
@@ -113,7 +135,7 @@ public class UserLoginInfoServiceImpl implements UserLoginInfoService {
             LOGGER.error(e.getCode(), e);
         } catch (Exception e) {
             response.setRetcode(UserLoginInfoErrorCode.DATA_QRY_ERROR);
-            response.setMessage("系统用户登录信息数据详情查询异常");
+            response.setMessage("用户登录信息数据详情查询异常");
             LOGGER.error(UserLoginInfoErrorCode.DATA_QRY_ERROR, e);
         }
         return response;
@@ -123,7 +145,7 @@ public class UserLoginInfoServiceImpl implements UserLoginInfoService {
     public DataResponse<Long> insertUserLoginInfo(UserLoginInfoDto dto) {
         DataResponse<Long> response = new DataResponse<>();
         try {
-            userInfoAuxiliaryService.createUser(dto);
+
             response.setData(dto.getPkid());
         } catch (ServiceException e) {
             response.setRetcode(e.getCode());

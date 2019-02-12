@@ -27,6 +27,7 @@ import com.xiaoye.iworks.utils.exception.ServiceErrorCode;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,7 +51,7 @@ public class UserLoginInfoController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public Response register(UserLoginInfoUpdateRequest request) {
+    public Response register(@RequestBody UserLoginInfoUpdateRequest request) {
         Response response = new Response();
         // TODO 参数校验以及参数填充
         // 判断用户是否已注册
@@ -74,14 +75,14 @@ public class UserLoginInfoController extends BasicController {
         dto.setPassword(request.getPass_word());
         dto.setEmail(request.getEmail());
         dto.setMobile(request.getMobile());
-        DataResponse<Long> insertResponse = userLoginInfoService.insertUserLoginInfo(dto);
-        ResponseCheck.checkSuccess(insertResponse);
+        DataResponse<Long> registerResponse = userLoginAuxiliary.createUser(dto);
+        ResponseCheck.checkSuccess(registerResponse);
         return response;
     }
 
     @RecordLogger
     @RequestMapping(value = "loginByUsername", method = RequestMethod.POST)
-    public Response loginByUsername(UserLoginInfoQueryRequest request, HttpServletRequest servletRequest) {
+    public Response loginByUsername(@RequestBody UserLoginInfoQueryRequest request, HttpServletRequest servletRequest) {
         DataResponse<String> response = new DataResponse();
         // 参数校验
         if(StringUtils.hasBlankString(request.getUser_name(), request.getPass_word())) {
@@ -125,7 +126,8 @@ public class UserLoginInfoController extends BasicController {
                 infoDto.setErrorCount(0);
                 loginInfoDto.setErrorCount(0);
                 loginInfoDto.setLockTime(null);
-                userLoginInfoService.updateUserLoginInfo(loginInfoDto);
+                DataResponse<Integer> updateResponse = userLoginInfoService.updateUserLoginInfo(loginInfoDto);
+                ResponseCheck.checkSuccess(updateResponse);
             }
         }
 
@@ -138,10 +140,13 @@ public class UserLoginInfoController extends BasicController {
                 loginInfoDto.setState(UserLoginInfoConstant.State.LOCKED);
                 loginInfoDto.setLockTime(DateTimeUtils.currentDate());
             }
-            userLoginInfoService.updateUserLoginInfo(loginInfoDto);
+            DataResponse<Integer> updateResponse = userLoginInfoService.updateUserLoginInfo(loginInfoDto);
+            ResponseCheck.checkSuccess(updateResponse);
             return response;
         }
-        response.setData(userLoginAuxiliary.createToken(infoDto, false, servletRequest));
+        DataResponse<String> createResponse = userLoginAuxiliary.createToken(infoDto, false, servletRequest);
+        ResponseCheck.checkSuccess(createResponse);
+        response.setData(createResponse.getData());
         return response;
     }
 
@@ -149,7 +154,9 @@ public class UserLoginInfoController extends BasicController {
     @RequestMapping(value = "getToken", method = RequestMethod.POST)
     public Response getToken(HttpServletRequest servletRequest) {
         DataResponse response = new DataResponse();
-        response.setData(userLoginAuxiliary.createToken(null, true, servletRequest));
+        DataResponse<String> createResponse = userLoginAuxiliary.createToken(null, true, servletRequest);
+        ResponseCheck.checkSuccess(createResponse);
+        response.setData(createResponse.getData());
         return response;
     }
 }

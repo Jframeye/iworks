@@ -9,10 +9,13 @@
           <div style="margin: 10px 10px -25px">
             <el-form :inline=true size="mini" v-model="search">
               <el-form-item label="字典编码">
-                <el-input style="width: 250px;" v-model="search.dict_code" placeholder="请输入字典编码"></el-input>
+                <el-input style="width: 250px;" v-model="search.dict_code" placeholder="请选择字典编码"></el-input>
               </el-form-item>
-              <el-form-item label="字典名称">
-                <el-input style="width: 250px;" v-model="search.dict_name" placeholder="请输入字典名称"></el-input>
+              <el-form-item label="字典健">
+                <el-input style="width: 250px;" v-model="search.dict_key" placeholder="请输入字典健"></el-input>
+              </el-form-item>
+              <el-form-item label="字典值">
+                <el-input style="width: 250px;" v-model="search.dict_value" placeholder="请选择字典值"></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button icon="el-icon-search" round>查询</el-button>
@@ -30,14 +33,9 @@
     </div>
     <el-table size='mini' :data="table_datas" v-loading.body="table_loading" border fit highlight-current-row style="width: 100%" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"></el-table-column>
-      <el-table-column prop="dict_name" align="center" label="字典名称"></el-table-column>
-      <el-table-column prop="dict_code" align="center" label="字典编码">
-        <template slot-scope="scope">
-          <router-link class="link-type" :to="'dictionary_data?'+scope.row.dict_code">
-            <span>{{ scope.row.dict_code }}</span>
-          </router-link>
-        </template>
-      </el-table-column>
+      <el-table-column prop="dict_code" align="center" label="字典编码"></el-table-column>
+      <el-table-column prop="dict_key" align="center" label="字典健"></el-table-column>
+      <el-table-column prop="dict_value" align="center" label="字典值"></el-table-column>
 
       <el-table-column align="center" label="状态">
         <template slot-scope="scope">
@@ -71,8 +69,11 @@
         <el-form-item label="字典编码" prop="dict_code">
           <el-input v-model="saveorupdate.form.dict_code" autocomplete="off" :disabled="saveorupdate.update"></el-input>
         </el-form-item>
-        <el-form-item label="字典名称" prop="dict_name">
-          <el-input v-model="saveorupdate.form.dict_name" autocomplete="off"></el-input>
+        <el-form-item label="字典健" prop="dict_key">
+          <el-input v-model="saveorupdate.form.dict_key" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="字典值" prop="dict_value">
+          <el-input v-model="saveorupdate.form.dict_value" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="备注" prop="dict_desc">
           <el-input v-model="saveorupdate.form.dict_desc" autocomplete="off"></el-input>
@@ -92,7 +93,7 @@
 </template>
 
 <script>
-import { listDictByPage, insertDict, updateDict, deleteDict } from "@/api/system/dict";
+import { listDictDataByPage, insertDictData, updateDictData, deleteDictData } from "@/api/system/dict";
 
 export default {
   data() {
@@ -106,7 +107,8 @@ export default {
       },
       search: {
         dict_code: "",
-        dict_name: ""
+        dict_key: "",
+        dict_value: ""
       },
       selected: [],
       saveorupdate: {
@@ -115,25 +117,27 @@ export default {
         title: '对话框',
         form: {
           pkid: '',
-          dict_code: '',
-          dict_name: '',
+          dict_code: "",
+          dict_key: '',
+          dict_value: '',
           dict_desc: '',
           state: ""
         },
         new_form: {
           pkid: '',
-          dict_code: '',
-          dict_name: '',
+          dict_code: "",
+          dict_key: '',
+          dict_value: '',
           dict_desc: '',
           state: ""
         }
       },
       rules: {
-        dict_code: [
-          { required: true, message: '请输入字典编码', trigger: 'blur' }
+        dict_key: [
+          { required: true, message: '请输入常量编码', trigger: 'blur' }
         ],
-        dict_name: [
-          { required: true, message: '请输入字典名称', trigger: 'blur' }
+        dict_value: [
+          { required: true, message: '请输入常量值', trigger: 'blur' }
         ],
         state: [
           { required: true, message: '请选择状态' }
@@ -158,7 +162,7 @@ export default {
     },
     listDatas() {
       this.table_loading = true;
-      listDictByPage(this.search).then(result => {
+      listDictDataByPage(this.search).then(result => {
         this.table_datas = result.datas;
         this.page.total = result.total;
         this.table_loading = false;
@@ -195,7 +199,7 @@ export default {
       this.$refs['form-data'].validate((valid) => {
           if (valid) {
             if(_this.saveorupdate.update) {
-              updateDict(_this.saveorupdate.form).then(result => {
+              updateDictData(_this.saveorupdate.form).then(result => {
                 this.$message({
                   type: "success",
                   message: "修改成功!"
@@ -206,7 +210,7 @@ export default {
                 this.$message.error(err);
               });
             } else {
-              insertDict(_this.saveorupdate.form).then(result => {
+              insertDictData(_this.saveorupdate.form).then(result => {
                 this.$message({
                   type: "success",
                   message: "新增成功!"
@@ -240,7 +244,7 @@ export default {
             _this.selected.forEach(row => {
               ids.push(row.pkid);
             });
-            deleteDict(ids).then(result => {
+            deleteDictData(ids).then(result => {
               this.$message({
                 type: "success",
                 message: "删除成功!"

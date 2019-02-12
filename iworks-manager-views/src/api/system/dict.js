@@ -1,36 +1,71 @@
 import { get, post } from '../axios'
 
 /**
- * 分页查询字典常量信息
+ * 分页查询字典分类信息
  * @param p
  * @returns {*}
  */
-export const listDictByPage = p => post('api/system/user/list', {})
+export const listDictByPage = p => post('http://localhost:8080/api/basic/dict_constant/list', {})
 
 /**
- * 新增字典常量信息
+ * 分页查询字典分类数据信息
  * @param p
  * @returns {*}
  */
-export const insertDict = p => post('api/system/user/insert', {})
+export const listDictDataByPage = p => post('http://localhost:8080/api/basic/dict_constant/list_dict', {})
 
 /**
- * 修改字典常量信息
+ * 新增字典分类信息
  * @param p
  * @returns {*}
  */
-export const updateDict = p => post('api/system/user/update', {})
+export const insertDict = p => post('http://localhost:8080/api/basic/dict_constant/insert', {})
 
 /**
- * 删除字典常量信息
+ * 新增字典分类数据信息
  * @param p
  * @returns {*}
  */
-export const deleteDict = p => post('api/system/user/delete', {})
+export const insertDictData = p => post('http://localhost:8080/api/basic/dict_constant/insert_dict', {})
 
 /**
- * 查询字典常量信息
+ * 修改字典分类数据信息
  * @param p
  * @returns {*}
  */
-export const findDict = p => post('api/system/user/list', {})
+export const updateDict = p => post('http://localhost:8080/api/basic/dict_constant/update', {})
+
+/**
+ * 修改字典分类数据信息
+ * @param p
+ * @returns {*}
+ */
+export const updateDictData = p => post('http://localhost:8080/api/basic/dict_constant/update_dict', {})
+
+/**
+ * 删除字典分类信息
+ * @param p
+ * @returns {*}
+ */
+export const deleteDict = p => post('http://localhost:8080/api/basic/dict_constant/delete', {})
+
+/**
+ * 删除字典分类数据信息
+ * @param p
+ * @returns {*}
+ */
+export const deleteDictData = p => post('http://localhost:8080/api/basic/dict_constant/delete_dict', {})
+
+/**
+ * 查询字典分类信息
+ * @param p
+ * @returns {*}
+ */
+export const findDict = p => post('http://localhost:8080/api/basic/dict_constant/find', {})
+
+/**
+ * 查询字典分类数据信息
+ * @param p
+ * @returns {*}
+ */
+export const findDictData = p => post('http://localhost:8080/api/basic/dict_constant/find_dict', {})

@@ -15,6 +15,7 @@ import com.xiaoye.iworks.common.logger.annotation.RecordLogger;
 import com.xiaoye.iworks.common.session.annotation.CheckSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +33,7 @@ public class DictConstantController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "list")
-    public Response list(DictConstantQueryRequest request) {
+    public Response list(@RequestBody DictConstantQueryRequest request) {
         DictConstantQueryInput queryInput = new DictConstantQueryInput();
         queryInput.setDictCode(request.getDict_code());
         queryInput.setDictName(request.getDict_name());
@@ -43,7 +44,7 @@ public class DictConstantController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "list_dict")
-    public Response listDict(DictConstantDataQueryRequest request) {
+    public Response listDict(@RequestBody DictConstantDataQueryRequest request) {
         DictConstantDataQueryInput queryInput = new DictConstantDataQueryInput();
         // TODO 参数校验以及参数填充
 
@@ -52,7 +53,7 @@ public class DictConstantController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "find")
-    public Response find(DictConstantQueryRequest request) {
+    public Response find(@RequestBody DictConstantQueryRequest request) {
         DictConstantQueryInput queryInput = new DictConstantQueryInput();
         // TODO 参数校验以及参数填充
 
@@ -61,7 +62,7 @@ public class DictConstantController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "find_dict")
-    public Response findDict(DictConstantDataQueryRequest request) {
+    public Response findDict(@RequestBody DictConstantDataQueryRequest request) {
         DictConstantDataQueryInput queryInput = new DictConstantDataQueryInput();
         // TODO 参数校验以及参数填充
 
@@ -70,7 +71,7 @@ public class DictConstantController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "update")
-    public Response update(DictConstantUpdateRequest request) {
+    public Response update(@RequestBody DictConstantUpdateRequest request) {
         DictConstantDto dto = new DictConstantDto();
         // TODO 参数填充(判断新增or修改)
 
@@ -79,7 +80,7 @@ public class DictConstantController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "update_dict")
-    public Response updateDict(DictConstantDataUpdateRequest request) {
+    public Response updateDict(@RequestBody DictConstantDataUpdateRequest request) {
         DictConstantDataDto dto = new DictConstantDataDto();
         // TODO 参数填充(判断新增or修改)
 
@@ -88,7 +89,7 @@ public class DictConstantController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "delete")
-    public Response delete(DictConstantQueryRequest request) {
+    public Response delete(@RequestBody DictConstantQueryRequest request) {
         DictConstantQueryInput queryInput = new DictConstantQueryInput();
         // TODO 参数校验以及参数填充
 
@@ -97,7 +98,7 @@ public class DictConstantController extends BasicController {
 
     @RecordLogger
     @RequestMapping(value = "delete_dict")
-    public Response deleteDict(DictConstantDataQueryRequest request) {
+    public Response deleteDict(@RequestBody DictConstantDataQueryRequest request) {
         DictConstantDataQueryInput queryInput = new DictConstantDataQueryInput();
         // TODO 参数校验以及参数填充
 
