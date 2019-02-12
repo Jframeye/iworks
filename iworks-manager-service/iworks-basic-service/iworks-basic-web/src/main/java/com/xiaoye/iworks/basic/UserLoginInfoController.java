@@ -5,26 +5,17 @@ import com.xiaoye.iworks.api.result.Response;
 import com.xiaoye.iworks.basic.api.UserLoginInfoService;
 import com.xiaoye.iworks.basic.api.constant.UserLoginInfoConstant;
 import com.xiaoye.iworks.basic.api.dto.UserLoginInfoDto;
-import com.xiaoye.iworks.basic.api.dto.UserLoginLogsDto;
 import com.xiaoye.iworks.basic.api.input.UserLoginInfoQueryInput;
-import com.xiaoye.iworks.basic.auxiliary.UserLoginAuxiliary;
+import com.xiaoye.iworks.basic.core.support.UserLoginAuxiliaryService;
 import com.xiaoye.iworks.basic.core.exception.UserLoginInfoErrorCode;
 import com.xiaoye.iworks.basic.request.UserLoginInfoQueryRequest;
 import com.xiaoye.iworks.basic.request.UserLoginInfoUpdateRequest;
 import com.xiaoye.iworks.common.api.BasicController;
-import com.xiaoye.iworks.common.constant.SessionConstant;
-import com.xiaoye.iworks.common.exception.BizServiceException;
 import com.xiaoye.iworks.common.logger.annotation.RecordLogger;
-import com.xiaoye.iworks.common.session.token.Token;
-import com.xiaoye.iworks.common.session.token.TokenFactory;
 import com.xiaoye.iworks.common.support.ResponseCheck;
-import com.xiaoye.iworks.service.RedisCacheService;
 import com.xiaoye.iworks.utils.DateTimeUtils;
 import com.xiaoye.iworks.utils.EncryptUtil;
 import com.xiaoye.iworks.utils.StringUtils;
-import com.xiaoye.iworks.utils.WebUtils;
-import com.xiaoye.iworks.utils.exception.ServiceErrorCode;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,7 +37,7 @@ public class UserLoginInfoController extends BasicController {
     @Autowired
     private UserLoginInfoService userLoginInfoService;
     @Autowired
-    private UserLoginAuxiliary userLoginAuxiliary;
+    private UserLoginAuxiliaryService userLoginAuxiliary;
 
 
     @RecordLogger
