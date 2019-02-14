@@ -8,7 +8,7 @@
         <el-row class="row" style="text-align: center">
           <el-col class="col" :span="6">
             <el-tooltip class="item" effect="dark" content="返回" placement="bottom">
-              <el-button icon="el-icon-back" type="text" size="medium" class="back-btn" @click="back"></el-button>
+              <el-button icon="el-icon-back" type="text" size="medium" class="back-btn"></el-button>
             </el-tooltip>
           </el-col>
           <el-col class="col header-info" :span="12">
@@ -33,61 +33,67 @@
         </el-row>
       </el-col>
     </el-row>
-    <el-row class="row menu-bar">
+    <el-row class="row container-box">
       <el-col class="col menu-items">
-        <el-row class="row menu-item">
-          <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-          <br>
-          系统管理
-        </el-row>
-        <el-row class="row menu-item">
-          <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-          <br>
-          系统管理
-        </el-row>
-        <el-row class="row menu-item">
-          <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-          <br>
-          系统管理
-        </el-row>
-        <el-row class="row menu-item">
-          <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-          <br>
-          系统管理
-        </el-row>
-        <el-row class="row menu-item">
-          <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-          <br>
-          系统管理
-        </el-row>
-        <el-row class="row menu-item">
-          <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-          <br>
-          系统管理
-        </el-row>
-        <el-row class="row menu-item">
-          <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-          <br>
-          系统管理
-        </el-row>
-        <el-row class="row menu-item">
-          <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-          <br>
-          系统管理
-        </el-row>
-        <el-row class="row menu-item">
-          <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-          <br>
-          系统管理
-        </el-row>
-        <el-row class="row menu-item">
-          <svg-icon icon-class="xiaoxi" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-          <br>
-          消息
-        </el-row>
+        <vue-scroll>
+          <el-row class="row menu-item">
+            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
+            <br>
+            系统管理
+          </el-row>
+          <el-row class="row menu-item">
+            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
+            <br>
+            系统管理
+          </el-row>
+          <el-row class="row menu-item">
+            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
+            <br>
+            系统管理
+          </el-row>
+          <el-row class="row menu-item">
+            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
+            <br>
+            系统管理
+          </el-row>
+          <el-row class="row menu-item">
+            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
+            <br>
+            系统管理
+          </el-row>
+          <el-row class="row menu-item">
+            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
+            <br>
+            系统管理
+          </el-row>
+          <el-row class="row menu-item">
+            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
+            <br>
+            系统管理
+          </el-row>
+          <el-row class="row menu-item">
+            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
+            <br>
+            系统管理
+          </el-row>
+          <el-row class="row menu-item">
+            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
+            <br>
+            系统管理
+          </el-row>
+          <el-row class="row menu-item">
+            <svg-icon icon-class="xiaoxi" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
+            <br>
+            消息
+          </el-row>
+        </vue-scroll>
       </el-col>
       <el-col class="col content-region">
-        <!--<project></project>-->
+        <transition name="fade-transform" mode="out-in">
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
+        </transition>
       </el-col>
     </el-row>
   </div>
@@ -116,9 +122,9 @@
   .header-info { font-size: 15px;font-weight: bold;color:#17B9E6; }
   .user-info { height: 60px;text-align: right;padding-right: 20px; }
   .user-info img { width: 40px;height: 40px; border-radius:50%;margin-top: 10px; }
-  .menu-bar { height: calc(100vh - 60px);position: fixed; }
-  .menu-bar .menu-items { width: 100px;background-color: #333333; }
-  .menu-bar .menu-items .menu-item { height: 80px; text-align: center;font-size: 14px;cursor: pointer; color: #888888; }
+  .container-box { height: calc(100vh - 60px);position: fixed; }
+  .container-box .menu-items { width: 100px;background-color: #333333; }
+  .container-box .menu-items .menu-item { height: 80px; text-align: center;font-size: 14px;cursor: pointer; color: #888888; }
 
-  .content-region { width: calc(100vw - 100px);overflow-y: hidden; }
+  .container-box .content-region { width: calc(100vw - 100px);overflow-y: hidden; }
 </style>

@@ -7,8 +7,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'login',
-      component: () => import('@/pages/index.vue')
+      name: 'index',
+      component: () => import('@/pages/index.vue'),
+      redirect: 'system',
+      children: [
+        { path: 'system', component: () => import('@/pages/system/index.vue') },
+      ]
     }
   ]
 })

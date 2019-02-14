@@ -5,6 +5,9 @@ import Vue from 'vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
+// 滚动条
+import vuescroll from 'vuescroll';
+
 // 全局样式
 import './assets/css/common.css';
 import './assets/font-awesome/css/font-awesome.min.css';
@@ -19,6 +22,12 @@ import router from './router'
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
+Vue.use(vuescroll); // install the vuescroll first
+Vue.prototype.$vuescrollConfig = {
+  bar: {
+    background: '#86827f'
+  }
+};
 Vue.use(animated);
 
 new Vue({
