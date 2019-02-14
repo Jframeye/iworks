@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-cloak>
+  <div v-cloak>
     <el-row class="row header-bar">
       <el-col class="col logo-bar">
         <img src="http://doclever.cn:8090/logo.png">
