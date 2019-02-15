@@ -3,10 +3,9 @@
     <el-tabs style="height: 50px;">
       <el-tab-pane name="" label="菜单管理"></el-tab-pane>
       <el-tab-pane name="" label="权限管理"></el-tab-pane>
-      <el-tab-pane name="" label="常量管理"></el-tab-pane>
       <el-tab-pane name="" label="字典管理"></el-tab-pane>
       <el-tab-pane name="" label="日志管理"></el-tab-pane>
-      <el-tab-pane name="" label="设置"></el-tab-pane>
+      <el-tab-pane name="" label="参数设置"></el-tab-pane>
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
@@ -15,7 +14,7 @@
 </template>
 
 <script>
-  import constant_view from './constant_list.vue'
+  import constant_view from './list_parameter.vue'
   export default {
     name: 'system',
     components: {

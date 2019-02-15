@@ -14,7 +14,7 @@
           数据查询
         </div>
         <el-row class="row">
-          <el-form :inline=true size="mini" v-model="search">
+          <el-form :inline=true size="small" v-model="search">
             <el-form-item label="常量编码">
               <el-input style="width: 250px;" v-model="search.state" placeholder="请输入常量编码"></el-input>
             </el-form-item>
@@ -38,14 +38,22 @@
           </el-select>
         </div>
         <el-row class="row">
-          <el-table :data="tableData" border style="width: 100%">
+          <el-table :data="tableData" border style="width: 100%" size="mini">
             <el-table-column fixed type="selection" width="55" align="center"></el-table-column>
             <el-table-column prop="date" label="日期" width="150"></el-table-column>
             <el-table-column prop="name" label="姓名" width="120"></el-table-column>
             <el-table-column prop="province" label="省份" width="120"></el-table-column>
             <el-table-column prop="city" label="市区" width="120"></el-table-column>
-            <el-table-column prop="address" label="地址" width="300"></el-table-column>
-            <el-table-column prop="zip" label="邮编" width="120"></el-table-column>
+            <el-table-column label="地址" width="300">
+              <template slot-scope="scope">
+                <dot type="success"></dot>{{scope.row.address}}
+              </template>
+            </el-table-column>
+            <el-table-column label="邮编" width="120">
+              <template slot-scope="scope">
+                <dot type="danger"></dot>{{scope.row.zip}}
+              </template>
+            </el-table-column>
             <el-table-column fixed="right" label="操作" width="120">
               <template slot-scope="scope">
                 <el-button type="text" size="small">移除</el-button>
@@ -53,8 +61,7 @@
             </el-table-column>
           </el-table>
           <div class="pagination-container">
-            <el-pagination background :current-page="1"
-                           :page-sizes="[10,20,30, 50]" :page-size="10" layout="total, sizes, prev, pager, next, jumper" :total="100">
+            <el-pagination background :current-page="1" :page-sizes="[10,20,30, 50]" :page-size="10" layout="sizes, prev, pager, next, total, jumper" :total="100">
             </el-pagination>
           </div>
         </el-row>
@@ -78,11 +85,13 @@
 </template>
 
 <script>
-  import expand from '@/components/expand.vue'
+  import expand from '@/components/expand.vue';
+  import dot from '@/components/dot.vue';
   export default {
     name: 'system',
     components: {
-      "expand": expand
+      "expand": expand,
+      "dot": dot
     },
     data() {
       return {
