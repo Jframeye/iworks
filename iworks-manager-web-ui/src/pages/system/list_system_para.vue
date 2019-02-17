@@ -1,14 +1,14 @@
 <template>
-  <el-row class="row">
-    <el-row class="row" style="height: 50px;line-height: 50px; padding-right: 20px">
-      <el-button type="primary" size="small" style="margin-left: 20px;" @click="showAdd=true">
+  <el-row class="row" style="padding-left: 20px;">
+    <el-row class="row" style="height: 35px;line-height: 35px">
+      <el-button type="primary" size="small" @click="showAdd=true">
         <i class="el-icon-plus" style="font-weight:900"></i>&nbsp;新增常量
       </el-button>
       <el-button type="danger" size="small" style="margin-left: 10px;">
         <strong><i class="el-icon-delete" style="font-weight:900"></i></strong>&nbsp;删除常量
       </el-button>
     </el-row>
-    <el-row class="row" style="margin: 10px 20px 10px 20px;width: calc(100% - 40px);height: calc(100vh - 175px);overflow-y: auto">
+    <el-row class="row" style="margin: 10px 0; width: calc(100% - 5px);height: calc(100vh - 175px);overflow-y: auto">
       <expand :expand="1" style="background-color: white;border-radius: 5px;box-shadow: 0 2px 4px 0 rgba(0,0,0,.12), 0 0 6px 0 rgba(0,0,0,.04);">
         <div slot="title" style="font-size: 14px">
           数据查询

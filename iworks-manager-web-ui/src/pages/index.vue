@@ -19,7 +19,7 @@
             <el-dropdown style="top: -15px;">
               <span class="el-dropdown-link" style="color: #50bfff;cursor: pointer">
                 <span>
-                    叶宏梁
+                    {{current}}
                 </span>
                 <i class="el-icon-caret-bottom el-icon--right"></i>
               </span>
@@ -37,54 +37,18 @@
       <el-col class="col menu-items">
         <vue-scroll>
           <el-row class="row menu-item">
-            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-            <br>
-            系统管理
+            <router-link to="/index">
+              <svg-icon :icon-class="current == 'index' ? 'index_activite' : 'index'" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
+              <br>
+              后台首页
+            </router-link>
           </el-row>
-          <el-row class="row menu-item">
-            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-            <br>
-            系统管理
-          </el-row>
-          <el-row class="row menu-item">
-            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-            <br>
-            系统管理
-          </el-row>
-          <el-row class="row menu-item">
-            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-            <br>
-            系统管理
-          </el-row>
-          <el-row class="row menu-item">
-            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-            <br>
-            系统管理
-          </el-row>
-          <el-row class="row menu-item">
-            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-            <br>
-            系统管理
-          </el-row>
-          <el-row class="row menu-item">
-            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-            <br>
-            系统管理
-          </el-row>
-          <el-row class="row menu-item">
-            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-            <br>
-            系统管理
-          </el-row>
-          <el-row class="row menu-item">
-            <svg-icon icon-class="xiangmu" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-            <br>
-            系统管理
-          </el-row>
-          <el-row class="row menu-item">
-            <svg-icon icon-class="xiaoxi" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
-            <br>
-            消息
+          <el-row v-for="item in permissions" :key="item.menu_code" class="row menu-item">
+            <router-link :to="{ name: item.menu_code, query: { menu_code: item.menu_code }}">
+              <svg-icon :icon-class="current == item.menu_code ? item.menu_icon + '_activite' : item.menu_icon" style="width: 32px; height: 32px; margin-top: 15px;"></svg-icon>
+              <br>
+              {{item.menu_name}}
+            </router-link>
           </el-row>
         </vue-scroll>
       </el-col>
@@ -100,14 +64,28 @@
 </template>
 
 <script>
+  import { mapGetters } from "vuex";
   export default {
     name: 'console',
     components: {
     },
     data() {
       return {
-        type: 0
+        current: this.$route.name,
+        menu_list: []
       }
+    },
+    watch: {
+      $route(to, from) {
+        this.current = this.$route.name
+      }
+    },
+    created() {
+    },
+    computed: {
+      ...mapGetters(["permissions"])
+    },
+    methods: {
     }
   }
 </script>
@@ -124,7 +102,9 @@
   .user-info img { width: 40px;height: 40px; border-radius:50%;margin-top: 10px; }
   .container-box { height: calc(100vh - 60px);position: fixed; }
   .container-box .menu-items { width: 100px;background-color: #333333; }
-  .container-box .menu-items .menu-item { height: 80px; text-align: center;font-size: 14px;cursor: pointer; color: #888888; }
-
+  .container-box .menu-items .menu-item { height: 80px; text-align: center;font-size: 14px;cursor: pointer; }
+  .container-box .menu-items .menu-item a { text-decoration: none; color: #888888; }
   .container-box .content-region { width: calc(100vw - 100px);overflow-y: hidden; }
+
+  .router-link-active { text-decoration: none; color: #ffffff!important; }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <el-row class="row">
+  <el-row class="row" style="padding: 0 5px;">
     <el-row class="row" style="height: 35px;line-height: 35px">
       <el-button size="mini" type="text" icon="fa fa-arrows-alt" style="margin-left: 5px;font-size: 15px" title="放大/缩小"></el-button>
       <el-button type="primary" size="mini" style="float: right;margin-top: 4px;margin-right: 5px;margin-left: 0px">
@@ -11,12 +11,12 @@
       <el-row class="row" style="background-color: white;border-radius: 5px;box-shadow: 0 2px 4px 0 rgba(0,0,0,.12), 0 0 6px 0 rgba(0,0,0,.04)">
         <el-row class="row" style="height:40px;line-height: 40px;padding-left: 10px;font-size: 14px;color: #17B9E6">
           基本信息&nbsp;
-          <el-tooltip class="item" effect="dark" placement="bottom" trigger="hover" :content="editInfo">
+          <el-tooltip class="item" effect="dark" placement="bottom" trigger="hover">
             <i class="el-icon-info" style="font-size: 12px;"></i>
           </el-tooltip>
         </el-row>
         <el-row class="row" style="height: 1px;background-color: lightgray"></el-row>
-        <el-form label-position="top" label-width="80px" style="padding: 10px 100px 20px 10px" id="interfaceBasicInfo">
+        <el-form label-position="top" label-width="80px" style="padding: 10px 100px 20px 10px">
           <el-row class="row">
             <el-col class="col" :span="12">
               <el-form-item label="名称">
@@ -25,9 +25,9 @@
             </el-col>
             <el-col class="col" :span="12">
               <el-form-item label="简介">
-                <el-tooltip class="item" effect="dark" :content="asdasd" placement="bottom" :disabled="false">
+                <el-tooltip class="item" effect="dark" placement="bottom" :disabled="false">
                   <el-input style="width: 90%" size="small">
-                    <i slot="suffix" class="el-input__icon el-icon-edit" @click="editRemark" style="cursor: pointer"></i>
+                    <i slot="suffix" class="el-input__icon el-icon-edit" style="cursor: pointer"></i>
                   </el-input>
                 </el-tooltip>
               </el-form-item>
@@ -40,23 +40,11 @@
             </el-col>
             <el-col class="col" :span="12">
               <el-form-item label="状态">
-                <el-select style="width: 90%;text-align: center" size="small">
-                  <el-option  :value="0" label="开发中"></el-option>
-                  <el-option  :value="1" label="开发完成"></el-option>
-                  <el-option  :value="2" label="已废弃"></el-option>
-                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row class="row">
             <el-form-item label="路径">
-              <el-select style="width: 20%;text-align: center" size="small">
-                <el-option  value="GET"></el-option>
-                <el-option  value="POST"></el-option>
-                <el-option  value="PUT"></el-option>
-                <el-option  value="DELETE"></el-option>
-                <el-option  value="PATCH"></el-option>
-              </el-select>
               <el-input size="small" style="width: calc(75% - 14px);margin-left: 10px" placeholder="请输入接口路径(不包含BaseUrl)"></el-input>
             </el-form-item>
           </el-row>
@@ -75,7 +63,7 @@
 
 <script>
   export default {
-    name: 'edit-resource',
+    name: 'edit-menu',
     components: {
     },
     data () {

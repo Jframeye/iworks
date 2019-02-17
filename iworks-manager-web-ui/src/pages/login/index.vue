@@ -11,16 +11,15 @@
               <el-row>
                 <el-col :span="2" :xs="2">&nbsp;</el-col>
                 <el-col :span="20" class="login-box" :xs="20">
-                  <el-form>
-                    <el-form-item label="请输入用户名" prop="username">
-                      <el-input v-model="username"></el-input>
+                  <el-form ref="login_form" :model="login_form">
+                    <el-form-item label="请输入用户名">
+                      <el-input v-model="login_form.user_name"></el-input>
                     </el-form-item>
-                    <el-form-item label="请输入密码" prop="password" style="margin-bottom: 30px;">
-                      <el-input v-model="pwd" type="password"></el-input>
+                    <el-form-item label="请输入密码" style="margin-bottom: 30px;">
+                      <el-input v-model="login_form.pass_word" type="password"></el-input>
                     </el-form-item>
                     <el-form-item>
-                      <el-button type="warning" style="width: 100%" @click.prevent="login" :loading="loginPending">登录
-                      </el-button>
+                      <el-button type="warning" style="width: 100%" @click.prevent="login" :loading="login_pending">登录</el-button>
                     </el-form-item>
                     <el-form-item>
                       <!--<img @click="qqLogin()"  target="_blank" class="fr" style="padding-top: 5px;cursor: pointer" src="@/assets/images/qq.png"> </a>-->
@@ -45,8 +44,30 @@
     name: 'login',
     data() {
       return {
-        msg: 'Welcome to Your Vue.js App'
+        login_pending: false,
+        login_form: {
+          user_name: "xiaoye08050141@126.com",
+          pass_word: "xiaoye+123"
+        }
       }
+    },
+    methods: {
+      login:function () {
+        if(!this.login_form.user_name || !this.login_form.pass_word) {
+          this.$message.error('用户名密码不能为空');
+          return;
+        }
+        this.login_pending = true;
+        this.$store.dispatch("Login_By_Username", this.login_form)
+          .then(() => {
+            this.$router.push({ path: "/" });
+          }).catch(err => {
+          this.$message({
+            type: "error",
+            message: err
+          });
+        });
+      },
     }
   }
 </script>
