@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
 import { isBlank } from './tools'
+import { aes_encrypt, aes_decrypt} from '@/utils/crypto'
 
 /**
  * 设置 token 到 cookie 中, 不传值,则删除 cookie 中的 token
@@ -30,7 +31,7 @@ export const getToken = () => {
  */
 export const set = (name, data) => {
   if (data) {
-    window.localStorage.setItem(name, JSON.stringify(data));
+    window.sessionStorage.setItem(name, aes_encrypt(data));
   } else {
     remove(name);
   }
@@ -41,9 +42,9 @@ export const set = (name, data) => {
  * @param {*} name
  */
 export const get = (name) => {
-  const data = window.localStorage.getItem(name);
+  const data = window.sessionStorage.getItem(name);
   if (isBlank(data)) return '';
-  return JSON.parse(data);
+  return JSON.parse(aes_decrypt(data));
 }
 
 /**
@@ -51,5 +52,5 @@ export const get = (name) => {
  * @param {*} name
  */
 const remove = (name) => {
-  window.localStorage.removeItem(name);
+  window.sessionStorage.removeItem(name);
 }

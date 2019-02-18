@@ -1,13 +1,13 @@
 <template>
-  <el-row class="row">
-    <el-col class="col" :span="full_box ? 0 : 6" style="padding-left: 20px;">
-      <el-row class="row" style="height: 35px;line-height: 35px">
+  <el-row class="row section-box">
+    <el-col class="col" :span="full_box ? 0 : 6">
+      <el-row class="row tools-box">
         <el-button size="small" type="primary" @click.native="add_menu">
-          <i class="el-icon-plus" style="font-weight:900"></i>&nbsp;新增菜单组
+          <i class="el-icon-plus"></i>&nbsp;新增菜单组
         </el-button>
       </el-row>
-      <el-row class="row" style="background-color: white;padding: 5px;border-radius: 5px;height: calc(100vh - 150px);overflow-y: auto;margin-top: 5px">
-        <el-input size="small" placeholder="" style="width: 100%;margin-bottom: 10px">
+      <el-row class="row search-box">
+        <el-input size="small" placeholder="" style="margin-bottom: 10px">
           <template slot="prepend">
             <label>名称</label>
           </template>
@@ -15,7 +15,7 @@
         <list :data="menu_list"></list>
       </el-row>
     </el-col>
-    <el-col :span="full_box ? 24 : 18" class="col" style="height: calc(100vh - 110px);">
+    <el-col :span="full_box ? 24 : 18" class="col">
       <el-row class="row">
         <transition name="component-fade" mode="out-in">
           <edit-menu></edit-menu>
@@ -64,14 +64,5 @@
 </script>
 
 <style>
-  #content {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-  #content .component-fade-enter-active, .component-fade-leave-active {
-    transition: opacity .3s ease;
-  }
-  #content .component-fade-enter, .component-fade-leave-to {
-    opacity: 0;
-  }
+  .search-box { background-color: white;padding: 5px;border-radius: 5px;height: calc(100vh - 150px);overflow-y: auto;margin-top: 5px; }
 </style>

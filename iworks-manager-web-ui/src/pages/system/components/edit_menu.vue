@@ -1,5 +1,5 @@
 <template>
-  <el-row class="row" style="padding: 0 5px;">
+  <el-row class="row" style="padding-left: 5px;">
     <el-row class="row" style="height: 35px;line-height: 35px">
       <el-button size="mini" type="text" icon="fa fa-arrows-alt" style="margin-left: 5px;font-size: 15px" title="放大/缩小"></el-button>
       <el-button type="primary" size="mini" style="float: right;margin-top: 4px;margin-right: 5px;margin-left: 0px">

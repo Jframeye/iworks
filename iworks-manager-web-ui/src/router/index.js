@@ -46,6 +46,7 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
+    debugger
     if (white_routers.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
       next()
     } else {

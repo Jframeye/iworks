@@ -22,6 +22,7 @@ const app = {
     /** 设置用户权限 */
     SET_PERMISSIONS: (state, permissions) => {
       state.permissions = [].concat(permissions);
+      storage.set('USER_PERMISSIONS', permissions);
     }
   },
 
@@ -65,6 +66,18 @@ const app = {
       })
     },
     /**
+     * 退出系统
+     * @param commit
+     * @returns {Promise}
+     * @constructor
+     */
+    Logout({ commit }) {
+      return new Promise(resolve => {
+        commit('SET_TOKEN', '')
+        resolve()
+      })
+    },
+    /**
      * 异常退出系统
      * @param commit
      * @returns {Promise}
@@ -73,7 +86,6 @@ const app = {
     Fed_Logout({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
-        storage.setToken('')
         resolve()
       })
     },

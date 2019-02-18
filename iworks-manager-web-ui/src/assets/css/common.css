@@ -1,149 +1,182 @@
 body {
-    width: 100%;
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
-    background-color: rgb(244,241,244)
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(244, 241, 244)
 }
 
-.container{
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height:100%;
+.container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
-[v-cloak]{
-    display: none;
+[v-cloak] {
+  display: none;
 }
 
 * {
-    font-family: Helvetica Neue,PingFang SC,Microsoft Yahei,\\5FAE\8F6F\96C5\9ED1,STXihei,\\534E\6587\7EC6\9ED1,sans-serif;
+  font-family: Helvetica Neue, PingFang SC, Microsoft Yahei, \\5FAE\8F6F\96C5\9ED1, STXihei, \\534E\6587\7EC6\9ED1, sans-serif;
 }
 
-.row{
-    margin: 0;
-    padding: 0;
-    width: 100%;
+.row {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
-.col{
-    margin: 0;
-    padding: 0;
-    height: 100%;
+
+.col {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 .file {
-    position: relative;
-    display: inline-block;
-    background-color: #50bfff;
-    border: 1px solid #99D3F5;
-    border-radius: 4px;
-    padding: 4px 12px;
-    overflow: hidden;
-    color: white;
-    text-decoration: none;
-    text-indent: 0;
-    line-height: 20px;
+  position: relative;
+  display: inline-block;
+  background-color: #50bfff;
+  border: 1px solid #99D3F5;
+  border-radius: 4px;
+  padding: 4px 12px;
+  overflow: hidden;
+  color: white;
+  text-decoration: none;
+  text-indent: 0;
+  line-height: 20px;
 }
+
 .file input {
-    position: absolute;
-    font-size: 100px;
-    right: 0;
-    top: 0;
-    opacity: 0;
+  position: absolute;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
 }
+
 .file:hover {
-    background: #AADFFD;
-    border-color: #78C3F3;
-    color: #004974;
-    text-decoration: none;
+  background: #AADFFD;
+  border-color: #78C3F3;
+  color: #004974;
+  text-decoration: none;
 }
 
-.table-hover tr:hover
-{
-    background-color:rgb(247,246,242) ;
+.table-hover tr:hover {
+  background-color: rgb(247, 246, 242);
 }
 
-.el-textarea
-{
-    vertical-align:baseline ;
+.el-textarea {
+  vertical-align: baseline;
 }
 
-.el-input__inner{
-    display:inline-block;
+.el-input__inner {
+  display: inline-block;
 }
 
-.el-textarea__inner{
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
+.el-textarea__inner {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
 }
 
 td {
-    padding: 0;
+  padding: 0;
 }
 
 .my-autocomplete {
 }
+
 .my-autocomplete li {
-    line-height: normal;
-    padding: 7px;
+  line-height: normal;
+  padding: 7px;
 }
+
 .my-autocomplete li .value {
-    text-overflow: ellipsis;
-    overflow: hidden;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .my-autocomplete li .remark {
-    font-size: 13px;
-    color: #b4b4b4;
-}
-.my-autocomplete li .highlighted .remark {
-    color: #ddd;
+  font-size: 13px;
+  color: #b4b4b4;
 }
 
-.el-tree-node__content>.el-checkbox {
-    vertical-align:inherit;
+.my-autocomplete li .highlighted .remark {
+  color: #ddd;
+}
+
+.el-tree-node__content > .el-checkbox {
+  vertical-align: inherit;
 }
 
 div.el-tree-node__content {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .hover .row:hover {
-    background-color:rgb(247,246,242) ;
+  background-color: rgb(247, 246, 242);
 }
 
 msgBadge {
-    margin-top: 20px;
-    margin-right: 40px;
+  margin-top: 20px;
+  margin-right: 40px;
 }
 
 .el-dropdown-link .el-badge__content.is-fixed {
-    top:15px
+  top: 15px
 }
 
 .docPreview {
 
 }
+
 .docPreview img {
-    max-width: 100%;
+  max-width: 100%;
 }
+
 .docPreview table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: center;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
 }
-.docPreview td{
-    border:1px solid #BBB;
+
+.docPreview td {
+  border: 1px solid #BBB;
 }
-.docPreview th{
-    border:1px solid #BBB;
+
+.docPreview th {
+  border: 1px solid #BBB;
 }
-.docPreview tr:hover{
-    background-color: #f3f3f3;
+
+.docPreview tr:hover {
+  background-color: #f3f3f3;
 }
+
 .docPreview pre {
-    background-color: #f3f3f3;
-    padding: 10px;
+  background-color: #f3f3f3;
+  padding: 10px;
+}
+
+.section-box {
+  padding-left: 20px;
+  padding-right: 10px;
+}
+
+.tools-box {
+  height: 35px;
+  line-height: 35px
+}
+
+.content-box {
+  margin: 10px 0;
+  width: 100%;
+  height: calc(100vh - 175px);
+  overflow-y: auto;
+}
+
+.content-box .pane-box {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .12), 0 0 6px 0 rgba(0, 0, 0, .04);
 }

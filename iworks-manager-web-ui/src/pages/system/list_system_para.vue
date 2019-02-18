@@ -1,15 +1,15 @@
 <template>
-  <el-row class="row" style="padding-left: 20px;">
-    <el-row class="row" style="height: 35px;line-height: 35px">
+  <el-row class="row section-box">
+    <el-row class="row tools-box">
       <el-button type="primary" size="small" @click="showAdd=true">
-        <i class="el-icon-plus" style="font-weight:900"></i>&nbsp;新增常量
+        <i class="el-icon-plus"></i>&nbsp;新增常量
       </el-button>
-      <el-button type="danger" size="small" style="margin-left: 10px;">
-        <strong><i class="el-icon-delete" style="font-weight:900"></i></strong>&nbsp;删除常量
+      <el-button type="danger" size="small">
+        <strong><i class="el-icon-delete"></i></strong>&nbsp;删除常量
       </el-button>
     </el-row>
-    <el-row class="row" style="margin: 10px 0; width: calc(100% - 5px);height: calc(100vh - 175px);overflow-y: auto">
-      <expand :expand="1" style="background-color: white;border-radius: 5px;box-shadow: 0 2px 4px 0 rgba(0,0,0,.12), 0 0 6px 0 rgba(0,0,0,.04);">
+    <el-row class="row content-box">
+      <expand :expand="1" class="pane-box">
         <div slot="title" style="font-size: 14px">
           数据查询
         </div>
@@ -27,7 +27,7 @@
           </el-form>
         </el-row>
       </expand>
-      <expand :expand="1" style="background-color: white;margin-top: 20px;border-radius: 5px;box-shadow: 0 2px 4px 0 rgba(0,0,0,.12), 0 0 6px 0 rgba(0,0,0,.04);">
+      <expand :expand="1" class="pane-box" style="margin-top: 20px;">
         <div slot="title" style="font-size: 14px">
           数据结果
         </div>
@@ -67,6 +67,7 @@
         </el-row>
       </expand>
     </el-row>
+
     <el-dialog title="新建项目" :visible.sync="showAdd" width="50%" append-to-body>
       <el-form label-position="top" ref="form" label-width="100px">
         <el-form-item label="名称">

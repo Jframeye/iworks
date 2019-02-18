@@ -1,6 +1,6 @@
 <template>
-  <el-row class="row menu-bar" style="margin-top: 10px">
-    <el-tabs v-model="current" style="height: 50px;">
+  <el-row class="row menu-bar">
+    <el-tabs v-model="current">
       <el-tab-pane v-for="item in menu_list" :key="item.menu_code" :name="item.menu_code" :label="item.menu_name">
         <transition name="component-fade" mode="out-in">
           <keep-alive>
@@ -8,8 +8,6 @@
           </keep-alive>
         </transition>
       </el-tab-pane>
-      <el-tab-pane name="" :label="'current:' + current"></el-tab-pane>
-      <el-tab-pane name="" :label="'parent_menu_code:' + parent_menu_code"></el-tab-pane>
     </el-tabs>
   </el-row>
 </template>
@@ -70,6 +68,7 @@
 </script>
 
 <style>
+  .menu-bar { margin-top: 10px; }
   .menu-bar .el-tabs__header {
     background-color: white;
   }

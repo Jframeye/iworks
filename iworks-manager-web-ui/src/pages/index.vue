@@ -2,7 +2,7 @@
   <div v-cloak>
     <el-row class="row header-bar">
       <el-col class="col logo-bar">
-        <img src="http://doclever.cn:8090/logo.png">
+        <img src="@/assets/index_logo.png">
       </el-col>
       <el-col class="col header-info-bar">
         <el-row class="row" style="text-align: center">
@@ -94,7 +94,7 @@
 <style>
   .header-bar { height: 60px;line-height: 60px; }
   .logo-bar { width: 100px;line-height: 60px;text-align: center;background-color:#17B9E6; }
-  .logo-bar img { width:40px;height:40px;margin-top: 10px }
+  .logo-bar img { margin-top: 10px }
   .header-info-bar { width: calc(100vw - 100px);background-color: white;box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 3px 0px; }
   .back-btn { font-size: 20px;float: left;margin-left: 20px;margin-top: 8px; }
   .header-info { font-size: 15px;font-weight: bold;color:#17B9E6; }
